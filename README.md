@@ -5,3 +5,5 @@
     only exe available here now, and without hacking information you cannot use it. 
     The application must run as administrator in case it cannot run well.
     you also need COMDLG.OCX (32) to run it.
+    i recently change the language from chinese to English for publishing, all the important part has been translated but there might be sth not include and some bad expression haven't been fixed.
+    if you want to rebuild the level but not for a test, you need to expand your source gba file to more than 8 MB, rewrite data usually needs more room. Have fun!
