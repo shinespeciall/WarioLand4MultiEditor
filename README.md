@@ -5,4 +5,4 @@
 ##    The application must run as administrator in case it cannot run well.
 ##    you also need COMDLG32.OCX (x86) to run it.(it is contained in VB IDE, i cannot unload here you can download somewhere else perhaps    with COMDLG32.dll together.)
 ##    i recently change the language from Chinese to English for publishing, all the important parts has been translated but there might be sth not included and some bad expression haven't been fixed.
-##    if you want to rebuild the level but not for a test, you need to expand your source gba file to more than 8 MB, rewrite data usually need more room. Have fun!
+##    if you want to rebuild the level but not for a test (now you can only find suitable Tile text for yourself in the room or other rooms use the same tileset to make suitable change), you need to expand your source gba file to more than 8 MB (recommanding fill with Byte FF, more suitable for my program), rewrite data usually need more room. Have fun!
