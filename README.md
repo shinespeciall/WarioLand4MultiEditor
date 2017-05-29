@@ -1,6 +1,6 @@
 #   MutiEditor for Wario Land 4 made with VB
 ##    No version information but update sometimes, i'd like to add a number after filename just for counting the update time
-##    If you want to join my new UI MAP editor(Another VB Program for accelerating map editing doing sth like Super Mario Maker), contact me.
+##    Now I am making my new UI MAP editor(Another function with a lot of work to do), it needs time.
 ##    only exe available here now, and without hacking information you cannot use it. 
 ##    The application must run as administrator in case it cannot run well.
 ##    you also need COMDLG32.OCX (x86) and comctl32.ocx (x86) to run it.(it is contained in VB IDE, i cannot unload here you can download somewhere else perhaps with COMDLG32.dll together.)
