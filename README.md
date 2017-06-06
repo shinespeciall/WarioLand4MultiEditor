@@ -1,4 +1,4 @@
-#   MutiEditor for Wario Land 4 is being made with VB(some patch application will be made in C++)
+#   MutiEditor for Wario Land 4 is being made with VB(some patch applications will be made with C++)
 ##    No version information but update sometimes, i'd like to add a number after filename just for counting the update time
 ##    The Visual MAP editor can run now, you can try this for render one layer, make up your own MOD file according to the JPG files and edit the layer, I will upload my MOD file when doing editing work.
 ##    only exe available here now, and without hacking information you cannot use it. 
