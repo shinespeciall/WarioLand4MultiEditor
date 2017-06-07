@@ -3,6 +3,7 @@
 
 #define u32 unsigned int
 #define u8 unsigned char
+
 int main(int argc,char *argv[])
 {
 	unsigned char a;
@@ -43,27 +44,32 @@ int main(int argc,char *argv[])
 		fread(&ptrStream[i],sizeof(u8),1,gbafp);
 	u32 pointers[24];
 	for(i=0;i<96;i+=4)
-	{
 		pointers[i/4]=(ptrStream[i+3]<<24)+(ptrStream[i+2]<<16)+(ptrStream[i+1]<<8)+ptrStream[i]-134217728L;
-	}
 	//Then Load Room number after 639068 for each level
 	u8 Bytes[288];
 	rewind(gbafp);
 	fseek(gbafp,6525032L,0);     //639068
 	for(i=0;i<288;i++)
-		{
 		fread(&Bytes[i],sizeof(u8),1,gbafp);
-		}
 
-	for(i=0;i<18;i++)
+	unsigned char B[24][704];        //For Save all the Bytes
+	for(i=0;i<24;i++)
 	{
-		for(j=0;j<18;j++)
+		rewind(gbafp);
+		fseek(gbafp,pointers[i],0);
+		fread(&B[i],704*sizeof(u8),1,gbafp);
+	}
+	for(i=0;i<17;i++)                //for The 17 Level and the No.24 can be check somewhere else
+	{
+		for(j=0;j<17;j++)
 		{
-			if(((unsigned int) Bytes[12*j]==i) & ((unsigned int) Bytes[12*j+1]<16))
+			if( ((unsigned int) Bytes[12*j]==i) & ((unsigned int) Bytes[12*j+1]<16) )
 				break;
 		}
-		if(j!=18)
-			printf("%x\n",(unsigned int) Bytes[12*j]);   //just for debug
+		if(j!=17)             //probably there is no way to judge if the Data areas of Levels have been maximized, is there?
+		{
+			printf("%2x\n",(unsigned int) Bytes[12*j]);     //temporary output for check
+		}
 	}
 	fclose(gbafp);
 	a=getchar();
