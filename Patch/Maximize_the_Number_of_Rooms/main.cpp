@@ -1,4 +1,5 @@
 //Write in VC++6.0
+//draw one gba file to the icon of the application to start patching
 
 #include <stdio.h>
 #include <stdlib.h>         //exit() is in the header
