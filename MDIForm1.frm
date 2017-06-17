@@ -51,9 +51,6 @@ Begin VB.MDIForm MDIForm1
       Begin VB.Menu mnuRoomConnectionBeta 
          Caption         =   "Room connection info"
       End
-      Begin VB.Menu mnuMAPEditor 
-         Caption         =   "Room Visual MAP Editor(incompleted)"
-      End
    End
    Begin VB.Menu mnufrm 
       Caption         =   "Form"
@@ -234,10 +231,6 @@ If MODfilepath = "" Then
 MsgBox "no file loaded", vbCritical, "Info"
 Exit Sub
 End If
-End Sub
-
-Private Sub mnuMAPEditor_Click()
-Form10.Visible = True
 End Sub
 
 Private Sub mnunewmap_Click()

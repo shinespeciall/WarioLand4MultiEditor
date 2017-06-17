@@ -21,7 +21,6 @@ Begin VB.Form Form2
    End
    Begin VB.CommandButton Command15 
       Caption         =   "Right"
-      Enabled         =   0   'False
       Height          =   375
       Left            =   13560
       TabIndex        =   32
@@ -30,7 +29,6 @@ Begin VB.Form Form2
    End
    Begin VB.CommandButton Command14 
       Caption         =   "Left"
-      Enabled         =   0   'False
       Height          =   375
       Left            =   12840
       TabIndex        =   31
@@ -363,6 +361,7 @@ Hexstream1 = addstr & Hexstream1
 heighta2 = Hex(Val("&H" & heighta2) + Num1)
 Text4.Text = heighta2
 Text1.Text = ""
+MsgBox "Finish !"
 End Sub
 
 Private Sub Command13_Click()
@@ -402,6 +401,87 @@ Hexstream1 = Hexstream1 & addstr
 heighta2 = Hex(Val("&H" & heighta2) + Num1)
 Text4.Text = heighta2
 Text1.Text = ""
+MsgBox "Finish !"
+End Sub
+
+Private Sub Command14_Click()
+Dim Num1 As Integer, Hex1 As String
+Num1 = InputBox("input how much line you want to add!", "info", 1)
+If Num1 <= 0 Then
+MsgBox "Wrong!"
+Exit Sub
+End If
+
+If Val("&H" & widtha1) * (Val("&H" & heighta2) + Num1) >= Val("&H" & "FFF") Then
+MsgBox "Map too large !"
+Exit Sub
+End If
+
+Hex1 = Right("0000" & InputBox("input filling Word", "info", 40), 4)
+Dim i As Integer, j As Integer, addstr As String
+If Hexstream2 = "" Then GoTo DoOne3
+For i = 0 To Val("&H" & heighta2) - 1
+For j = 1 To Num1
+addstr = addstr & Mid(Hex1, 1, 2)
+Next j
+addstr = addstr & Mid(Hexstream2, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
+Next i
+Hexstream2 = addstr
+
+addstr = ""
+DoOne3:
+For i = 0 To Val("&H" & heighta2) - 1
+For j = 1 To Num1
+addstr = addstr & Mid(Hex1, 1, 2)
+Next j
+addstr = addstr & Mid(Hexstream1, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
+Next i
+Hexstream1 = addstr
+
+widtha1 = Hex(Val("&H" & widtha1) + Num1)
+Text3.Text = widtha1
+Text1.Text = ""
+MsgBox "Finish !"
+End Sub
+
+Private Sub Command15_Click()
+Dim Num1 As Integer, Hex1 As String
+Num1 = InputBox("input how much line you want to add!", "info", 1)
+If Num1 <= 0 Then
+MsgBox "Wrong!"
+Exit Sub
+End If
+
+If Val("&H" & widtha1) * (Val("&H" & heighta2) + Num1) >= Val("&H" & "FFF") Then
+MsgBox "Map too large !"
+Exit Sub
+End If
+
+Hex1 = Right("0000" & InputBox("input filling Word", "info", 40), 4)
+Dim i As Integer, j As Integer, addstr As String
+If Hexstream2 = "" Then GoTo DoOne3
+For i = 0 To Val("&H" & heighta2) - 1
+addstr = addstr & Mid(Hexstream2, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
+For j = 1 To Num1
+addstr = addstr & Mid(Hex1, 1, 2)
+Next j
+Next i
+Hexstream2 = addstr
+
+addstr = ""
+DoOne3:
+For i = 0 To Val("&H" & heighta2) - 1
+addstr = addstr & Mid(Hexstream1, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
+For j = 1 To Num1
+addstr = addstr & Mid(Hex1, 1, 2)
+Next j
+Next i
+Hexstream1 = addstr
+
+widtha1 = Hex(Val("&H" & widtha1) + Num1)
+Text3.Text = widtha1
+Text1.Text = ""
+MsgBox "Finish !"
 End Sub
 
 Private Sub Command16_Click()

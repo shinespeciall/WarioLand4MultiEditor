@@ -798,7 +798,7 @@ End Sub
 Private Sub VScroll1_Change()
 If VScroll1.Value >= 17000 Then VScroll1.Value = 17000
 Form1.Picture1.Top = 375 - VScroll1.Value
-Form1.Picture1.Height = 12000 + VScroll1.Value
+Form1.Picture1.height = 12000 + VScroll1.Value
 DoEvents
 End Sub
 

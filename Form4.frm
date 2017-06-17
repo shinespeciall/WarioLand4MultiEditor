@@ -16,7 +16,7 @@ Begin VB.Form Form4
       Caption         =   "add a room"
       Enabled         =   0   'False
       Height          =   375
-      Left            =   2880
+      Left            =   2640
       TabIndex        =   15
       Top             =   3960
       Width           =   1335
@@ -389,6 +389,7 @@ RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 16)
 'RoomElementFirstOffset = Hex(RoomElementFirstOffset)
 'Form4.Text2.Text = Form4.Text2.Text & "Room Normal模式元素信息地址：" & RoomElementFirstOffset & vbCrLf
 Form4.List1.Enabled = True
+Command1_Click
 End Sub
 
 Private Sub List1_Scroll()
