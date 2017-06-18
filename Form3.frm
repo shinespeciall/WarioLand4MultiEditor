@@ -97,7 +97,7 @@ Dim str1 As String
 Dim maxnum As Long
 If Len(Form3.Text1.Text) = 0 Then Exit Sub
 If SaveDataOffset(100) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 For i = 1 To 100
@@ -163,7 +163,7 @@ Dim i As Integer, j As Long, ModValue As Integer
 Dim str1 As String
 Dim maxnum As Long
 If SaveDataOffset(99) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 For i = 1 To 100

@@ -155,9 +155,9 @@ Begin VB.Form Form10
       Begin VB.CommandButton Command7 
          Caption         =   "Go"
          Height          =   495
-         Left            =   3120
+         Left            =   2280
          TabIndex        =   24
-         Top             =   3960
+         Top             =   4560
          Width           =   615
       End
       Begin VB.ComboBox Combo2 
@@ -196,18 +196,18 @@ Begin VB.Form Form10
       End
       Begin VB.TextBox Text7 
          Height          =   375
-         Left            =   1800
+         Left            =   1320
          TabIndex        =   13
          Text            =   "0"
-         Top             =   4320
+         Top             =   4080
          Width           =   1095
       End
       Begin VB.TextBox Text6 
          Height          =   375
-         Left            =   1800
+         Left            =   1320
          TabIndex        =   10
          Text            =   "0"
-         Top             =   3720
+         Top             =   3600
          Width           =   1095
       End
       Begin VB.CommandButton Command5 
@@ -217,6 +217,13 @@ Begin VB.Form Form10
          TabIndex        =   8
          Top             =   2280
          Width           =   1095
+      End
+      Begin VB.Label Label3 
+         Height          =   495
+         Left            =   2520
+         TabIndex        =   31
+         Top             =   3840
+         Width           =   1335
       End
       Begin VB.Label Label2 
          Caption         =   "select MOD:"
@@ -252,17 +259,17 @@ Begin VB.Form Form10
       Begin VB.Label Label7 
          Caption         =   "vertical"
          Height          =   375
-         Left            =   600
+         Left            =   240
          TabIndex        =   12
-         Top             =   4320
+         Top             =   4080
          Width           =   975
       End
       Begin VB.Label Label6 
          Caption         =   "Horizontal"
          Height          =   375
-         Left            =   600
+         Left            =   240
          TabIndex        =   11
-         Top             =   3840
+         Top             =   3600
          Width           =   1095
       End
       Begin VB.Label Label5 
@@ -626,7 +633,19 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
             b1 = Val("&H" & Mid(OutputString, 18 * j + 9, 2))
             b2 = Val("&H" & Mid(OutputString, 18 * j + 11, 2))
             b3 = Val("&H" & Mid(OutputString, 18 * j + 13, 2))
+            If b0 > b1 Then
+            b4 = b0
+            b0 = b1
+            b1 = b4
+            End If
+            If b2 > b1 Then
+            b4 = b2
+            b2 = b3
+            b3 = b4
+            End If
             Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b1 + 1 - Xshift) * 24 * 16, (b3 + 1 - Yshift) * 24 * 16), vbRed, B
+            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b0 - Xshift + 0.5) * 24 * 16, (b2 - Yshift + 0.5) * 24 * 16), vbGreen, BF
+            Form10.Picture1.Line ((b1 - Xshift + 0.5) * 24 * 16, (b3 - Yshift + 0.5) * 24 * 16)-((b1 - Xshift + 1) * 24 * 16, (b3 - Yshift + 1) * 24 * 16), vbGreen, BF
             If Mid(OutputString, 18 * j + 15, 2) <> "FF" Then
             b4 = Val("&H" & Mid(OutputString, 18 * j + 15, 2))
             b5 = Val("&H" & Mid(OutputString, 18 * j + 17, 2))
@@ -635,7 +654,9 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
             If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "01" Then b1 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
             If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "02" Then b2 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
             If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "03" Then b3 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
-            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b1 + 1 - Xshift) * 24 * 16, (b3 + 1 - Yshift) * 24 * 16), vbRed, B
+            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b1 + 1 - Xshift) * 24 * 16, (b3 + 1 - Yshift) * 24 * 16), vbYellow, B
+            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b0 - Xshift + 0.5) * 24 * 16, (b2 - Yshift + 0.5) * 24 * 16), vbGreen, BF
+            Form10.Picture1.Line ((b1 - Xshift + 0.5) * 24 * 16, (b3 - Yshift + 0.5) * 24 * 16)-((b1 - Xshift + 1) * 24 * 16, (b3 - Yshift + 1) * 24 * 16), vbGreen, BF
             End If
             Next j
             Exit For
@@ -787,7 +808,7 @@ Next j
 End If
 
 Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
-
+Command5_Click
 End If
 End Sub
 
@@ -810,8 +831,9 @@ End Sub
 Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 MouseX = X \ (24 * 16)
 MouseY = Y \ (24 * 16)
-Form10.Shape1.Left = X
-Form10.Shape1.Top = Y
+Form10.Label3.Caption = "(" & Hex(MouseX) & " , " & Hex(MouseY) & ")"
+Form10.Shape1.Left = X - Xshift
+Form10.Shape1.Top = Y - Yshift
 End Sub
 
 Private Sub Picture1_Click()

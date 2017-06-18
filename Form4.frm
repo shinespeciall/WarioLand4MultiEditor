@@ -31,12 +31,13 @@ Begin VB.Form Form4
       Width           =   975
    End
    Begin VB.ListBox List5 
+      Enabled         =   0   'False
       Height          =   1680
       ItemData        =   "Form4.frx":0004
       Left            =   120
       List            =   "Form4.frx":0006
       TabIndex        =   12
-      ToolTipText     =   "choose one with a click"
+      ToolTipText     =   "double click to change value"
       Top             =   4080
       Width           =   975
    End
@@ -50,12 +51,13 @@ Begin VB.Form Form4
       Width           =   975
    End
    Begin VB.ListBox List3 
+      Enabled         =   0   'False
       Height          =   1680
       ItemData        =   "Form4.frx":000C
       Left            =   2280
       List            =   "Form4.frx":000E
       TabIndex        =   10
-      ToolTipText     =   "choose one with a click"
+      ToolTipText     =   "double click to change value"
       Top             =   2040
       Width           =   975
    End
@@ -94,12 +96,13 @@ Begin VB.Form Form4
       Width           =   2775
    End
    Begin VB.ListBox List1 
+      Enabled         =   0   'False
       Height          =   1680
       ItemData        =   "Form4.frx":0014
       Left            =   120
       List            =   "Form4.frx":0016
       TabIndex        =   3
-      ToolTipText     =   "choose one with a click"
+      ToolTipText     =   "double click to change value"
       Top             =   2040
       Width           =   975
    End
@@ -289,6 +292,9 @@ ROMallHex = ""
 
 Erase ROMallbyte()
 Form4.Combo1.Enabled = True
+Form4.List1.Enabled = True
+Form4.List3.Enabled = True
+Form4.List5.Enabled = True
 End Sub
 
 Private Sub Command1_Click()
@@ -301,7 +307,7 @@ End Sub
 Private Sub Command2_Click()
 If LevelStartStreamOffset = "" Then Exit Sub
 If SaveDataOffset(95) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim i As Integer, str1 As String, j As Integer
@@ -332,11 +338,6 @@ End Sub
 
 Private Sub List1_Click()
 Form4.List1.Enabled = False
-'Creat New Room Sub
-'If Form4.List1.Text = "F7FFFFFF" Then
-
-
-'End of Creat New Room Sub
 Form4.Text1.Text = Form4.List1.Text
 PointerOffset1 = Form4.List2.List(Form4.List1.ListIndex)
 LevelRoomIndex = Hex(Form4.List1.ListIndex + 1)
@@ -389,7 +390,34 @@ RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 16)
 'RoomElementFirstOffset = Hex(RoomElementFirstOffset)
 'Form4.Text2.Text = Form4.Text2.Text & "Room Normal模式元素信息地址：" & RoomElementFirstOffset & vbCrLf
 Form4.List1.Enabled = True
-Command1_Click
+End Sub
+
+Private Sub List1_DblClick()
+Dim i As Integer
+i = MsgBox("Are you sure to change this value?", vbYesNo, "Info")
+If i = vbNo Then Exit Sub
+Dim str As String, str1 As String
+str1 = InputBox("input an Offset to ", "Info", "3F2263")
+If str1 = "" Then Exit Sub
+str = Replace(str1, Chr(32), "")
+str = Replace(str, Chr(13), "")
+str = Replace(str, Chr(10), "")
+str = Right("00" & Hex(Val("&H" & "8000000") + Val("&H" & str)), 8)
+str = Mid(str, 7, 2) & Mid(str, 5, 2) & Mid(str, 3, 2) & Mid(str, 1, 2)
+If SaveDataOffset(97) <> "" Then
+    MsgBox "buffer memory used up, save all and retry"
+    Exit Sub
+End If
+Dim TempAddress As String
+TempAddress = Form4.List2.List(Form4.List1.ListIndex)
+For i = 1 To 100
+    If SaveDataOffset(i) = "" Then Exit For
+    If SaveDataOffset(i) = TempAddress Then Exit For
+Next i
+SaveDataOffset(i) = TempAddress
+SaveDatabuffer(i) = str
+Form4.List1.AddItem str1, List1.ListIndex
+Form4.List1.RemoveItem List1.ListIndex
 End Sub
 
 Private Sub List1_Scroll()
@@ -465,6 +493,34 @@ RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 12)
 Form4.List3.Enabled = True
 End Sub
 
+Private Sub List3_DblClick()
+Dim i As Integer
+i = MsgBox("Are you sure to change this value?", vbYesNo, "Info")
+If i = vbNo Then Exit Sub
+Dim str As String, str1 As String
+str1 = InputBox("input an Offset to ", "Info", "3F2263")
+If str1 = "" Then Exit Sub
+str = Replace(str1, Chr(32), "")
+str = Replace(str, Chr(13), "")
+str = Replace(str, Chr(10), "")
+str = Right("00" & Hex(Val("&H" & "8000000") + Val("&H" & str)), 8)
+str = Mid(str, 7, 2) & Mid(str, 5, 2) & Mid(str, 3, 2) & Mid(str, 1, 2)
+If SaveDataOffset(97) <> "" Then
+    MsgBox "buffer memory used up, save all and retry"
+    Exit Sub
+End If
+Dim TempAddress As String
+TempAddress = Form4.List4.List(Form4.List3.ListIndex)
+For i = 1 To 100
+    If SaveDataOffset(i) = "" Then Exit For
+    If SaveDataOffset(i) = TempAddress Then Exit For
+Next i
+SaveDataOffset(i) = TempAddress
+SaveDatabuffer(i) = str
+Form4.List3.AddItem str1, List3.ListIndex
+Form4.List3.RemoveItem List3.ListIndex
+End Sub
+
 Private Sub List3_Scroll()
 List1.TopIndex = List3.TopIndex
 List2.TopIndex = List3.TopIndex
@@ -536,6 +592,34 @@ RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 20)
 'RoomElementFirstOffset = Hex(RoomElementFirstOffset)
 'Form4.Text2.Text = Form4.Text2.Text & "Room Normal模式元素信息地址：" & RoomElementFirstOffset & vbCrLf
 Form4.List5.Enabled = True
+End Sub
+
+Private Sub List5_DblClick()
+Dim i As Integer
+i = MsgBox("Are you sure to change this value?", vbYesNo, "Info")
+If i = vbNo Then Exit Sub
+Dim str As String, str1 As String
+str1 = InputBox("input an Offset to ", "Info", "3F2263")
+If str1 = "" Then Exit Sub
+str = Replace(str1, Chr(32), "")
+str = Replace(str, Chr(13), "")
+str = Replace(str, Chr(10), "")
+str = Right("00" & Hex(Val("&H" & "8000000") + Val("&H" & str)), 8)
+str = Mid(str, 7, 2) & Mid(str, 5, 2) & Mid(str, 3, 2) & Mid(str, 1, 2)
+If SaveDataOffset(97) <> "" Then
+    MsgBox "buffer memory used up, save all and retry"
+    Exit Sub
+End If
+Dim TempAddress As String
+TempAddress = Form4.List6.List(Form4.List5.ListIndex)
+For i = 1 To 100
+    If SaveDataOffset(i) = "" Then Exit For
+    If SaveDataOffset(i) = TempAddress Then Exit For
+Next i
+SaveDataOffset(i) = TempAddress
+SaveDatabuffer(i) = str
+Form4.List5.AddItem str1, List5.ListIndex
+Form4.List5.RemoveItem List5.ListIndex
 End Sub
 
 Private Sub List5_Scroll()

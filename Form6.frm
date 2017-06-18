@@ -283,7 +283,7 @@ Dim str1 As String
 Dim maxnum As Long
 If Form6.Text1.Text = "" Then Exit Sub        '检查Textbox，就是说可以自己输入地址，但是注意要小于顺序写入地址，即第一条写入记录
 If SaveDataOffset(98) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim TempAddress As Long
@@ -359,7 +359,7 @@ Dim str1 As String
 Dim maxnum As Long
 If Form6.Text1.Text = "" Then Exit Sub        '检查Textbox，就是说可以自己输入地址，但是注意要小于顺序写入地址，即第一条写入记录
 If SaveDataOffset(98) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim TempAddress As Long
@@ -403,7 +403,7 @@ MsgBox "Wrong Const!"
 Exit Sub
 End If
 If SaveDataOffset(100) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim i As Integer, TempAddress As Long
@@ -427,7 +427,7 @@ MsgBox "Wrong Const!"
 Exit Sub
 End If
 If SaveDataOffset(95) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim i As Integer, TempAddress As Long
@@ -488,7 +488,7 @@ MsgBox "Wrong Const!"
 Exit Sub
 End If
 If SaveDataOffset(100) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim i As Integer, TempAddress As Long
@@ -512,7 +512,7 @@ MsgBox "Wrong Const!"
 Exit Sub
 End If
 If SaveDataOffset(100) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim i As Integer, TempAddress As Long
@@ -536,7 +536,7 @@ MsgBox "Wrong Const!"
 Exit Sub
 End If
 If SaveDataOffset(100) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim i As Integer, TempAddress As Long
@@ -560,7 +560,7 @@ MsgBox "Wrong Const!"
 Exit Sub
 End If
 If SaveDataOffset(100) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim i As Integer, TempAddress As Long
@@ -584,7 +584,7 @@ MsgBox "Wrong Const!"
 Exit Sub
 End If
 If SaveDataOffset(100) <> "" Then
-    MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+    MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
 Dim i As Integer, TempAddress As Long

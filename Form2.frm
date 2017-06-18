@@ -651,7 +651,7 @@ If IfisNewRoom = True Then
 i = MsgBox("make sure you are making new Room！！！", vbYesNo, "info")
 If i <> vbYes Then Exit Sub
     If SaveDataOffset(98) <> "" Then
-        MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+        MsgBox "buffer memory used up, save all and retry !"
         Exit Sub
     End If
     For i = 1 To 100
@@ -660,7 +660,7 @@ If i <> vbYes Then Exit Sub
 SaveDataOffset(i) = SaveDatabuffer(0)
 SaveDatabuffer(i) = Form2.Text2.Text & "FF"
 'MsgBox "保存后请自行修改 78F970 处的下次写入地址！"
-Form2.Label8.Caption = "直接生成新地址"
+Form2.Label8.Caption = "Automatically make the offset"
 Form2.Text6.Text = SaveDatabuffer(0)
 SaveDataOffset(i + 1) = PointerOffset1
 TempAddress = Val("&H" & "8000000") + Val("&H" & SaveDatabuffer(0))
@@ -673,7 +673,7 @@ End If
 
 If Form2.Text6.Text = "" Then         '检查Textbox，就是说可以自己输入地址，但是注意要小于顺序写入地址，即第一条写入记录
     If SaveDataOffset(98) <> "" Then
-        MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+        MsgBox "buffer memory used up, save all and retry !"
         Exit Sub
     End If
     TempAddress = Val("&H" & SaveDatabuffer(0)) + Len(Form2.Text2.Text) / 2
@@ -747,7 +747,7 @@ ReCreatNewOffset:
     SaveDatabuffer(i + 2) = str1
 Else
     If SaveDataOffset(100) <> "" Then   '如果i=100的时候才有Null，那么记录数不够，退出该过程
-        MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+        MsgBox "buffer memory used up, save all and retry !"
         Hexstream1 = ""
         Hexstream2 = ""
         widtha1 = ""

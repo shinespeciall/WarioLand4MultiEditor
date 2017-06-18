@@ -201,7 +201,7 @@ TempPointerValue(i) = j
 Next i
 
     If SaveDataOffset(99) <> "" Then
-        MsgBox "记录条数不够，请保存所有修改记录后再使用缓存！"
+        MsgBox "buffer memory used up, save all and retry !"
         Exit Sub
     End If
     For i = 1 To 100
@@ -253,8 +253,8 @@ Form7.Picture1.Enabled = False
 End Sub
 
 Private Sub Form_Resize()                 ' 80 twip(缇 读ti，第二声) per height and width
-If Form7.Height < 1700 Then Exit Sub
-Form7.Picture1.Move 60, 60, 20560, (Form7.Height \ 640 - 1) * 640 'height: 640 per 2 line   Width: 20480
+If Form7.height < 1700 Then Exit Sub
+Form7.Picture1.Move 60, 60, 20560, (Form7.height \ 640 - 1) * 640 'height: 640 per 2 line   Width: 20480
 ColorHByte = "1"
 If TileLength <> "" Then Form7.Picture2.BackColor = Palette16Color(Val("&H" & ColorHByte))
 End Sub
