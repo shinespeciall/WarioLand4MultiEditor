@@ -81,17 +81,17 @@ Begin VB.Form Form6
    Begin VB.CommandButton Command5 
       Caption         =   "save"
       Height          =   375
-      Left            =   4200
+      Left            =   4440
       TabIndex        =   13
       Top             =   4920
-      Width           =   1095
+      Width           =   735
    End
    Begin VB.TextBox Text5 
       Height          =   375
       Left            =   3600
       TabIndex        =   12
       Top             =   4920
-      Width           =   615
+      Width           =   735
    End
    Begin VB.TextBox Text4 
       Height          =   1455
@@ -104,7 +104,7 @@ Begin VB.Form Form6
    End
    Begin VB.CommandButton Command3 
       Caption         =   "save"
-      Height          =   855
+      Height          =   375
       Left            =   4080
       TabIndex        =   9
       Top             =   3480
@@ -115,7 +115,7 @@ Begin VB.Form Form6
       Left            =   4320
       TabIndex        =   8
       Top             =   2640
-      Width           =   615
+      Width           =   855
    End
    Begin VB.CommandButton Command2 
       Caption         =   "save"

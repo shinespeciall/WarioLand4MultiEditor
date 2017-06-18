@@ -9,21 +9,29 @@ Begin VB.Form Form10
    ScaleHeight     =   15000
    ScaleWidth      =   24645
    Visible         =   0   'False
-   Begin VB.CommandButton Command10 
-      Caption         =   "refresh with grid"
-      Height          =   495
-      Left            =   23040
-      TabIndex        =   29
-      Top             =   720
-      Width           =   1455
-   End
-   Begin VB.CommandButton Command9 
+   Begin VB.CommandButton Command11 
       Caption         =   "refresh"
       Height          =   375
-      Left            =   23040
-      TabIndex        =   28
+      Left            =   21840
+      TabIndex        =   30
       Top             =   120
-      Width           =   1455
+      Width           =   2655
+   End
+   Begin VB.CommandButton Command10 
+      Caption         =   "refresh with grid"
+      Height          =   375
+      Left            =   21840
+      TabIndex        =   29
+      Top             =   1080
+      Width           =   2655
+   End
+   Begin VB.CommandButton Command9 
+      Caption         =   "refresh with camera control"
+      Height          =   375
+      Left            =   21840
+      TabIndex        =   28
+      Top             =   600
+      Width           =   2655
    End
    Begin VB.PictureBox Picture2 
       BackColor       =   &H00000000&
@@ -320,6 +328,8 @@ Form10.Text1.Text = str1
 End Sub
 
 Private Sub Command10_Click()
+Form10.Picture1.Cls
+Form10.Picture1.DrawWidth = 1
 Dim i As Integer, j As Integer, result As Boolean
 For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
 For i = 0 To Val("&H" & MapLength) - 1 - Xshift
@@ -330,6 +340,18 @@ Next j
 For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
 For i = 0 To Val("&H" & MapLength) - 1 - Xshift
 Form10.Picture1.Line (64 * 6 * i, 64 * 6 * j)-(64 * 6 * i + 64 * 6, 64 * 6 * j + 64 * 6), vbWhite, B
+DoEvents
+Next i
+Next j
+End Sub
+
+Private Sub Command11_Click()
+Form10.Picture1.Cls
+Form10.Picture1.DrawWidth = 2
+Dim i As Integer, j As Integer, result As Boolean
+For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
+For i = 0 To Val("&H" & MapLength) - 1 - Xshift
+result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
 Next j
@@ -531,7 +553,6 @@ DoEvents
 Next i
 Next j
 End If
-
 Form9.Text1.Text = Form9.Text1.Text & "Finish All" & vbCrLf
 Form10.Combo1.Enabled = True
 End Sub
@@ -573,6 +594,8 @@ End Sub
 
 
 Private Sub Command9_Click()
+Form10.Picture1.Cls
+Form10.Picture1.DrawWidth = 2
 Dim i As Integer, j As Integer, result As Boolean
 For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
 For i = 0 To Val("&H" & MapLength) - 1 - Xshift
@@ -580,6 +603,45 @@ result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
 Next j
+If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
+    Dim FirstPointer As String
+    FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
+    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
+    FirstPointer = Mid(FirstPointer, 7, 2) & Mid(FirstPointer, 5, 2) & Mid(FirstPointer, 3, 2) & Mid(FirstPointer, 1, 2)
+    FirstPointer = Hex(Val("&H" & FirstPointer) - Val("&H" & "8000000"))
+    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))
+    Dim OutputString As String, CheckPointer As String, kk As Integer
+    Dim b0 As Integer, b1 As Integer, b2 As Integer, b3 As Integer, b4 As Integer, b5 As Integer
+    For i = 0 To 16
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    CheckPointer = Mid(FirstPointer, 7 + 8 * i, 2) & Mid(FirstPointer, 5 + 8 * i, 2) & Mid(FirstPointer, 3 + 8 * i, 2) & Mid(FirstPointer, 1 + 8 * i, 2)
+    CheckPointer = Hex(Val("&H" & CheckPointer) - Val("&H" & "8000000"))
+    OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 1))
+        If Mid(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+            RoomCameraStringPointerOffset = CheckPointer
+            OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 10 * 9 + 1))
+            kk = Val("&H" & Mid(OutputString, 3, 2))
+            For j = 0 To (kk - 1)
+            b0 = Val("&H" & Mid(OutputString, 18 * j + 7, 2))
+            b1 = Val("&H" & Mid(OutputString, 18 * j + 9, 2))
+            b2 = Val("&H" & Mid(OutputString, 18 * j + 11, 2))
+            b3 = Val("&H" & Mid(OutputString, 18 * j + 13, 2))
+            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b1 + 1 - Xshift) * 24 * 16, (b3 + 1 - Yshift) * 24 * 16), vbRed, B
+            If Mid(OutputString, 18 * j + 15, 2) <> "FF" Then
+            b4 = Val("&H" & Mid(OutputString, 18 * j + 15, 2))
+            b5 = Val("&H" & Mid(OutputString, 18 * j + 17, 2))
+            Form10.Picture1.Line ((b4 - Xshift) * 24 * 16, (b5 - Yshift) * 24 * 16)-((b4 + 1 - Xshift) * 24 * 16, (b5 + 1 - Yshift) * 24 * 16), vbRed, B
+            If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "00" Then b0 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
+            If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "01" Then b1 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
+            If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "02" Then b2 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
+            If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "03" Then b3 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
+            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b1 + 1 - Xshift) * 24 * 16, (b3 + 1 - Yshift) * 24 * 16), vbRed, B
+            End If
+            Next j
+            Exit For
+        End If
+    Next i
+End If
 End Sub
 
 Private Sub Form_Load()
@@ -723,6 +785,8 @@ For i = 0 To Val("&H" & widtha1) - 1
 Next i
 Next j
 End If
+
+Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
 
 End If
 End Sub
