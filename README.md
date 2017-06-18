@@ -7,3 +7,5 @@
 ##    I recently change the language from Chinese to English for publishing, all the important parts has been translated but there might be sth not included and some bad expression haven't been fixed. so not all the things are showed in English now.
 ##      The sprites editor sometimes will not render the sprites properly, you need to use the slider to correct it.
 ##     If you want to rebuild the level but not for a test (now you can only find suitable Tile text for yourself in the room or other rooms use the same tileset to make suitable change Or try to use the incompleted Visual editor), you need to expand your source gba file, which is available as a patch program here now, rewrite data usually need more room.
+##      This is an example:
+![Image text](https://github.com/shinespeciall/WarioLand4MultiEditor/blob/master/screenshot.png)
