@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form Form3 
-   Caption         =   "Room联系关系"
+   Caption         =   "Rooms' connection"
    ClientHeight    =   5775
    ClientLeft      =   315
    ClientTop       =   870

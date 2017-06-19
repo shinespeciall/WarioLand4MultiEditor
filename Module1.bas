@@ -111,7 +111,7 @@ If shiftoffset = Len(Hexstream) - 3 Then
 Exit Do
 End If
 
-Form2.Label1.Caption = "Output:" & Str(shiftoffset) & "/" & Str(Len(Hexstream) - 2)
+Form2.Label1.Caption = "Output:" & str(shiftoffset) & "/" & str(Len(Hexstream) - 2)
 Loop
 
 CompressDataOnly = OutputStream
@@ -211,3 +211,7 @@ End If
 Next i
 strcmp = 0
 End Function
+
+'Public Function Decompress(ByRef TextMap() As String, ByVal DataOffset As String) As String      'return Type
+
+'End Function

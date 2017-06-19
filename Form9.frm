@@ -37,6 +37,6 @@ Form9.Text1.Text = ""
 End Sub
 
 Private Sub Form_Load()
-Form9.Move Form4.width + Form1.width, 0, MDIForm1.width - Form4.width - Form1.width - 450, MDIForm1.height - 1150
+Form9.Move Form4.width + 18510, 0, MDIForm1.width - Form4.width - 18510 - 450, MDIForm1.height - 1150
 Form9.Text1.FontSize = 20
 End Sub

@@ -3,8 +3,8 @@ Begin VB.Form Form4
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Level guide"
    ClientHeight    =   9270
-   ClientLeft      =   630
-   ClientTop       =   585
+   ClientLeft      =   45
+   ClientTop       =   390
    ClientWidth     =   4560
    LinkTopic       =   "Form4"
    MaxButton       =   0   'False

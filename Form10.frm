@@ -30,6 +30,7 @@ Begin VB.Form Form10
       Height          =   375
       Left            =   21840
       TabIndex        =   28
+      ToolTipText     =   "If no camera control it will be simply refresh"
       Top             =   600
       Width           =   2655
    End
@@ -338,14 +339,14 @@ Private Sub Command10_Click()
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 1
 Dim i As Integer, j As Integer, result As Boolean
-For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
-For i = 0 To Val("&H" & MapLength) - 1 - Xshift
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
 result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
 Next j
-For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
-For i = 0 To Val("&H" & MapLength) - 1 - Xshift
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
 Form10.Picture1.Line (64 * 6 * i, 64 * 6 * j)-(64 * 6 * i + 64 * 6, 64 * 6 * j + 64 * 6), vbWhite, B
 DoEvents
 Next i
@@ -356,8 +357,8 @@ Private Sub Command11_Click()
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 2
 Dim i As Integer, j As Integer, result As Boolean
-For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
-For i = 0 To Val("&H" & MapLength) - 1 - Xshift
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
 result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
@@ -543,8 +544,8 @@ If IsDeliver = False Then
 Form9.Text1.Text = Form9.Text1.Text & "No Map Text Data inport, create new map!" & vbCrLf
 'make grid for Tile16
 Form9.Text1.Text = Form9.Text1.Text & "Making grid......" & vbCrLf
-For j = 0 To Val("&H" & MapHeight) - 1
-For i = 0 To Val("&H" & MapLength) - 1
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
 Form10.Picture1.Line (64 * 6 * i, 64 * 6 * j)-(64 * 6 * i + 64 * 6, 64 * 6 * j + 64 * 6), vbWhite, B
 DoEvents
 Next i
@@ -573,8 +574,8 @@ L1_LB_000(i, j) = L1_LB_001(i, j)
 L1_LB_001(i, j) = "0000"
 Next i
 Next j
-For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
-For i = 0 To Val("&H" & MapLength) - 1 - Xshift
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
 result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
@@ -587,8 +588,8 @@ Xshift = Val("&H" & Form10.Text6.Text)
 Yshift = Val("&H" & Form10.Text7.Text)
 Form10.Picture1.Cls
 Dim i As Integer, j As Integer, result As Boolean
-For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
-For i = 0 To Val("&H" & MapLength) - 1 - Xshift
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
 result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
@@ -604,8 +605,8 @@ Private Sub Command9_Click()
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 2
 Dim i As Integer, j As Integer, result As Boolean
-For j = 0 To Val("&H" & MapHeight) - 1 - Yshift
-For i = 0 To Val("&H" & MapLength) - 1 - Xshift
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
 result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
@@ -643,7 +644,7 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
             b2 = b3
             b3 = b4
             End If
-            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b1 + 1 - Xshift) * 24 * 16, (b3 + 1 - Yshift) * 24 * 16), vbRed, B
+            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b1 + 1 - Xshift) * 24 * 16, (b3 + 1 - Yshift) * 24 * 16), vbRed, B                  'posibly overflow
             Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b0 - Xshift + 0.5) * 24 * 16, (b2 - Yshift + 0.5) * 24 * 16), vbGreen, BF
             Form10.Picture1.Line ((b1 - Xshift + 0.5) * 24 * 16, (b3 - Yshift + 0.5) * 24 * 16)-((b1 - Xshift + 1) * 24 * 16, (b3 - Yshift + 1) * 24 * 16), vbGreen, BF
             If Mid(OutputString, 18 * j + 15, 2) <> "FF" Then

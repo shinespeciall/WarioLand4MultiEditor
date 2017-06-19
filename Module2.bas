@@ -100,11 +100,11 @@ End Function
 'LSH = BIN_to_DEC(D2B(X) & Replace(Space(B), Chr(32), "0"))
 'End Function
 
-Public Function RSH(ByVal X As Long, ByVal B As Integer) As Long
-If Len(D2B(X)) <= B Then
+Public Function RSH(ByVal X As Long, ByVal b As Integer) As Long
+If Len(D2B(X)) <= b Then
 RSH = 0
 Else
-RSH = BIN_to_DEC(Mid(D2B(X), 1, Len(D2B(X)) - B))
+RSH = BIN_to_DEC(Mid(D2B(X), 1, Len(D2B(X)) - b))
 End If
 End Function
 
@@ -278,4 +278,8 @@ Next i
 
 Erase Tile8()
 DrawTile16 = True
+End Function
+
+Public Function Min(a As Single, b As Single) As Single
+If a <= b Then Min = a Else Min = b
 End Function

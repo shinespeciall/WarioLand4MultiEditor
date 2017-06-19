@@ -91,7 +91,7 @@ Form1.Visible = False
 Form2.Visible = False
 Form3.Visible = False
 Form4.Visible = True
-
+Form9.Visible = True
 'MDIForm1.Left = 0
 'MDIForm1.Top = 0
 'MDIForm1.Height = Screen.Height - 650

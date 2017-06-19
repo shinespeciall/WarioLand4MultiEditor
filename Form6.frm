@@ -2,8 +2,8 @@ VERSION 5.00
 Begin VB.Form Form6 
    Caption         =   "Room property and flag"
    ClientHeight    =   8325
-   ClientLeft      =   6030
-   ClientTop       =   3180
+   ClientLeft      =   -45
+   ClientTop       =   300
    ClientWidth     =   5310
    LinkTopic       =   "Form6"
    MDIChild        =   -1  'True
