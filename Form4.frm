@@ -162,6 +162,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Public Form4TextBox2Temp As String
 Public RoomNumber As String       '第一个Room记为1
 
@@ -337,6 +339,7 @@ Unload Form2
 End Sub
 
 Private Sub List1_Click()
+If Form4.Text1.Text = Form4.List1.Text Then Exit Sub
 Form4.List1.Enabled = False
 Form4.Text1.Text = Form4.List1.Text
 PointerOffset1 = Form4.List2.List(Form4.List1.ListIndex)
@@ -385,10 +388,47 @@ Form4.Text2.Text = Form4.Text2.Text & "未知指针2：" & Mid(ROMallHex, 55 + 8, 2) 
 Form4.Text2.Text = Form4.Text2.Text & "精灵调色板：" & Mid(ROMallHex, 53 + 16, 2) & Mid(ROMallHex, 51 + 16, 2) & Mid(ROMallHex, 49 + 16, 2) & vbCrLf
 
 RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 16)
-'RoomElementFirstOffset = Mid(RoomElementFirstOffset, 7, 2) & Mid(RoomElementFirstOffset, 5, 2) & Mid(RoomElementFirstOffset, 3, 2) & Mid(RoomElementFirstOffset, 1, 2)
-'RoomElementFirstOffset = Val("&H" & RoomElementFirstOffset) - Val("&H" & "8000000")
-'RoomElementFirstOffset = Hex(RoomElementFirstOffset)
-'Form4.Text2.Text = Form4.Text2.Text & "Room Normal模式元素信息地址：" & RoomElementFirstOffset & vbCrLf
+
+CameraCotrolPointerOffset = ""
+CameraCotrolString = ""
+RoomCameraStringPointerOffset = ""
+LengthOfAllPointer = 0
+If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
+    Dim OutputString As String, CheckPointer As String, j As Integer, kk As Integer, FirstPointer As String
+    FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
+    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
+    FirstPointer = Mid(FirstPointer, 7, 2) & Mid(FirstPointer, 5, 2) & Mid(FirstPointer, 3, 2) & Mid(FirstPointer, 1, 2)
+    FirstPointer = Hex(Val("&H" & FirstPointer) - Val("&H" & "8000000"))
+    CameraCotrolPointerOffset = FirstPointer
+    '*********************                  pointer table pointer head is Offset_78F540
+    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
+    '*********************                  start search
+    For i = 0 To 16
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
+    CheckPointer = Mid(FirstPointer, 7 + 8 * i, 2) & Mid(FirstPointer, 5 + 8 * i, 2) & Mid(FirstPointer, 3 + 8 * i, 2) & Mid(FirstPointer, 1 + 8 * i, 2)
+    CheckPointer = Hex(Val("&H" & CheckPointer) - Val("&H" & "8000000"))
+
+    OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 1))
+        If Mid(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+            RoomCameraStringPointerOffset = CheckPointer
+            OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 10 * 9 + 1))
+            'then go on to enumerate the camera control flag
+            CameraCotrolString = Mid(OutputString, 1, 4)
+            kk = Val("&H" & Mid(OutputString, 3, 2))
+            If kk <> 0 Then Form4.Text2.Text = Form4.Text2.Text & "Exist Camera Control !" & vbCrLf
+            For j = 0 To (kk - 1)
+            CameraCotrolString = CameraCotrolString & Mid(OutputString, 18 * j + 5, 18)
+            Next j
+            Exit For
+        End If
+    Next i
+
+    For i = 0 To 16
+    LengthOfAllPointer = LengthOfAllPointer + 4
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    Next i
+End If
+
 Form4.List1.Enabled = True
 End Sub
 
@@ -437,6 +477,7 @@ List6.TopIndex = List2.TopIndex
 End Sub
 
 Private Sub List3_Click()
+If Form4.Text1.Text = Form4.List3.Text Then Exit Sub
 Form4.List3.Enabled = False
 Form4.Text1.Text = Form4.List3.Text
 PointerOffset1 = Form4.List4.List(Form4.List3.ListIndex)
@@ -486,10 +527,47 @@ Form4.Text2.Text = Form4.Text2.Text & "未知指针2：" & Mid(ROMallHex, 55 + 8, 2) 
 Form4.Text2.Text = Form4.Text2.Text & "精灵调色板：" & Mid(ROMallHex, 53 + 16, 2) & Mid(ROMallHex, 51 + 16, 2) & Mid(ROMallHex, 49 + 16, 2) & vbCrLf
 
 RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 12)
-'RoomElementFirstOffset = Mid(RoomElementFirstOffset, 7, 2) & Mid(RoomElementFirstOffset, 5, 2) & Mid(RoomElementFirstOffset, 3, 2) & Mid(RoomElementFirstOffset, 1, 2)
-'RoomElementFirstOffset = Val("&H" & RoomElementFirstOffset) - Val("&H" & "8000000")
-'RoomElementFirstOffset = Hex(RoomElementFirstOffset)
-'Form4.Text2.Text = Form4.Text2.Text & "Room Normal模式元素信息地址：" & RoomElementFirstOffset & vbCrLf
+
+CameraCotrolPointerOffset = ""
+CameraCotrolString = ""
+RoomCameraStringPointerOffset = ""
+LengthOfAllPointer = 0
+If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
+    Dim OutputString As String, CheckPointer As String, j As Integer, kk As Integer, FirstPointer As String
+    FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
+    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
+    FirstPointer = Mid(FirstPointer, 7, 2) & Mid(FirstPointer, 5, 2) & Mid(FirstPointer, 3, 2) & Mid(FirstPointer, 1, 2)
+    FirstPointer = Hex(Val("&H" & FirstPointer) - Val("&H" & "8000000"))
+    CameraCotrolPointerOffset = FirstPointer
+    '*********************                  pointer table pointer head is Offset_78F540
+    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
+    '*********************                  start search
+    For i = 0 To 16
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
+    CheckPointer = Mid(FirstPointer, 7 + 8 * i, 2) & Mid(FirstPointer, 5 + 8 * i, 2) & Mid(FirstPointer, 3 + 8 * i, 2) & Mid(FirstPointer, 1 + 8 * i, 2)
+    CheckPointer = Hex(Val("&H" & CheckPointer) - Val("&H" & "8000000"))
+
+    OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 1))
+        If Mid(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+            RoomCameraStringPointerOffset = CheckPointer
+            OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 10 * 9 + 1))
+            'then go on to enumerate the camera control flag
+            CameraCotrolString = Mid(OutputString, 1, 4)
+            kk = Val("&H" & Mid(OutputString, 3, 2))
+            If kk <> 0 Then Form4.Text2.Text = Form4.Text2.Text & "Exist Camera Control !" & vbCrLf
+            For j = 0 To (kk - 1)
+            CameraCotrolString = CameraCotrolString & Mid(OutputString, 18 * j + 5, 18)
+            Next j
+            Exit For
+        End If
+    Next i
+
+    For i = 0 To 16
+    LengthOfAllPointer = LengthOfAllPointer + 4
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    Next i
+End If
+
 Form4.List3.Enabled = True
 End Sub
 
@@ -538,6 +616,7 @@ List6.TopIndex = List4.TopIndex
 End Sub
 
 Private Sub List5_Click()
+If Form4.Text1.Text = Form4.List5.Text Then Exit Sub
 Form4.List5.Enabled = False
 Form4.Text1.Text = Form4.List5.Text
 PointerOffset1 = Form4.List6.List(Form4.List5.ListIndex)
@@ -587,10 +666,47 @@ Form4.Text2.Text = Form4.Text2.Text & "未知指针2：" & Mid(ROMallHex, 55 + 8, 2) 
 Form4.Text2.Text = Form4.Text2.Text & "精灵调色板：" & Mid(ROMallHex, 53 + 16, 2) & Mid(ROMallHex, 51 + 16, 2) & Mid(ROMallHex, 49 + 16, 2) & vbCrLf
 
 RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 20)
-'RoomElementFirstOffset = Mid(RoomElementFirstOffset, 7, 2) & Mid(RoomElementFirstOffset, 5, 2) & Mid(RoomElementFirstOffset, 3, 2) & Mid(RoomElementFirstOffset, 1, 2)
-'RoomElementFirstOffset = Val("&H" & RoomElementFirstOffset) - Val("&H" & "8000000")
-'RoomElementFirstOffset = Hex(RoomElementFirstOffset)
-'Form4.Text2.Text = Form4.Text2.Text & "Room Normal模式元素信息地址：" & RoomElementFirstOffset & vbCrLf
+
+CameraCotrolPointerOffset = ""
+CameraCotrolString = ""
+RoomCameraStringPointerOffset = ""
+LengthOfAllPointer = 0
+If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
+    Dim OutputString As String, CheckPointer As String, j As Integer, kk As Integer, FirstPointer As String
+    FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
+    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
+    FirstPointer = Mid(FirstPointer, 7, 2) & Mid(FirstPointer, 5, 2) & Mid(FirstPointer, 3, 2) & Mid(FirstPointer, 1, 2)
+    FirstPointer = Hex(Val("&H" & FirstPointer) - Val("&H" & "8000000"))
+    CameraCotrolPointerOffset = FirstPointer
+    '*********************                  pointer table pointer head is Offset_78F540
+    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
+    '*********************                  start search
+    For i = 0 To 16
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
+    CheckPointer = Mid(FirstPointer, 7 + 8 * i, 2) & Mid(FirstPointer, 5 + 8 * i, 2) & Mid(FirstPointer, 3 + 8 * i, 2) & Mid(FirstPointer, 1 + 8 * i, 2)
+    CheckPointer = Hex(Val("&H" & CheckPointer) - Val("&H" & "8000000"))
+
+    OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 1))
+        If Mid(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+            RoomCameraStringPointerOffset = CheckPointer
+            OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 10 * 9 + 1))
+            'then go on to enumerate the camera control flag
+            CameraCotrolString = Mid(OutputString, 1, 4)
+            kk = Val("&H" & Mid(OutputString, 3, 2))
+            If kk <> 0 Then Form4.Text2.Text = Form4.Text2.Text & "Exist Camera Control !" & vbCrLf
+            For j = 0 To (kk - 1)
+            CameraCotrolString = CameraCotrolString & Mid(OutputString, 18 * j + 5, 18)
+            Next j
+            Exit For
+        End If
+    Next i
+
+    For i = 0 To 16
+    LengthOfAllPointer = LengthOfAllPointer + 4
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    Next i
+End If
+
 Form4.List5.Enabled = True
 End Sub
 

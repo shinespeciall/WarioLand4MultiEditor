@@ -39,6 +39,14 @@ Public TempPointerValue() As String
 
 Public RoomElementFirstOffset As String
 
+'******************************************************************************from Form 6 for global use
+Public CameraCotrolString As String
+Public CameraCotrolPointerOffset As String      '存放（指向指针表表头位置的指针）的地址
+Public RoomCameraStringPointerOffset As String     '存放（指向Room的Camera控制流字符串的指针）的地址
+Public LengthOfAllPointer As Long               '指针表总长，单位是Byte
+'******************************************************************************
+
+
 Public Function CompressDataOnly(ByVal Hexstream As String) As String   'compress data only, and value "FF" has not been try.
 Dim OutputStream As String
 Dim str1 As String, str2 As String    'store now text in byte

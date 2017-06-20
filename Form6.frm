@@ -104,9 +104,11 @@ Begin VB.Form Form6
    End
    Begin VB.CommandButton Command3 
       Caption         =   "save"
+      Enabled         =   0   'False
       Height          =   375
       Left            =   4080
       TabIndex        =   9
+      ToolTipText     =   "Unsupport and the function will be moved to Visual Editor"
       Top             =   3480
       Width           =   1095
    End
@@ -240,14 +242,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Public Form6TextBox1Temp As String
-
-Public CameraCotrolString As String
-Public CameraCotrolPointerOffset As String      '存放（指向指针表表头位置的指针）的地址
-Public RoomCameraStringPointerOffset As String     '存放（指向Room的Camera控制流字符串的指针）的地址
-Public LengthOfAllPointer As Long               '指针表总长，单位是Byte
-
-
 Private Sub Combo1_Click()
 Form6.Text1.Text = ""
 If gbafilepath = "" Then Exit Sub
@@ -601,6 +595,8 @@ SaveDataOffset(i) = Hex(TempAddress)
 SaveDatabuffer(i) = Form6.Text9.Text
 End Sub
 
+Public Form6TextBox1Temp As String
+
 Private Sub Form_Activate()
 Form6.Move 4650, 1000, 5550, 8910
 If LevelRoomIndex = "" Then Exit Sub
@@ -615,7 +611,6 @@ Form6.Text8.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 2 + (Val("&H" & Lev
 Form6.Text6.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 4 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Third byte flag    Layer 1 Visible Flag
 Form6.Text7.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 6 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Fourth byte flag    Layer 2 Visible Flag
 Form6.Text2.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'tenth byte flag
-Form6.Text3.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'nineth byte flag
 Form6.Text5.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 52 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)     'eleventh byte flag
 
     Dim FirstPointer As String

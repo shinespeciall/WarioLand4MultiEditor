@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form Form10 
    Caption         =   "Visual MAP Editor"
    ClientHeight    =   15000
-   ClientLeft      =   495
+   ClientLeft      =   1125
    ClientTop       =   465
    ClientWidth     =   24645
    LinkTopic       =   "Form1"
@@ -36,14 +36,14 @@ Begin VB.Form Form10
    End
    Begin VB.PictureBox Picture2 
       BackColor       =   &H00000000&
-      Height          =   3255
-      Left            =   360
-      ScaleHeight     =   3195
-      ScaleWidth      =   3705
+      Height          =   3375
+      Left            =   240
+      ScaleHeight     =   3315
+      ScaleWidth      =   4065
       TabIndex        =   27
       ToolTipText     =   "click to disable one Tile16"
-      Top             =   6840
-      Width           =   3765
+      Top             =   6600
+      Width           =   4125
    End
    Begin VB.CommandButton Command8 
       Caption         =   "Clear"
@@ -143,11 +143,12 @@ Begin VB.Form Form10
          Height          =   3840
          Left            =   3600
          Top             =   3120
+         Visible         =   0   'False
          Width           =   5760
       End
    End
    Begin VB.Frame Frame1 
-      Caption         =   "Frame"
+      Caption         =   "MAP Properties"
       Height          =   6375
       Left            =   240
       TabIndex        =   0
@@ -156,9 +157,9 @@ Begin VB.Form Form10
       Begin VB.CommandButton Command7 
          Caption         =   "Go"
          Height          =   495
-         Left            =   2280
+         Left            =   2880
          TabIndex        =   24
-         Top             =   4560
+         Top             =   4320
          Width           =   615
       End
       Begin VB.ComboBox Combo2 
@@ -220,10 +221,11 @@ Begin VB.Form Form10
          Width           =   1095
       End
       Begin VB.Label Label3 
+         Caption         =   "(   ,   )"
          Height          =   495
          Left            =   2520
          TabIndex        =   31
-         Top             =   3840
+         Top             =   3600
          Width           =   1335
       End
       Begin VB.Label Label2 
@@ -462,7 +464,7 @@ StrTemp = ReadFileHex(gbafilepath, Hex(Val("&H" & Tilesets) * 9 * 4 + Val("&H" &
 
 TileOffset = Mid(StrTemp, 5, 2) & Mid(StrTemp, 3, 2) & Mid(StrTemp, 1, 2)
 TileLength2 = Val("&H" & Mid(StrTemp, 11, 2) & Mid(StrTemp, 9, 2))
-Form9.Text1.Text = Form10.Text1.Text & "The amount of Tiles is " & str(TileLength2 / 32) & vbCrLf
+Form9.Text1.Text = Form9.Text1.Text & "The amount of Tiles is " & str(TileLength2 / 32) & vbCrLf
 TextMAPDataOffset = Mid(StrTemp, 45, 2) & Mid(StrTemp, 43, 2) & Mid(StrTemp, 41, 2)
 paletteOffset = Mid(StrTemp, 21, 2) & Mid(StrTemp, 19, 2) & Mid(StrTemp, 17, 2)
 ReDim Palette256(16, 16)
@@ -472,7 +474,7 @@ Dim TextMapData As String
 StrTemp = ReadFileHexWithByteInterchange(gbafilepath, TileOffset, Hex(Val("&H" & TileOffset) + TileLength2))
 '-------------------------------------------------------------»®“À÷Æ≤ﬂ
 str1 = ReadFileHex(gbafilepath, Hex(Val("&H" & Tilesets) * 2 ^ 5 + Val("&H" & "3F8098")), Hex(Val("&H" & Tilesets) * 2 ^ 5 + 31 + Val("&H" & "3F8098")))
-'str1 = ReadFileHex(gbafilepath, Hex(Val("&H" & Tilesets) * 2 ^ 5 + Val("&H" & "3F91D8")), Hex(Val("&H" & Tilesets) * 2 ^ 5 + 31 + Val("&H" & "3F91D8")))
+'str1 = ReadFileHex(gbafilepath, Hex(Val("&H" & Tilesets) * 2 ^ 5 + Val("&H" & "3F91D8")), Hex(Val("&H" & Tilesets) * 2 ^ 5 + 31 + Val("&H" & "3F91D8")))             '???
 For i = 0 To 15
 str2 = Mid(str1, 4 * i + 1, 2)
 Mid(str1, 4 * i + 1, 2) = Mid(str1, 4 * i + 3, 2)
@@ -830,6 +832,7 @@ Erase TileMOD()
 End Sub
 
 Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Form10.Shape1.Visible = True
 MouseX = X \ (24 * 16)
 MouseY = Y \ (24 * 16)
 Form10.Label3.Caption = "(" & Hex(MouseX) & " , " & Hex(MouseY) & ")"
