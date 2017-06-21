@@ -12,6 +12,14 @@ Begin VB.Form Form4
    MinButton       =   0   'False
    ScaleHeight     =   9270
    ScaleWidth      =   4560
+   Begin VB.CommandButton Command3 
+      Caption         =   "Edit Room"
+      Height          =   375
+      Left            =   3000
+      TabIndex        =   16
+      Top             =   6000
+      Width           =   1455
+   End
    Begin VB.CommandButton Command2 
       Caption         =   "add a room"
       Enabled         =   0   'False
@@ -84,7 +92,7 @@ Begin VB.Form Form4
       Height          =   375
       Left            =   3000
       TabIndex        =   5
-      Top             =   5760
+      Top             =   5520
       Width           =   1455
    End
    Begin VB.TextBox Text1 

@@ -23,15 +23,23 @@ Begin VB.Form Form10
       Height          =   2655
       Left            =   360
       TabIndex        =   32
-      Top             =   10680
+      Top             =   10200
       Width           =   3975
+      Begin VB.CommandButton Command14 
+         Caption         =   "Undo All"
+         Height          =   375
+         Left            =   2280
+         TabIndex        =   36
+         Top             =   2040
+         Width           =   1335
+      End
       Begin VB.CommandButton Command12 
          Caption         =   "Add New control"
          Height          =   375
          Left            =   240
          TabIndex        =   34
          Top             =   2040
-         Width           =   3375
+         Width           =   1935
       End
       Begin VB.TextBox Text2 
          Height          =   1335
@@ -439,6 +447,19 @@ Form2.Visible = True
 Unload Form10
 End Sub
 
+Private Sub Command14_Click()
+If Len(CameraCotrolString) <> 0 And WasCameraControlStringChange = False Then
+Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
+For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
+Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
+Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
+Next i
+ElseIf Len(CameraCotrolString) <> 0 And WasCameraControlStringChange = True Then
+Form10.Text2.Text = "Exist camera control but "" & vbcrlf & ""you have save once in temp, " & vbCrLf & "resave is not support here !"
+Form10.Command12.Enabled = False
+End If
+End Sub
+
 Private Sub Command2_Click()
 Dim str1 As String, i As Integer, j As Integer
 For j = 0 To Val("&H" & MapHeight) - 1
@@ -674,7 +695,6 @@ Private Sub Command8_Click()
 Form10.Picture1.Cls
 End Sub
 
-
 Private Sub Command9_Click()
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 2
@@ -685,23 +705,12 @@ result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
 Next j
-If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
-    Dim FirstPointer As String
-    FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
-    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
-    FirstPointer = Mid(FirstPointer, 7, 2) & Mid(FirstPointer, 5, 2) & Mid(FirstPointer, 3, 2) & Mid(FirstPointer, 1, 2)
-    FirstPointer = Hex(Val("&H" & FirstPointer) - Val("&H" & "8000000"))
-    FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))
-    Dim OutputString As String, CheckPointer As String, kk As Integer
+If Len(CameraCotrolString) <> 0 Then
+    Dim OutputString As String, kk As Integer
     Dim b0 As Integer, b1 As Integer, b2 As Integer, b3 As Integer, b4 As Integer, b5 As Integer
-    For i = 0 To 16
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
-    CheckPointer = Mid(FirstPointer, 7 + 8 * i, 2) & Mid(FirstPointer, 5 + 8 * i, 2) & Mid(FirstPointer, 3 + 8 * i, 2) & Mid(FirstPointer, 1 + 8 * i, 2)
-    CheckPointer = Hex(Val("&H" & CheckPointer) - Val("&H" & "8000000"))
-    OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 1))
-        If Mid(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
-            RoomCameraStringPointerOffset = CheckPointer
-            OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 10 * 9 + 1))
+            OutputString = Replace(Form10.Text2.Text, Chr(32), "")
+            OutputString = Replace(OutputString, Chr(13), "")
+            OutputString = Replace(OutputString, Chr(10), "")
             kk = Val("&H" & Mid(OutputString, 3, 2))
             For j = 0 To (kk - 1)
             b0 = Val("&H" & Mid(OutputString, 18 * j + 7, 2))
@@ -730,13 +739,10 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
             If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "02" Then b2 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
             If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "03" Then b3 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
             Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b1 + 1 - Xshift) * 24 * 16, (b3 + 1 - Yshift) * 24 * 16), vbYellow, B
-            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b0 - Xshift + 0.5) * 24 * 16, (b2 - Yshift + 0.5) * 24 * 16), vbGreen, BF
-            Form10.Picture1.Line ((b1 - Xshift + 0.5) * 24 * 16, (b3 - Yshift + 0.5) * 24 * 16)-((b1 - Xshift + 1) * 24 * 16, (b3 - Yshift + 1) * 24 * 16), vbGreen, BF
+            Form10.Picture1.Line ((b0 - Xshift) * 24 * 16, (b2 - Yshift) * 24 * 16)-((b0 - Xshift + 0.5) * 24 * 16, (b2 - Yshift + 0.5) * 24 * 16), vbWhite, BF
+            Form10.Picture1.Line ((b1 - Xshift + 0.5) * 24 * 16, (b3 - Yshift + 0.5) * 24 * 16)-((b1 - Xshift + 1) * 24 * 16, (b3 - Yshift + 1) * 24 * 16), vbWhite, BF
             End If
             Next j
-            Exit For
-        End If
-    Next i
 End If
 End Sub
 
@@ -896,6 +902,7 @@ Next i
 ElseIf Len(CameraCotrolString) <> 0 And WasCameraControlStringChange = True Then
 Form10.Text2.Text = "Exist camera control but "" & vbcrlf & ""you have save once in temp, " & vbCrLf & "resave is not support here !"
 Form10.Command12.Enabled = False
+Form10.Command14.Enabled = False
 End If
 
 End If
