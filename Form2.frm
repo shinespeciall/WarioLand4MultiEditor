@@ -302,6 +302,7 @@ End Function
 
 Private Sub Command1_Click()
 If gbafilepath = "" Then Exit Sub
+Form2.Label10.Caption = "line£º" & "0" & "    Number£º" & "0"
 Form2.Label2.Caption = "layer 1:"
 Form2.Text1.Text = ""
 
@@ -503,6 +504,7 @@ End Sub
 
 Private Sub Command3_Click()
 If gbafilepath = "" Then Exit Sub
+Form2.Label10.Caption = "line£º" & "0" & "    Number£º" & "0"
 Form2.Label2.Caption = "layer 2:"
 Form2.Text1.Text = ""
 
@@ -904,6 +906,7 @@ Form2.Text6.FontSize = 12
 End Sub
 
 Private Sub Text1_Click()
+If (Form2.Command4.Enabled = True) And (Len(Hexstream2) = 0) Then Exit Sub
 LineNumberinForm2Text1 = LineNo(Form2.Text1.hwnd) - 1
 IndexinOneLine = (Form2.Text1.SelStart - (Val("&H" & widtha1) * 3 + 2) * LineNumberinForm2Text1) \ 3
 Form2.Label10.Caption = "line£º" & LineNumberinForm2Text1 & "    Number£º" & IndexinOneLine

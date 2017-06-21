@@ -110,6 +110,8 @@ Form2.Visible = False
 Form3.Visible = False
 Form6.Visible = False
 Form10.Visible = False
+
+WasCameraControlStringChange = False
 End Sub
 
 Private Sub Form_Activate()

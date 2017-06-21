@@ -104,7 +104,6 @@ Begin VB.Form Form6
    End
    Begin VB.CommandButton Command3 
       Caption         =   "save"
-      Enabled         =   0   'False
       Height          =   375
       Left            =   4080
       TabIndex        =   9
@@ -242,6 +241,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Public Form6TextBox1Temp As String
+
 Private Sub Combo1_Click()
 Form6.Text1.Text = ""
 If gbafilepath = "" Then Exit Sub
@@ -473,6 +474,7 @@ Else
         End If
 End If
 Form9.Text1.Text = Form9.Text1.Text & "Save Temp successfully!!" & vbCrLf
+WasCameraControlStringChange = True
 End Sub
 
 Private Sub Command5_Click()
@@ -594,8 +596,6 @@ Next i
 SaveDataOffset(i) = Hex(TempAddress)
 SaveDatabuffer(i) = Form6.Text9.Text
 End Sub
-
-Public Form6TextBox1Temp As String
 
 Private Sub Form_Activate()
 Form6.Move 4650, 1000, 5550, 8910

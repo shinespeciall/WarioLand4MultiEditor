@@ -132,7 +132,7 @@ bytenum = 5120       'bytenum = 2048 + 2048 + 1024
 For i = LBound(ROMallbyte) To LBound(ROMallbyte) + CLng(bytenum)
 ROMallHex = ROMallHex & Right("00" & Hex(ROMallbyte(i)), 2)    '用Right()防止出现"0X"的情况
 DoEvents
-Form1.Label2.Caption = "infprmation: Opening and reading" & i - LBound(ROMallbyte) & "/" & bytenum
+Form1.Label2.Caption = "information: Opening and reading" & i - LBound(ROMallbyte) & "/" & bytenum
 Next i
 
 Form1.Label2.Caption = "infprmation: decompressing..."
@@ -495,6 +495,7 @@ Form1.Picture1.ForeColor = vbBlack
 MDIForm1.mnuroomchange.Enabled = True
 Form1.Text1.Enabled = True
 BeforeLine = BeforeLine + 9 + Val("&H" & a2)
+Form1.Label2.Caption = "information：finish All ! You can change Map by Ctrl + R"
 Exit Sub
 Else          '存在layer2
 MessageStream = ReadFileHex(gbafilepath, LevelChangeRoomStreamOffset, Right("0000" & Hex(Val("&H" & LevelChangeRoomStreamOffset) + 512), 8))
@@ -747,6 +748,7 @@ layer2compressdatalength = nowoffset - layer1compressdatalength - 4 - 6 + j
 
 Form1.Picture1.Print "layer2 compressed data's length(byte):" & str(layer2compressdatalength / 2) & "      layer end Offset:" & Hex(Val("&H" & Form1.Text1.Text) + layer1compressdatalength / 2 + layer2compressdatalength / 2 + 3 + 2)
 Form1.Picture1.Print ""
+Form1.Label2.Caption = "information：finish All ! You can change Map by Ctrl + R"
 
 Erase decompressHex()                     ' release RAM
 Erase ROMallbyte()

@@ -45,7 +45,7 @@ Public CameraCotrolPointerOffset As String      '´æ·Å£¨Ö¸ÏòÖ¸Õë±í±íÍ·Î»ÖÃµÄÖ¸Õë£
 Public RoomCameraStringPointerOffset As String     '´æ·Å£¨Ö¸ÏòRoomµÄCamera¿ØÖÆÁ÷×Ö·û´®µÄÖ¸Õë£©µÄµØÖ·
 Public LengthOfAllPointer As Long               'Ö¸Õë±í×Ü³¤£¬µ¥Î»ÊÇByte
 '******************************************************************************
-
+Public WasCameraControlStringChange As Boolean
 
 Public Function CompressDataOnly(ByVal Hexstream As String) As String   'compress data only, and value "FF" has not been try.
 Dim OutputStream As String
@@ -218,6 +218,56 @@ Exit Function
 End If
 Next i
 strcmp = 0
+End Function
+
+Public Function SaveCameraString(StrTemp As String) As Boolean         'not support resave
+If SaveDataOffset(95) <> "" Then
+    SaveCameraString = False
+    Exit Function
+End If
+Dim i As Integer, TempAddress As Long
+TempAddress = Val("&H" & LevelAllRoomPointerandDataBaseOffset) + 24 + (Val("&H" & LevelRoomIndex) - 1) * 44
+For i = 1 To 100
+If SaveDataOffset(i) = "" Then Exit For
+Next i
+SaveDataOffset(i) = Hex(TempAddress)
+SaveDatabuffer(i) = "03"
+
+i = i + 1
+Dim TempPointer As String
+
+StrTemp = Replace(StrTemp, Chr(32), "")
+StrTemp = Replace(StrTemp, Chr(13), "")
+StrTemp = Replace(StrTemp, Chr(10), "")
+
+If RoomCameraStringPointerOffset = "" Then               'ÒÔÇ°²»´æÔÚCamera¿ØÖÆ
+        SaveDataOffset(i) = SaveDatabuffer(0)        'ÏÈĞ´ĞÂµÄCamera¿ØÖÆÁ÷Êı¾İ
+        TempPointer = Right("00" & Hex(Val("&H" & SaveDataOffset(i)) + Val("&H8000000")), 8)
+        TempPointer = Mid(TempPointer, 7, 2) & Mid(TempPointer, 5, 2) & Mid(TempPointer, 3, 2) & Mid(TempPointer, 1, 2)
+        SaveDatabuffer(i) = StrTemp
+        SaveDatabuffer(0) = Hex(Val("&H" & SaveDatabuffer(0)) + Len(StrTemp))   '»ùÖ·ÖØÕû
+        SaveDatabuffer(0) = (SaveDatabuffer(0) \ 4) * 4 + 4
+        SaveDataOffset(i + 1) = CameraCotrolPointerOffset      'ĞŞ¸ÄÖ¸Õë±í±íÍ·Ö¸Õë£¬½ÓÏÂÀ´¼ÆËãÖ¸Õë±íĞÂÎ»ÖÃºÍ³¤¶È
+        SaveDatabuffer(i + 1) = Right("0000" & Hex(Val("&H" & SaveDatabuffer(0)) + Val("&H8000000")), 8)
+        SaveDatabuffer(i + 1) = Mid(SaveDatabuffer(i + 1), 7, 2) & Mid(SaveDatabuffer(i + 1), 5, 2) & Mid(SaveDatabuffer(i + 1), 3, 2) & Mid(SaveDatabuffer(i + 1), 1, 2)    'ÖØÖÃÖ¸Õë£¬¶¨Î»ÁËĞÂµÄÖ¸Õë±íµØÖ·
+        SaveDataOffset(i + 2) = SaveDatabuffer(0)      'Ğ´ĞÂµÄÖ¸Õë±í
+        
+        SaveDatabuffer(i + 2) = TempPointer & ReadFileHex(gbafilepath, CameraCotrolPointerOffset, Hex(Val("&H" & CameraCotrolPointerOffset) + LengthOfAllPointer - 1))
+        SaveDatabuffer(0) = Hex(Val("&H" & SaveDatabuffer(0)) + LengthOfAllPointer + 4) '»ùÖ·ÖØÕû
+Else
+        If Len(StrTemp) > Len(CameraCotrolString) Then         'ÒÔÇ°´æÔÚÖ»ÊÇÏÖÔÚµÄ±È½Ï³¤
+        SaveDataOffset(i) = RoomCameraStringPointerOffset
+        TempPointer = Right("0000" & Hex(Val("&H" & SaveDatabuffer(0)) + Val("&H8000000")), 8)
+        TempPointer = Mid(TempPointer, 7, 2) & Mid(TempPointer, 5, 2) & Mid(TempPointer, 3, 2) & Mid(TempPointer, 1, 2)
+        SaveDatabuffer(i) = TempPointer
+        SaveDataOffset(i + 1) = SaveDatabuffer(0)
+        SaveDatabuffer(i + 1) = StrTemp
+        SaveDatabuffer(0) = Hex(Val("&H" & SaveDatabuffer(0)) + Len(StrTemp))   '»ùÖ·ÖØÕû
+        Else
+        SaveDataOffset(i) = RoomCameraStringPointerOffset
+        SaveDatabuffer(i) = StrTemp & Replace(Space(Len(CameraCotrolString) - Len(StrTemp)), Chr(32), "0")
+        End If
+End If
 End Function
 
 'Public Function Decompress(ByRef TextMap() As String, ByVal DataOffset As String) As String      'return Type

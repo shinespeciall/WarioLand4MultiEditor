@@ -102,6 +102,7 @@ MDIForm1.mnusave.Enabled = False
 MDIForm1.mnuroomchange.Enabled = False
 MDIForm1.mnuFindBaseOffset.Enabled = False
 
+WasCameraControlStringChange = False
 IfisNewRoom = False
 IsDeliver = False
 End Sub
@@ -302,6 +303,7 @@ Form4.Text2.Text = ""
 Form1.Text1.Text = ""
 Form1.Picture1.Cls
 BeforeLine = 0
+WasCameraControlStringChange = False
 End Sub
 
 Private Sub mnuOutputSpritesTiles_Click()

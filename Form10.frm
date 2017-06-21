@@ -9,13 +9,47 @@ Begin VB.Form Form10
    ScaleHeight     =   15000
    ScaleWidth      =   24645
    Visible         =   0   'False
+   Begin VB.CommandButton Command13 
+      Caption         =   "Return to hex Editor"
+      Enabled         =   0   'False
+      Height          =   1215
+      Left            =   23880
+      TabIndex        =   35
+      Top             =   4560
+      Width           =   735
+   End
+   Begin VB.Frame Frame2 
+      Caption         =   "Camera Control"
+      Height          =   2655
+      Left            =   360
+      TabIndex        =   32
+      Top             =   10680
+      Width           =   3975
+      Begin VB.CommandButton Command12 
+         Caption         =   "Add New control"
+         Height          =   375
+         Left            =   240
+         TabIndex        =   34
+         Top             =   2040
+         Width           =   3375
+      End
+      Begin VB.TextBox Text2 
+         Height          =   1335
+         Left            =   240
+         MultiLine       =   -1  'True
+         ScrollBars      =   2  'Vertical
+         TabIndex        =   33
+         Top             =   480
+         Width           =   3495
+      End
+   End
    Begin VB.CommandButton Command11 
       Caption         =   "refresh"
       Height          =   375
       Left            =   21840
       TabIndex        =   30
       Top             =   120
-      Width           =   2655
+      Width           =   2775
    End
    Begin VB.CommandButton Command10 
       Caption         =   "refresh with grid"
@@ -23,7 +57,7 @@ Begin VB.Form Form10
       Left            =   21840
       TabIndex        =   29
       Top             =   1080
-      Width           =   2655
+      Width           =   2775
    End
    Begin VB.CommandButton Command9 
       Caption         =   "refresh with camera control"
@@ -32,7 +66,7 @@ Begin VB.Form Form10
       TabIndex        =   28
       ToolTipText     =   "If no camera control it will be simply refresh"
       Top             =   600
-      Width           =   2655
+      Width           =   2775
    End
    Begin VB.PictureBox Picture2 
       BackColor       =   &H00000000&
@@ -51,7 +85,7 @@ Begin VB.Form Form10
       Left            =   23880
       TabIndex        =   26
       Top             =   1800
-      Width           =   615
+      Width           =   735
    End
    Begin VB.CommandButton Command6 
       Caption         =   "Undo"
@@ -59,7 +93,7 @@ Begin VB.Form Form10
       Left            =   23880
       TabIndex        =   22
       Top             =   2640
-      Width           =   615
+      Width           =   735
    End
    Begin VB.OptionButton Option3 
       Caption         =   "to layer 3"
@@ -307,6 +341,8 @@ Public MouseY As Long
 Public Xshift As Long
 Public Yshift As Long
 
+Public WasCameraControlChange As Boolean
+
 Private Sub Combo1_Click()
 Form10.Picture2.Cls
 Dim width As Integer, height As Integer, i As Integer, j As Integer, result As Boolean
@@ -365,6 +401,42 @@ result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
 Next j
+End Sub
+
+Private Sub Command13_Click()
+Dim i As Integer, j As Integer, IsHexstream2NeedWrite As Boolean, str1 As String
+heighta2 = MapHeight
+widtha1 = MapLength
+Hexstream1 = ""
+Hexstream2 = ""
+For j = 0 To Val("&H" & heighta2) - 1
+For i = 0 To Val("&H" & widtha1) - 1
+Hexstream1 = Hexstream1 & "00"
+If Mid(L1_LB_000(i, j), 1, 2) <> "00" Then IsHexstream2NeedWrite = True
+Next i
+Next j
+For j = 0 To Val("&H" & heighta2) - 1
+For i = 0 To Val("&H" & widtha1) - 1
+Mid(Hexstream1, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid(L1_LB_000(i, j), 3, 2)
+If IsHexstream2NeedWrite = True Then Hexstream2 = Hexstream2 & "00"
+Next i
+Next j
+If IsHexstream2NeedWrite = True Then
+For j = 0 To Val("&H" & heighta2) - 1
+For i = 0 To Val("&H" & widtha1) - 1
+Mid(Hexstream2, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid(L1_LB_000(i, j), 1, 2)
+Next i
+Next j
+End If
+
+If WasCameraControlChange = True Then
+IsHexstream2NeedWrite = SaveCameraString(str1)           'IsHexstream2NeedWrite is reused for another thing
+If IsHexstream2NeedWrite = False Then MsgBox "fail to save camera control !"
+If IsHexstream2NeedWrite = True Then MsgBox "the App have saved camera control in temp !"
+End If
+Form10.Visible = False
+Form2.Visible = True
+Unload Form10
 End Sub
 
 Private Sub Command2_Click()
@@ -784,6 +856,7 @@ Form10.Combo2.AddItem "5B  The Big Board end"
 
 Xshift = 0
 Yshift = 0
+WasCameraControlChange = False
 If IsDeliver = True Then
 ReDim L1_LB_000(Val("&H" & widtha1) - 1, Val("&H" & heighta2) - 1)
 ReDim L1_LB_001(Val("&H" & widtha1) - 1, Val("&H" & heighta2) - 1)
@@ -811,7 +884,20 @@ Next j
 End If
 
 Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
+Form10.Command13.Enabled = True
 Command5_Click
+
+If Len(CameraCotrolString) <> 0 And WasCameraControlStringChange = False Then
+Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
+For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
+Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
+Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
+Next i
+ElseIf Len(CameraCotrolString) <> 0 And WasCameraControlStringChange = True Then
+Form10.Text2.Text = "Exist camera control but "" & vbcrlf & ""you have save once in temp, " & vbCrLf & "resave is not support here !"
+Form10.Command12.Enabled = False
+End If
+
 End If
 End Sub
 
