@@ -19,10 +19,6 @@ Public L1_LB_001() As String        'three for temp and undo
 Public L2_LB_001() As String
 Public L3_LB_001() As String
 
-
-Public TileOffset As String, TileLength2 As Long
-Public TextMAPDataOffset As String, paletteOffset As String
-
 Public Function RGB555ToRGB888(ByVal RGB555 As String) As Long
 If Len(RGB555) <> 4 Then
 RGB555ToRGB888 = 0

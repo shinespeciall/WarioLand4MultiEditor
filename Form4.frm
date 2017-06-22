@@ -320,21 +320,16 @@ If SaveDataOffset(95) <> "" Then
     MsgBox "buffer memory used up, save all and retry !"
     Exit Sub
 End If
-Dim i As Integer, str1 As String, j As Integer
+Dim i As Integer, j As Integer    ', str1 As String
 For i = 1 To 100
     If SaveDataOffset(i) = "" Then Exit For
 Next i
 SaveDataOffset(i) = Hex(Val("&H" & LevelStartStreamOffset) + 1)    '修改Room数量标志位，最大值为 10 Hex
-SaveDatabuffer(i) = Val("&H" & RoomNumber) + 1
+SaveDatabuffer(i) = Right("00" & Hex(Val("&H" & RoomNumber) + 1), 2)
+RoomNumber = Right("00" & Hex(Val("&H" & RoomNumber) + 1), 2)
 SaveDataOffset(i + 1) = LevelAllRoomPointerandDataBaseOffset         '每个Room的layer指针和元素指针及Flag数据串保存基址
-str1 = ""
-For j = 1 To Val("&H" & RoomNumber)
-str1 = str1 + "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"     '44 Byte = 88 个 0 ( 44 Dec =  2C Hex )
-'Debug.Print Len("0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
-Next j
-SaveDatabuffer(i + 1) = str1
-SaveDataOffset(i + 2) = SaveDatabuffer(0)
-SaveDatabuffer(i + 2) = LevelAllRoomPointerandDataallHex ' + "XX101010 20000000 63223F08 63223F08 63223F08 ???????? "     '缺少开始5个标志位信息，不能完成
+
+SaveDatabuffer(i + 1) = LevelAllRoomPointerandDataallHex ' + "XX101010 20000000 63223F08 63223F08 63223F08 ???????? "     '缺少开始5个标志位信息，不能完成
 End Sub
 
 Private Sub Form_Activate()

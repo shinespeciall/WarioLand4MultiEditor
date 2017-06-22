@@ -1,4 +1,6 @@
 Attribute VB_Name = "Module1"
+'/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////This part is for control use
+
 Public gbafilepath As String         'save gba file path and name
 
 Public Hexstream1 As String         'load current layer1 decompressed room all Hex stream
@@ -46,6 +48,7 @@ Public RoomCameraStringPointerOffset As String     '存放（指向Room的Camera控制流
 Public LengthOfAllPointer As Long               '指针表总长，单位是Byte
 '******************************************************************************
 Public WasCameraControlStringChange As Boolean
+'/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Public Function CompressDataOnly(ByVal Hexstream As String) As String   'compress data only, and value "FF" has not been try.
 Dim OutputStream As String

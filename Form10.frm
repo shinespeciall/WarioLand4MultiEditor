@@ -495,8 +495,8 @@ Next j
 End Sub
 
 Private Sub Command5_Click()
-'Public TileOffset As String, TileLength2 As Long
-'Public TextMAPDataOffset As String, paletteOffset As String
+Dim TileOffset As String, TileLength2 As Long
+Dim TextMAPDataOffset As String, paletteOffset As String
 If gbafilepath = "" Then
 Form9.Text1.Text = Form9.Text1.Text & "Please Open the GBA file!!" & vbCrLf
 Exit Sub
