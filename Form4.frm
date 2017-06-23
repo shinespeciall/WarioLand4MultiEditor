@@ -332,6 +332,14 @@ SaveDataOffset(i + 1) = LevelAllRoomPointerandDataBaseOffset         '每个Room的
 SaveDatabuffer(i + 1) = LevelAllRoomPointerandDataallHex ' + "XX101010 20000000 63223F08 63223F08 63223F08 ???????? "     '缺少开始5个标志位信息，不能完成
 End Sub
 
+Private Sub Command3_Click()
+'get last LevelRoomIndex if exist
+If LevelRoomIndex = "" Then
+MsgBox "You haven't choose a Room yet !", vbExclamation + vbOKOnly, "Info"
+End If
+
+End Sub
+
 Private Sub Form_Activate()
 Form4.Move 0, 0, 4650, 9705
 Form4.Label1.FontSize = 13

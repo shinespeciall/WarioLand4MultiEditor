@@ -5,7 +5,7 @@ Public TextMap() As String
 Public layerWidth As Integer, layerHeight As Integer
 '##########################################
 
-Public Function DecompressRLE(ByVal DataOffset As String) As String
+Public Function DecompressRLE(ByVal DataOffset As String, Optional IsDirectTileMAP As Boolean) As String              'UNFINISHED need more code for noe argument: IsDirectTileMAP
 Dim strdata As String, src As Integer, DecompressMap() As String
 src = 1
 strdata = ReadFileHex(gbafilepath, DataOffset, Hex(Val("&H" & DataOffset) + 5120))
