@@ -11,10 +11,12 @@ Public Tile88() As String
 Public TileMOD() As String
 Public NowTileMOD() As String
 
+Public L0_LB_000() As String
 Public L1_LB_000() As String        'three for now
 Public L2_LB_000() As String
 Public L3_LB_000() As String
 
+Public L0_LB_001() As String
 Public L1_LB_001() As String        'three for temp and undo
 Public L2_LB_001() As String
 Public L3_LB_001() As String

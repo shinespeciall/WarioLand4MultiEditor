@@ -273,6 +273,3 @@ Else
 End If
 End Function
 
-'Public Function Decompress(ByRef TextMap() As String, ByVal DataOffset As String) As String      'return Type
-
-'End Function

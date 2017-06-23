@@ -9,6 +9,30 @@ Begin VB.Form Form11
    MDIChild        =   -1  'True
    ScaleHeight     =   7980
    ScaleWidth      =   15585
+   Begin VB.CommandButton Command1 
+      Caption         =   "Go"
+      Height          =   495
+      Left            =   12000
+      TabIndex        =   5
+      Top             =   1080
+      Width           =   1335
+   End
+   Begin VB.TextBox Text2 
+      Height          =   495
+      Left            =   7920
+      TabIndex        =   4
+      Top             =   1080
+      Width           =   3735
+   End
+   Begin VB.TextBox Text1 
+      Height          =   3735
+      Left            =   7680
+      MultiLine       =   -1  'True
+      ScrollBars      =   3  'Both
+      TabIndex        =   3
+      Top             =   2040
+      Width           =   7095
+   End
    Begin VB.Frame Frame1 
       Caption         =   "Tileset (Only show partly just for choose)"
       Height          =   7575
@@ -149,6 +173,23 @@ DoEvents
 Next i
 Next j
 
+End Sub
+
+Private Sub Command1_Click()
+Dim str As String
+Form11.Text1.Text = ""
+str = DecompressRLE(Form11.Text2.Text)
+If str = "" Then Exit Sub
+Dim i As Integer, j As Integer
+For j = 0 To layerHeight - 1
+For i = 0 To layerWidth - 1
+Form11.Text1.Text = Form11.Text1.Text & " " & TextMap(i, j)
+Next i
+Form11.Text1.Text = Form11.Text1.Text & vbCrLf
+Next j
+layerHeight = 0
+layerWidth = 0
+Erase TextMap()
 End Sub
 
 Private Sub Form_Load()

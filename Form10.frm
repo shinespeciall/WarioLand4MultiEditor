@@ -511,36 +511,25 @@ Exit Sub
 End If
 Dim i As Long, j As Long
 'initial MAP matrix
-If IsDeliver <> True Then
+If IsDeliver = False Then
+ReDim L0_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L1_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L2_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L3_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
+ReDim L0_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L1_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L2_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L3_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 
 For j = 1 To Val("&H" & MapHeight)
 For i = 1 To Val("&H" & MapLength)
+
+L0_LB_000(i - 1, j - 1) = "0000"
 L1_LB_000(i - 1, j - 1) = "0000"
 L2_LB_000(i - 1, j - 1) = "0000"
 L3_LB_000(i - 1, j - 1) = "0000"
+L0_LB_001(i - 1, j - 1) = "0000"
 L1_LB_001(i - 1, j - 1) = "0000"
-L2_LB_001(i - 1, j - 1) = "0000"
-L3_LB_001(i - 1, j - 1) = "0000"
-Next i
-Next j
-End If
-
-If IsDeliver <> True Then
-ReDim L2_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
-ReDim L3_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
-ReDim L2_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
-ReDim L3_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
-
-For j = 1 To Val("&H" & MapHeight)
-For i = 1 To Val("&H" & MapLength)
-L2_LB_000(i - 1, j - 1) = "0000"
-L3_LB_000(i - 1, j - 1) = "0000"
 L2_LB_001(i - 1, j - 1) = "0000"
 L3_LB_001(i - 1, j - 1) = "0000"
 Next i
