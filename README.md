@@ -2,7 +2,7 @@
 ## PS: patch applications will be made with C++
 ## 
 ##     The App will update sometimes. When Updating the release App, i'd like to add a number after filename just for counting the update time. 
-##     The Visual MAP editor can run now, you can try this to render one layer,if you want to make sothing change, you should  make up your own MOD file according to the JPG files and load  one into the App to edit the layer, I will upload my MOD file when doing editing work.
+##     The Visual MAP editor can run now, you can try this to render one layer,if you want to make sothing change, you can make up your own MOD file according to the JPG files and load one into the App if editing the layer, I am planning to make an engine to manage MOD files initially, not by machine learning or something sophisticated, and perhaps I will need help when start to do it.
 ##      Without WL4 hacking information, it will be difficult to use it properly when you try to edit enimies and some other small things, I will try to make wizard if some part of hacking is completed.
 ##      I suppose you to run the App in administrator mode in case it crushes for cannot use ActiveX widgets.
 ##      If you want to run the App, you also need COMDLG32.OCX (x86) and comctl32.ocx (x86) to run the App properlly.(download them and put it in the path of the exe file, the files are in old version so I suppose you to download them althougth they are contained in any of your Microsoft .NET framework.)
