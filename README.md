@@ -9,6 +9,7 @@
 ##     If you want to rebuild the level but not for a test (now you can only find suitable Tile text for yourself in the room or other rooms use the same tileset to make suitable change Or try to use the incompleted Visual editor), you need to expand your source gba file, which is available as a patch program here now, rewrite data usually need more room.
 ##      This is an example:
 ![Image text](https://github.com/shinespeciall/WarioLand4MultiEditor/blob/master/screenshot.png)
-##-----------------------------------------------------------------------------------------------------------
-##for those who want to remake the game
-###I just want to remake the game in level in origin ROM, it is just an interest. If you want to ask what it will be like, I will mention another popular game Super Mario Maker as an example with enougth things you can operate and you can remake the game. Its just a Wario Land 4 fan's homemake repo for all my project, I won't change the charactor or the game mode. I suppose you to make your own version for your onw taste. If you would like to make your own game version by this App and want to improve the precsnt working condition, you can read CONTRIBUTOR.md or contact me. This App update and build frequently and you are supposed to download newly build version weekly.
+##---------------------------------------------------------------------
+
+## for those who want to remake the game
+### I just want to remake the game in level in origin ROM, it is just an interest. If you want to ask what it will be like, I will mention another popular game Super Mario Maker as an example with enougth things you can operate and you can remake the game. Its just a Wario Land 4 fan's homemake repo for all my project, I won't change the charactor or the game mode. I suppose you to make your own version for your onw taste. If you would like to make your own game version by this App and want to improve the precsnt working condition, you can read CONTRIBUTOR.md or contact me. This App update and build frequently and you are supposed to download newly build version weekly.
