@@ -9,6 +9,7 @@ Begin VB.Form Form11
    MDIChild        =   -1  'True
    ScaleHeight     =   7980
    ScaleWidth      =   15585
+   Visible         =   0   'False
    Begin VB.CommandButton Command1 
       Caption         =   "Go"
       Height          =   495

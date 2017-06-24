@@ -9,6 +9,10 @@ Begin VB.Form Form10
    ScaleHeight     =   15000
    ScaleWidth      =   24645
    Visible         =   0   'False
+   Begin VB.Timer Timer1 
+      Left            =   720
+      Top             =   13080
+   End
    Begin VB.CommandButton Command13 
       Caption         =   "Return to hex Editor"
       Enabled         =   0   'False
@@ -177,8 +181,26 @@ Begin VB.Form Form10
       ScaleHeight     =   12975
       ScaleWidth      =   19095
       TabIndex        =   1
-      Top             =   1680
+      Top             =   1560
       Width           =   19155
+      Begin VB.Shape Shape3 
+         BorderColor     =   &H000000FF&
+         BorderWidth     =   2
+         Height          =   390
+         Left            =   0
+         Top             =   0
+         Visible         =   0   'False
+         Width           =   390
+      End
+      Begin VB.Shape Shape2 
+         BorderColor     =   &H000000FF&
+         BorderWidth     =   2
+         Height          =   780
+         Left            =   11040
+         Top             =   3720
+         Visible         =   0   'False
+         Width           =   780
+      End
       Begin VB.Shape Shape1 
          BorderColor     =   &H00FF0000&
          BorderWidth     =   2
@@ -351,6 +373,10 @@ Public Yshift As Long
 
 Public WasCameraControlChange As Boolean
 
+Public IsMakingCameraRec As Boolean
+Public IsClick As Boolean
+Public WillBeResize As Integer
+
 Private Sub Combo1_Click()
 Form10.Picture2.Cls
 Dim width As Integer, height As Integer, i As Integer, j As Integer, result As Boolean
@@ -411,6 +437,18 @@ Next i
 Next j
 End Sub
 
+Private Sub Command12_Click()
+WasCameraControlChange = True
+IsMakingCameraRec = True
+WillBeResize = MsgBox("Make a rectangle for camera control," & vbCrLf & "Resize mode?", vbYesNo, "Info")
+Form10.Shape3.Left = 0: Form10.Shape3.Top = 0
+Form10.Command12.Enabled = False: Form10.Command14.Enabled = False
+Form10.Shape2.width = 780: Form10.Shape2.height = 780
+Form10.Shape2.Visible = True
+Form10.Shape3.Visible = True
+Form10.Timer1.Interval = 5
+End Sub
+
 Private Sub Command13_Click()
 Dim i As Integer, j As Integer, IsHexstream2NeedWrite As Boolean, str1 As String
 heighta2 = MapHeight
@@ -437,10 +475,13 @@ Next i
 Next j
 End If
 
-If WasCameraControlChange = True Then
+str1 = Replace(Form10.Text2.Text, Chr(32), "")
+str1 = Replace(str1, Chr(13), "")
+str1 = Replace(str1, Chr(10), "")
+If WasCameraControlChange = True And WasCameraControlStringChange = False Then      'the latter one is for global use
 IsHexstream2NeedWrite = SaveCameraString(str1)           'IsHexstream2NeedWrite is reused for another thing
 If IsHexstream2NeedWrite = False Then MsgBox "fail to save camera control !"
-If IsHexstream2NeedWrite = True Then MsgBox "the App have saved camera control in temp !"
+If IsHexstream2NeedWrite = True Then MsgBox "the App save camera control in temp successfully!"
 End If
 Form10.Visible = False
 Form2.Visible = True
@@ -448,15 +489,14 @@ Unload Form10
 End Sub
 
 Private Sub Command14_Click()
-If Len(CameraCotrolString) <> 0 And WasCameraControlStringChange = False Then
+If Len(CameraCotrolString) <> 0 Then
 Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
 For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
 Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
 Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
 Next i
-ElseIf Len(CameraCotrolString) <> 0 And WasCameraControlStringChange = True Then
-Form10.Text2.Text = "Exist camera control but "" & vbcrlf & ""you have save once in temp, " & vbCrLf & "resave is not support here !"
-Form10.Command12.Enabled = False
+Else
+Form10.Text2.Text = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) & "00" & vbCrLf
 End If
 End Sub
 
@@ -694,12 +734,12 @@ result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
 Next j
-If Len(CameraCotrolString) <> 0 Then
-    Dim OutputString As String, kk As Integer
+Dim OutputString As String, kk As Integer
+OutputString = Replace(Form10.Text2.Text, Chr(32), "")
+OutputString = Replace(OutputString, Chr(13), "")
+OutputString = Replace(OutputString, Chr(10), "")
+If Len(OutputString) <> 0 Then
     Dim b0 As Integer, b1 As Integer, b2 As Integer, b3 As Integer, b4 As Integer, b5 As Integer
-            OutputString = Replace(Form10.Text2.Text, Chr(32), "")
-            OutputString = Replace(OutputString, Chr(13), "")
-            OutputString = Replace(OutputString, Chr(10), "")
             kk = Val("&H" & Mid(OutputString, 3, 2))
             For j = 0 To (kk - 1)
             b0 = Val("&H" & Mid(OutputString, 18 * j + 7, 2))
@@ -736,6 +776,8 @@ End If
 End Sub
 
 Private Sub Form_Load()
+IsMakingCameraRec = False
+IsClick = False
 If MODfilepath = "" Then
 MsgBox "No MOD file Loaded", vbInformation, "Info"
 Form10.Visible = False
@@ -882,14 +924,16 @@ Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (
 Form10.Command13.Enabled = True
 Command5_Click
 
-If Len(CameraCotrolString) <> 0 And WasCameraControlStringChange = False Then
+If Len(CameraCotrolString) <> 0 Then
 Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
 For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
 Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
 Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
 Next i
-ElseIf Len(CameraCotrolString) <> 0 And WasCameraControlStringChange = True Then
-Form10.Text2.Text = "Exist camera control but "" & vbcrlf & ""you have save once in temp, " & vbCrLf & "resave is not support here !"
+Else
+Form10.Text2.Text = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) & "00" & vbCrLf
+End If
+If WasCameraControlStringChange = True Then
 Form10.Command12.Enabled = False
 Form10.Command14.Enabled = False
 End If
@@ -924,25 +968,30 @@ End Sub
 
 Private Sub Picture1_Click()
 Dim i As Integer, j As Integer
-For j = 0 To Val("&H" & MapHeight) - 1
-For i = 0 To Val("&H" & MapLength) - 1
-L1_LB_001(i, j) = L1_LB_000(i, j)
-Next i
-Next j
-For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
-For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
-If NowTileMOD(i, j) <> "0000" Then
-result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
-L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
-Form10.Command6.Enabled = True
-End If
-Next i
-Next j
 
-If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" Then
-result = DrawTile16(MouseX, MouseY, NowTileMOD(0, 0), Form10.Picture1)
-L1_LB_001(MouseX + Xshift, MouseY + Yshift) = L1_LB_000(MouseX + Xshift, MouseY + Yshift)
-L1_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+If IsMakingCameraRec = False Then
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    L1_LB_001(i, j) = L1_LB_000(i, j)
+    Next i
+    Next j
+    For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
+    For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
+    If NowTileMOD(i, j) <> "0000" Then
+    result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+    L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+    Form10.Command6.Enabled = True
+    End If
+    Next i
+    Next j
+
+    If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" Then
+    result = DrawTile16(MouseX, MouseY, NowTileMOD(0, 0), Form10.Picture1)
+    L1_LB_001(MouseX + Xshift, MouseY + Yshift) = L1_LB_000(MouseX + Xshift, MouseY + Yshift)
+    L1_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+    End If
+Else
+IsClick = True
 End If
 
 End Sub
@@ -985,4 +1034,114 @@ End Sub
 Private Sub Picture2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 MouseX = X \ (24 * 16)
 MouseY = Y \ (24 * 16)
+End Sub
+
+Private Sub Timer1_Timer()
+Static a As Boolean                'start by False
+Static X1 As Long, X2 As Long, Y1 As Long, Y2 As Long, XT As Long, YT As Long
+Static OneTile As Boolean
+
+If WillBeResize = vbYes Then
+    If OneTile = False And a = False And X1 = 0 Then          'drawing part
+    Form10.Shape2.Left = MouseX * (24 * 16)
+    Form10.Shape2.Top = MouseY * (24 * 16)
+    ElseIf OneTile = False And a = True And X1 > 0 Then
+    Form10.Shape2.width = (MouseX + 1) * (24 * 16) - Form10.Shape2.Left
+    Form10.Shape2.height = (MouseY + 1) * (24 * 16) - Form10.Shape2.Top
+    ElseIf OneTile = True Then
+    Form10.Shape3.Left = MouseX * (24 * 16)
+    Form10.Shape3.Top = MouseY * (24 * 16)
+    ElseIf OneTile = False And a = False And XT > 0 Then
+    If (MouseX + Xshift) < X1 And (MouseY + Yshift) < Y2 And (MouseY + Yshift) > Y1 Then
+    Form10.Shape2.Left = MouseX * (24 * 16)
+    Form10.Shape2.width = (X2 + 1) * (24 * 16) - Form10.Shape2.Left
+    End If
+    If (MouseX + Xshift) > X2 And (MouseY + Yshift) < Y2 And (MouseY + Yshift) > Y1 Then
+    Form10.Shape2.width = (MouseX + 1) * (24 * 16) - Form10.Shape2.Left
+    End If
+    If (MouseY + Yshift) < Y1 And (MouseX + Xshift) < X2 And (MouseX + Xshift) > X1 Then
+    Form10.Shape2.Top = MouseY * (24 * 16)
+    Form10.Shape2.height = (Y2 + 1) * (24 * 16) - Form10.Shape2.Top
+    End If
+    If (MouseY + Yshift) > Y2 And (MouseX + Xshift) < X2 And (MouseX + Xshift) > X1 Then
+    Form10.Shape2.height = (MouseY + 1) * (24 * 16) - Form10.Shape2.Top
+    End If
+    End If
+
+    If IsClick = True And OneTile = False And Y2 = 0 Then
+        a = Not a
+        If a = True Then
+            X1 = MouseX + Xshift
+            Y1 = MouseY + Yshift
+        Else
+            X2 = MouseX + Xshift
+            Y2 = MouseY + Yshift
+            Form10.Text2.Text = Form10.Text2.Text & "02" & Right("0" & Hex(X1), 2) & Right("0" & Hex(X2), 2) & Right("0" & Hex(Y1), 2) & Right("0" & Hex(Y2), 2) & vbCrLf
+            OneTile = True
+        End If
+        IsClick = False
+    ElseIf IsClick = True And OneTile = True Then
+        XT = MouseX + Xshift
+        YT = MouseY + Yshift
+        Form10.Text2.Text = Form10.Text2.Text & Right("0" & Hex(XT), 2) & Right("0" & Hex(YT), 2)
+        Form10.Shape3.Visible = False
+        OneTile = False
+        IsClick = False
+    ElseIf IsClick = True And (MouseX + Xshift) < X1 And (MouseY + Yshift) < Y2 And (MouseY + Yshift) > Y1 Then
+    Form10.Text2.Text = Form10.Text2.Text & "00" & Right("0" & Hex(MouseX + Xshift), 2) & vbCrLf
+    a = False: OneTile = False: X1 = 0: Y1 = 0: X2 = 0: Y2 = 0: XT = 0: YT = 0: Form10.Timer1.Interval = 0: Form10.Shape2.Visible = False: Form10.Command12.Enabled = True: Form10.Command14.Enabled = True: WillBeResize = 0
+    IsClick = False: IsMakingCameraRec = False: Call ChangeNumberAFlag
+    ElseIf IsClick = True And (MouseX + Xshift) > X2 And (MouseY + Yshift) < Y2 And (MouseY + Yshift) > Y1 Then
+    Form10.Text2.Text = Form10.Text2.Text & "01" & Right("0" & Hex(MouseX + Xshift), 2) & vbCrLf
+    a = False: OneTile = False: X1 = 0: Y1 = 0: X2 = 0: Y2 = 0: XT = 0: YT = 0: Form10.Timer1.Interval = 0: Form10.Shape2.Visible = False: Form10.Command12.Enabled = True: Form10.Command14.Enabled = True: WillBeResize = 0
+    IsClick = False: IsMakingCameraRec = False: Call ChangeNumberAFlag
+    ElseIf IsClick = True And (MouseY + Yshift) < Y1 And (MouseX + Xshift) < X2 And (MouseX + Xshift) > X1 Then
+    Form10.Text2.Text = Form10.Text2.Text & "02" & Right("0" & Hex(MouseY + Yshift), 2) & vbCrLf
+    a = False: OneTile = False: X1 = 0: Y1 = 0: X2 = 0: Y2 = 0: XT = 0: YT = 0: Form10.Timer1.Interval = 0: Form10.Shape2.Visible = False: Form10.Command12.Enabled = True: Form10.Command14.Enabled = True: WillBeResize = 0
+    IsClick = False: IsMakingCameraRec = False: Call ChangeNumberAFlag
+    ElseIf IsClick = True And (MouseY + Yshift) > Y2 And (MouseX + Xshift) < X2 And (MouseX + Xshift) > X1 Then
+    Form10.Text2.Text = Form10.Text2.Text & "03" & Right("0" & Hex(MouseY + Yshift), 2) & vbCrLf
+    a = False: OneTile = False: X1 = 0: Y1 = 0: X2 = 0: Y2 = 0: XT = 0: YT = 0: Form10.Timer1.Interval = 0: Form10.Shape2.Visible = False: Form10.Command12.Enabled = True: Form10.Command14.Enabled = True: WillBeResize = 0
+    IsClick = False: IsMakingCameraRec = False: Call ChangeNumberAFlag
+    End If
+ElseIf WillBeResize = vbNo Then
+    If a = False And X1 = 0 Then          'drawing part
+    Form10.Shape2.Left = MouseX * (24 * 16)
+    Form10.Shape2.Top = MouseY * (24 * 16)
+    ElseIf a = True And X1 > 0 Then
+    Form10.Shape2.width = (MouseX + 1) * (24 * 16) - Form10.Shape2.Left
+    Form10.Shape2.height = (MouseY + 1) * (24 * 16) - Form10.Shape2.Top
+    End If
+    
+    If IsClick = True And Y2 = 0 Then
+        a = Not a
+        If a = True Then
+            X1 = MouseX + Xshift
+            Y1 = MouseY + Yshift
+            IsClick = False
+        Else
+            X2 = MouseX + Xshift
+            Y2 = MouseY + Yshift
+            Form10.Text2.Text = Form10.Text2.Text & "02" & Right("0" & Hex(X1), 2) & Right("0" & Hex(X2), 2) & Right("0" & Hex(Y1), 2) & Right("0" & Hex(Y2), 2) & vbCrLf & "FFFFFFFF" & vbCrLf
+            a = False: X1 = 0: Y1 = 0: X2 = 0: Y2 = 0: WillBeResize = 0
+            Form10.Shape3.Visible = False: Form10.Timer1.Interval = 0: Form10.Shape2.Visible = False: Form10.Command12.Enabled = True: Form10.Command14.Enabled = True: Form10.Shape3.Visible = False
+            IsClick = False: IsMakingCameraRec = False: Call ChangeNumberAFlag
+        End If
+    End If
+End If
+End Sub
+
+Public Sub ChangeNumberAFlag()
+Dim str As String, i As Integer
+str = Replace(Form10.Text2.Text, Chr(32), "")
+str = Replace(str, Chr(13), "")
+str = Replace(str, Chr(10), "")
+If Len(str) <> 0 Then
+Mid(str, 3, 4) = Right("0" & Hex((Len(str) - 4) / 18), 2)
+Form10.Text2.Text = Mid(str, 1, 4) & vbCrLf
+For i = 0 To (Len(str) - 4) / 18 - 1
+Form10.Text2.Text = Form10.Text2.Text & Mid(str, 18 * i + 5, 10) & vbCrLf
+Form10.Text2.Text = Form10.Text2.Text & Mid(str, 18 * i + 15, 8) & vbCrLf
+Next i
+End If
 End Sub

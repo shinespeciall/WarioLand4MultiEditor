@@ -332,7 +332,7 @@ SaveDataOffset(i + 1) = LevelAllRoomPointerandDataBaseOffset         '每个Room的
 SaveDatabuffer(i + 1) = LevelAllRoomPointerandDataallHex ' + "XX101010 20000000 63223F08 63223F08 63223F08 ???????? "     '缺少开始5个标志位信息，不能完成
 End Sub
 
-Private Sub Command3_Click()
+Private Sub Command3_Click()   ' UNFINISHED
 'get last LevelRoomIndex if exist
 If LevelRoomIndex = "" Then
 MsgBox "You haven't choose a Room yet !", vbExclamation + vbOKOnly, "Info"
@@ -404,7 +404,6 @@ CameraCotrolPointerOffset = ""
 CameraCotrolString = ""
 RoomCameraStringPointerOffset = ""
 LengthOfAllPointer = 0
-If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     Dim OutputString As String, CheckPointer As String, j As Integer, kk As Integer, FirstPointer As String
     FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
@@ -413,6 +412,11 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
     CameraCotrolPointerOffset = FirstPointer
     '*********************                  pointer table pointer head is Offset_78F540
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
+    For i = 0 To 16
+    LengthOfAllPointer = LengthOfAllPointer + 4
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    Next i
+If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     '*********************                  start search
     For i = 0 To 16
     If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
@@ -432,11 +436,6 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
             Next j
             Exit For
         End If
-    Next i
-
-    For i = 0 To 16
-    LengthOfAllPointer = LengthOfAllPointer + 4
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
     Next i
 End If
 
@@ -543,7 +542,6 @@ CameraCotrolPointerOffset = ""
 CameraCotrolString = ""
 RoomCameraStringPointerOffset = ""
 LengthOfAllPointer = 0
-If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     Dim OutputString As String, CheckPointer As String, j As Integer, kk As Integer, FirstPointer As String
     FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
@@ -552,6 +550,11 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
     CameraCotrolPointerOffset = FirstPointer
     '*********************                  pointer table pointer head is Offset_78F540
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
+    For i = 0 To 16
+    LengthOfAllPointer = LengthOfAllPointer + 4
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    Next i
+If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     '*********************                  start search
     For i = 0 To 16
     If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
@@ -571,11 +574,6 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
             Next j
             Exit For
         End If
-    Next i
-
-    For i = 0 To 16
-    LengthOfAllPointer = LengthOfAllPointer + 4
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
     Next i
 End If
 
@@ -682,7 +680,6 @@ CameraCotrolPointerOffset = ""
 CameraCotrolString = ""
 RoomCameraStringPointerOffset = ""
 LengthOfAllPointer = 0
-If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     Dim OutputString As String, CheckPointer As String, j As Integer, kk As Integer, FirstPointer As String
     FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
@@ -691,6 +688,11 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
     CameraCotrolPointerOffset = FirstPointer
     '*********************                  pointer table pointer head is Offset_78F540
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
+    For i = 0 To 16
+    LengthOfAllPointer = LengthOfAllPointer + 4
+    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    Next i
+If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     '*********************                  start search
     For i = 0 To 16
     If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
@@ -710,11 +712,6 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
             Next j
             Exit For
         End If
-    Next i
-
-    For i = 0 To 16
-    LengthOfAllPointer = LengthOfAllPointer + 4
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
     Next i
 End If
 

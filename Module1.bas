@@ -271,5 +271,6 @@ Else
         SaveDatabuffer(i) = StrTemp & Replace(Space(Len(CameraCotrolString) - Len(StrTemp)), Chr(32), "0")
         End If
 End If
+SaveCameraString = True
 End Function
 
