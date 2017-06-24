@@ -489,6 +489,7 @@ Unload Form10
 End Sub
 
 Private Sub Command14_Click()
+WasCameraControlChange = False
 If Len(CameraCotrolString) <> 0 Then
 Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
 For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
@@ -1055,16 +1056,18 @@ If WillBeResize = vbYes Then
     If (MouseX + Xshift) < X1 And (MouseY + Yshift) < Y2 And (MouseY + Yshift) > Y1 Then
     Form10.Shape2.Left = MouseX * (24 * 16)
     Form10.Shape2.width = (X2 + 1) * (24 * 16) - Form10.Shape2.Left
-    End If
-    If (MouseX + Xshift) > X2 And (MouseY + Yshift) < Y2 And (MouseY + Yshift) > Y1 Then
+    ElseIf (MouseX + Xshift) > X2 And (MouseY + Yshift) < Y2 And (MouseY + Yshift) > Y1 Then
     Form10.Shape2.width = (MouseX + 1) * (24 * 16) - Form10.Shape2.Left
-    End If
-    If (MouseY + Yshift) < Y1 And (MouseX + Xshift) < X2 And (MouseX + Xshift) > X1 Then
+    ElseIf (MouseY + Yshift) < Y1 And (MouseX + Xshift) < X2 And (MouseX + Xshift) > X1 Then
     Form10.Shape2.Top = MouseY * (24 * 16)
     Form10.Shape2.height = (Y2 + 1) * (24 * 16) - Form10.Shape2.Top
-    End If
-    If (MouseY + Yshift) > Y2 And (MouseX + Xshift) < X2 And (MouseX + Xshift) > X1 Then
+    ElseIf (MouseY + Yshift) > Y2 And (MouseX + Xshift) < X2 And (MouseX + Xshift) > X1 Then
     Form10.Shape2.height = (MouseY + 1) * (24 * 16) - Form10.Shape2.Top
+    Else
+    Form10.Shape2.Left = X1 * (24 * 16)
+    Form10.Shape2.width = (X2 + 1) * (24 * 16) - Form10.Shape2.Left
+    Form10.Shape2.Top = Y1 * (24 * 16)
+    Form10.Shape2.height = (Y2 + 1) * (24 * 16) - Form10.Shape2.Top
     End If
     End If
 

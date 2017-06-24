@@ -7,6 +7,7 @@ Begin VB.MDIForm MDIForm1
    ClientLeft      =   225
    ClientTop       =   870
    ClientWidth     =   16275
+   Icon            =   "MDIForm1.frx":0000
    LinkTopic       =   "MDIForm1"
    StartUpPosition =   3  '´°¿ÚÈ±Ê¡
    WindowState     =   2  'Maximized
@@ -92,11 +93,6 @@ Form2.Visible = False
 Form3.Visible = False
 Form4.Visible = True
 Form9.Visible = True
-'Form11.Visible = True
-'MDIForm1.Left = 0
-'MDIForm1.Top = 0
-'MDIForm1.Height = Screen.Height - 650
-'MDIForm1.Width = Screen.Width
 
 MDIForm1.mnuedit.Enabled = False
 MDIForm1.mnusave.Enabled = False
