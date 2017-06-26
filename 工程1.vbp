@@ -33,6 +33,7 @@ MinorVer=5
 RevisionVer=1
 AutoIncrementVer=0
 ServerSupportFiles=0
+VersionCompanyName="Microsoft"
 VersionProductName="WL4MultiEditor"
 CompilationType=0
 OptimizationType=0

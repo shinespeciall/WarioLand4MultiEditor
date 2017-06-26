@@ -137,27 +137,30 @@ Form1.Visible = True
 End Sub
 
 Private Sub mnuFindBaseOffset_Click()
+If gbafilepath = "" Then
+Form9.Text1.Text = Form9.Text1.Text & "You haven't open a gba file !" & vbCrLf
+Exit Sub
+End If
 Dim inputBaseOffset As String, inputBaseOffset2 As String
-
-inputBaseOffset = InputBox("input start offset", "search", 0)    '___________
-
+inputBaseOffset = InputBox("input start pointer", "search", 8000000)
+If inputBaseOffset = "" Then Exit Sub
 inputBaseOffset2 = inputBaseOffset
 inputBaseOffset = Right("00000000" & CStr(inputBaseOffset), 8)
-Dim i As Long, j As Long, k As Long, l As Integer
+Dim i As Long, j As Long, k As Long
 Dim stepoffset As Integer
-
-stepoffset = Val(InputBox("step?", "search", 1))   '___________
-j = Val(InputBox("input number", "search", 1))
-
+stepoffset = Val(InputBox("step width? (In Dec)", "search", 1))
+If stepoffset = 0 Then Exit Sub
+j = Val(InputBox("input number of steps, count from one", "search", 1))
+If j <= 0 Then Exit Sub
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
 Dim ROMallHex As String
+Form9.Text1.Text = Form9.Text1.Text & "Start searching ! Please wait..." & vbCrLf
 Open gbafilepath For Binary As #1
 ReDim ROMallbyte(LOF(1) - 1)
 Get #1, , ROMallbyte   'ROMallstr now contains all of the text in the file
 Close #1
 Dim PointerFirstByte As String
-For k = 0 To j - 1
-
+For k = 0 To j
 inputBaseOffset = Right("0" & Hex(Val("&H" & inputBaseOffset2) + k * stepoffset), 8)
 inputBaseOffset = Mid(inputBaseOffset, 7, 2) & Mid(inputBaseOffset, 5, 2) & Mid(inputBaseOffset, 3, 2) & Mid(inputBaseOffset, 1, 2)
 PointerFirstByte = Mid(inputBaseOffset, 1, 2)
@@ -165,26 +168,15 @@ For i = 0 To Val("&H" & "78F970") - 1
 DoEvents
 If Right("0" & Hex(ROMallbyte(i)), 2) = PointerFirstByte Then
 If Right("0" & Hex(ROMallbyte(i)), 2) & Right("0" & Hex(ROMallbyte(i + 1)), 2) & Right("0" & Hex(ROMallbyte(i + 2)), 2) & Right("0" & Hex(ROMallbyte(i + 3)), 2) = inputBaseOffset Then
-l = MsgBox("Find " & Right("0" & Hex(Val("&H" & inputBaseOffset2) + stepoffset * k), 8), vbOKCancel)
-If l = 2 Then l = MsgBox("yes for next£¬no for break", vbYesNo)
-If l = vbYes Then
-    MsgBox "Offset:" & Hex(i)
-    GoTo exit_i_for
-ElseIf l = vbNo Then
-    MsgBox "Offset:" & Hex(i)
-    GoTo exit_k_for
-End If
-MsgBox "Offset:" & Hex(i)
+Form9.Text1.Text = Form9.Text1.Text & "Find " & Right("0" & Hex(Val("&H" & inputBaseOffset2) + stepoffset * k), 8)
+Form9.Text1.Text = Form9.Text1.Text & " Offset: " & Hex(i) & vbCrLf
 End If
 End If
 Next i
-exit_i_for:
-i = 0
 Next k
-exit_k_for:
 ROMAllHEX1 = ""
 Erase ROMallbyte()
-MsgBox "Finish£¬if no other message box has shown, no soch pointer been found.", vbOKOnly, "search pointer"
+Form9.Text1.Text = Form9.Text1.Text & "Finish£¬if no message has shown, no such pointer been found." & vbCrLf
 End Sub
 
 Private Sub mnuFindPropertyTableID_Click()
