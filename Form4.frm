@@ -12,6 +12,7 @@ Begin VB.Form Form4
    MinButton       =   0   'False
    ScaleHeight     =   9270
    ScaleWidth      =   4560
+   Visible         =   0   'False
    Begin VB.CommandButton Command3 
       Caption         =   "Edit Room"
       Height          =   375
@@ -118,10 +119,10 @@ Begin VB.Form Form4
       Height          =   300
       ItemData        =   "Form4.frx":0018
       Left            =   240
-      List            =   "Form4.frx":0064
+      List            =   "Form4.frx":001A
       TabIndex        =   0
       Text            =   "00"
-      Top             =   600
+      Top             =   480
       Width           =   4095
    End
    Begin VB.Label Label5 
@@ -221,7 +222,7 @@ Next i
 Dim LevelIndex As String
 For i = 0 To 30
     LevelIndex = Mid(ROMallHex, i * 24 + 1, 2)
-    If LevelIndex = Form4.Combo1.Text Then
+    If LevelIndex = Mid(Form4.Combo1.Text, 1, 2) Then
         RoomNumber = Mid(ROMallHex, i * 24 + 3, 2)
         'If Val("&H" & RoomNumber) < 16 Then Form4.Command2.Enabled = True
         'If Val("&H" & RoomNumber) = 16 Then Form4.Command2.Enabled = False
@@ -314,7 +315,7 @@ Load Form1
 Form1.Show
 End Sub
 
-Private Sub Command2_Click()
+Private Sub Command2_Click()   ' UNFINISHED
 If LevelStartStreamOffset = "" Then Exit Sub
 If SaveDataOffset(95) <> "" Then
     MsgBox "buffer memory used up, save all and retry !"
@@ -330,6 +331,8 @@ RoomNumber = Right("00" & Hex(Val("&H" & RoomNumber) + 1), 2)
 SaveDataOffset(i + 1) = LevelAllRoomPointerandDataBaseOffset         '每个Room的layer指针和元素指针及Flag数据串保存基址
 
 SaveDatabuffer(i + 1) = LevelAllRoomPointerandDataallHex ' + "XX101010 20000000 63223F08 63223F08 63223F08 ???????? "     '缺少开始5个标志位信息，不能完成
+
+Form11.Visible = True
 End Sub
 
 Private Sub Command3_Click()   ' UNFINISHED
@@ -340,13 +343,12 @@ End If
 
 End Sub
 
-Private Sub Form_Activate()
+
+Private Sub Form_Load()
 Form4.Move 0, 0, 4650, 9705
 Form4.Label1.FontSize = 13
 Form4.Label2.FontSize = 10
-If LevelStartStreamOffset = "" Then Form4.Command2.Enabled = False
-'Unload Form1
-Unload Form2
+Form4.Combo1.FontSize = 12
 End Sub
 
 Private Sub List1_Click()

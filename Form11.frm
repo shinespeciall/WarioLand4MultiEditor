@@ -13,25 +13,25 @@ Begin VB.Form Form11
    Begin VB.CommandButton Command1 
       Caption         =   "Go"
       Height          =   495
-      Left            =   12000
+      Left            =   12720
       TabIndex        =   5
-      Top             =   1080
+      Top             =   600
       Width           =   1335
    End
    Begin VB.TextBox Text2 
       Height          =   495
-      Left            =   7920
+      Left            =   8040
       TabIndex        =   4
-      Top             =   1080
+      Top             =   480
       Width           =   3735
    End
    Begin VB.TextBox Text1 
-      Height          =   3735
+      Height          =   5775
       Left            =   7680
       MultiLine       =   -1  'True
       ScrollBars      =   3  'Both
       TabIndex        =   3
-      Top             =   2040
+      Top             =   1560
       Width           =   7095
    End
    Begin VB.Frame Frame1 

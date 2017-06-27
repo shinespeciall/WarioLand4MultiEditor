@@ -91,13 +91,14 @@ Private Sub MDIForm_Load()
 Form1.Visible = False
 Form2.Visible = False
 Form3.Visible = False
-Form4.Visible = True
+Form4.Visible = False
 Form9.Visible = True
 
 MDIForm1.mnuedit.Enabled = False
 MDIForm1.mnusave.Enabled = False
 MDIForm1.mnuroomchange.Enabled = False
 MDIForm1.mnuFindBaseOffset.Enabled = False
+MDIForm1.mnuLevelguidefrm.Enabled = False
 
 WasCameraControlStringChange = False
 IfisNewRoom = False
@@ -293,6 +294,20 @@ Form1.Text1.Text = ""
 Form1.Picture1.Cls
 BeforeLine = 0
 WasCameraControlStringChange = False
+
+Dim k As Long, str5 As String                  ' Initialize form4 combo1
+For k = 0 To 23
+str0 = ""
+str5 = GetLevelNamePointer(k)
+str5 = Mid(str5, 7, 2) & Mid(str5, 5, 2) & Mid(str5, 3, 2) & Mid(str5, 1, 2)
+str5 = Hex(Val("&H" & str5) - Val("&H8000000"))
+str5 = ReadFileHex(gbafilepath, str5, Hex(Val("&H" & str5) + 25))
+For i = 0 To 25
+str0 = str0 & DEX_to_letter(CLng(Val("&H" & Mid(str5, 2 * i + 1, 2))))
+Next i
+Form4.Combo1.AddItem Right("00" & Hex(k), 2) & str0
+Next k
+MDIForm1.mnuLevelguidefrm.Enabled = True
 End Sub
 
 Private Sub mnuOutputSpritesTiles_Click()

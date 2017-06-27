@@ -105,6 +105,7 @@ MDIForm1.mnuedit.Enabled = False
 MDIForm1.mnusave.Enabled = False
 MDIForm1.mnuFindBaseOffset.Enabled = False
 MDIForm1.mnuRoomConnectionBeta.Enabled = False
+MDIForm1.mnuLevelguidefrm.Enabled = False
 
 Form2.Visible = False
 Form3.Visible = False

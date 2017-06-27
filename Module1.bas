@@ -459,3 +459,36 @@ Dim str1 As Long
            End Select
    letter_to_DEX = str1
 End Function
+
+Public Function GetLevelNamePointer(level As Long) As String
+Dim r3 As String, X As Integer
+r3 = "63A3AC"
+Select Case level
+    Case 0: X = 0
+    Case 1: X = 6
+    Case 2: X = 7
+    Case 3: X = 8
+    Case 4: X = 9
+    Case 5: X = 12
+    Case 6: X = 13
+    Case 7: X = 15
+    Case 8: X = 14
+    Case 9: X = 18
+    Case 10: X = 19
+    Case 11: X = 20
+    Case 12: X = 21
+    Case 13: X = 24
+    Case 14: X = 25
+    Case 15: X = 27
+    Case 16: X = 26
+    Case 17: X = 10
+    Case 18: X = 16
+    Case 19: X = 22
+    Case 20: X = 28
+    Case 21: X = 34
+    Case 22: X = 4
+    Case 23: X = 30
+End Select
+r3 = Hex(Val("&H" & r3) + 4 * X)
+GetLevelNamePointer = ReadFileHex(gbafilepath, r3, Hex(Val("&H" & r3) + 3))
+End Function
