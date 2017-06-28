@@ -98,21 +98,25 @@ BeforeLine = 0
 MDIForm1.Caption = "关卡修改可视化工程"
 MsgBox "保存完成，要继续修改请重新打开文件！", vbOKOnly
 
-Unload Form5
-Load Form4
-Form4.Visible = True
 MDIForm1.mnuedit.Enabled = False
 MDIForm1.mnusave.Enabled = False
 MDIForm1.mnuFindBaseOffset.Enabled = False
 MDIForm1.mnuRoomConnectionBeta.Enabled = False
 MDIForm1.mnuLevelguidefrm.Enabled = False
 
+Form1.Visible = False
 Form2.Visible = False
 Form3.Visible = False
+Form4.Visible = False
 Form6.Visible = False
+Form7.Visible = False
+Form8.Visible = False
+Form9.Visible = False
 Form10.Visible = False
 
 WasCameraControlStringChange = False
+
+Form5.Visible = False
 End Sub
 
 Private Sub Form_Activate()

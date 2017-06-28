@@ -373,6 +373,8 @@ Dim TenthByte_scrollBG As String
 
 TenthByte_scrollBG = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List1.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
 '********************************************读文件过程
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
@@ -510,7 +512,8 @@ Dim TenthByte_scrollBG As String
 
 TenthByte_scrollBG = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List3.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
-
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
 '********************************************读文件过程
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
@@ -648,7 +651,8 @@ Dim TenthByte_scrollBG As String
 
 TenthByte_scrollBG = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List5.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
-
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
 '********************************************读文件过程
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31

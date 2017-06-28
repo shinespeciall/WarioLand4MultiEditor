@@ -6,9 +6,9 @@ Begin VB.Form Form8
    ClientTop       =   465
    ClientWidth     =   4560
    LinkTopic       =   "Form8"
+   MDIChild        =   -1  'True
    ScaleHeight     =   4335
    ScaleWidth      =   4560
-   StartUpPosition =   3  '´°¿ÚÈ±Ê¡
    Visible         =   0   'False
    Begin VB.CommandButton Command1 
       Caption         =   "ReSave"
