@@ -1,0 +1,129 @@
+these should be hardcode into the wizard for creating a new room
+I forget to add Tileset in my first attempt, there still sth to do
+I don't know how to render BG layer yet, still testing...
+
+public one for unable BG:
+Tileset:\
+BG pointer mapping flag:00
+BG pointer mapping data:0858DA7C
+----------------------------------00
+Tileset:50, 11, 47
+BG pointer mapping flag:20
+BG pointer mapping data:085FA6D0
+----------------------------------01
+Tileset:01
+BG pointer mapping flag:20
+BG pointer mapping data:085FB2CC
+Tileset:02
+BG pointer mapping flag:20
+BG pointer mapping data:085FB8DC
+----------------------------------02
+BG pointer mapping flag:20
+BG pointer mapping data:085FC9A0
+BG pointer mapping flag:20
+BG pointer mapping data:085FD484
+BG pointer mapping flag:20
+BG pointer mapping data:085FC2D0
+BG pointer mapping flag:20
+BG pointer mapping data:085FD078
+----------------------------------03
+BG pointer mapping flag:20
+BG pointer mapping data:085FE540
+BG pointer mapping flag:20
+BG pointer mapping data:085FB8DC
+BG pointer mapping flag:20
+BG pointer mapping data:085FD9BC
+BG pointer mapping flag:20
+BG pointer mapping data:085FE008
+----------------------------------04
+BG pointer mapping flag:20
+BG pointer mapping data:085FE918
+BG pointer mapping flag:20
+BG pointer mapping data:085FF264
+BG pointer mapping flag:20
+BG pointer mapping data:085FEED8
+BG pointer mapping flag:20
+BG pointer mapping data:085FF960
+BG pointer mapping flag:20
+BG pointer mapping data:085FE918
+BG pointer mapping flag:20
+BG pointer mapping data:085FF684
+----------------------------------05
+BG pointer mapping flag:20
+BG pointer mapping data:085FFD94
+BG pointer mapping flag:20
+BG pointer mapping data:086006C4
+BG pointer mapping flag:20
+BG pointer mapping data:08600EF8
+BG pointer mapping flag:20
+BG pointer mapping data:08600388
+----------------------------------06
+BG pointer mapping flag:20
+BG pointer mapping data:086013D4
+BG pointer mapping flag:20
+BG pointer mapping data:08601A0C
+----------------------------------07 //none
+----------------------------------08
+BG pointer mapping flag:20
+BG pointer mapping data:0860221C
+BG pointer mapping flag:20
+BG pointer mapping data:08602858
+----------------------------------09
+BG pointer mapping flag:20
+BG pointer mapping data:08603E98
+BG pointer mapping flag:20
+BG pointer mapping data:08605270
+BG pointer mapping flag:20
+BG pointer mapping data:086045C4
+BG pointer mapping flag:20
+BG pointer mapping data:08604ACC
+----------------------------------0A
+BG pointer mapping flag:20
+BG pointer mapping data:08603064
+BG pointer mapping flag:20
+BG pointer mapping data:0860368C
+----------------------------------0B
+BG pointer mapping flag:20
+BG pointer mapping data:08605A7C
+BG pointer mapping flag:20
+BG pointer mapping data:086063B0
+----------------------------------0C
+BG pointer mapping flag:20
+BG pointer mapping data:086074C4
+BG pointer mapping flag:20
+BG pointer mapping data:08607CD0
+BG pointer mapping flag:20
+BG pointer mapping data:086084DC
+BG pointer mapping flag:20
+BG pointer mapping data:08608CE8
+----------------------------------0D
+BG pointer mapping flag:20
+BG pointer mapping data:0860A350
+BG pointer mapping flag:20
+BG pointer mapping data:0860A1E8
+BG pointer mapping flag:20
+BG pointer mapping data:0860A1D8
+BG pointer mapping flag:20
+BG pointer mapping data:0860A4B4
+----------------------------------0E
+BG pointer mapping flag:20
+BG pointer mapping data:086094F4
+BG pointer mapping flag:20
+BG pointer mapping data:08609A84
+----------------------------------0F
+BG pointer mapping flag:20
+BG pointer mapping data:0860AD10
+----------------------------------10
+BG pointer mapping flag:20
+BG pointer mapping data:0860E044
+BG pointer mapping flag:20
+BG pointer mapping data:0860BC54
+BG pointer mapping flag:20
+BG pointer mapping data:0860CF98
+BG pointer mapping flag:20
+BG pointer mapping data:0860B29C
+BG pointer mapping flag:20
+BG pointer mapping data:0860C5FC
+----------------------------------17
+BG pointer mapping flag:20
+BG pointer mapping data:0860ED78
