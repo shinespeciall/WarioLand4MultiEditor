@@ -5,8 +5,8 @@ Public TextMap() As String
 Public layerWidth As Integer, layerHeight As Integer
 '##########################################
 
-Public Function DecompressRLE(ByVal DataOffset As String, Optional IsDirectTileMAP As Boolean) As String              'UNFINISHED need more code for noe argument: IsDirectTileMAP
-Dim strdata As String, src As Integer, DecompressMap() As String
+Public Function DecompressRLE(ByVal DataOffset As String) As String              'UNFINISHED need more code for rearrangement
+Dim strdata As String, src As Integer, DecompressMap() As String, NeedRearrange As Boolean
 src = 1
 strdata = ReadFileHex(gbafilepath, DataOffset, Hex(Val("&H" & DataOffset) + 5120))
 If Mid(strdata, 1, 2) = "00" Then
@@ -17,6 +17,7 @@ If Mid(strdata, 1, 2) = "00" Then
 ElseIf Mid(strdata, 1, 2) = "01" Then
     ReDim TextMap(64, 32)
     ReDim DecompressMap(32 * 64)
+    NeedRearrange = True
     layerWidth = 64
     layerHeight = 32
 ElseIf Mid(strdata, 1, 2) = "02" Then
@@ -92,6 +93,32 @@ For ii = 0 To layerWidth - 1
 TextMap(ii, jj) = DecompressMap(ii + layerWidth * jj)
 Next ii
 Next jj
+
+If NeedRearrange = True Then
+Dim rearranged1() As String, rearranged2() As String
+ReDim rearranged1(32, 32)
+ReDim rearranged2(32, 32)
+For jj = 0 To 30 Step 2
+    For ii = 0 To 31
+        rearranged1(ii, jj) = TextMap(ii, jj \ 2)
+        rearranged1(ii, jj + 1) = TextMap(ii + 32, jj \ 2)
+    Next ii
+Next jj
+For jj = 1 To 31 Step 2
+    For ii = 0 To 31
+        rearranged2(ii, jj - 1) = TextMap(ii, jj \ 2 + 16)
+        rearranged2(ii, jj) = TextMap(ii + 32, jj \ 2 + 16)
+    Next ii
+Next jj
+For jj = 0 To 31
+    For ii = 0 To 31
+        TextMap(ii, jj) = rearranged1(ii, jj)
+        TextMap(ii + 32, jj) = rearranged2(ii, jj)
+    Next ii
+Next jj
+Erase rearranged1
+Erase rearranged2
+End If
 Erase DecompressMap
 DecompressRLE = Hex(layerHeight * layerWidth)
 End Function

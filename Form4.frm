@@ -349,6 +349,8 @@ Form4.Move 0, 0, 4650, 9705
 Form4.Label1.FontSize = 13
 Form4.Label2.FontSize = 10
 Form4.Combo1.FontSize = 12
+
+'Form11.Visible = True          for test now
 End Sub
 
 Private Sub List1_Click()
