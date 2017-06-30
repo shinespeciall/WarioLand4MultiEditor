@@ -178,13 +178,13 @@ Public RoomNumber As String       '第一个Room记为1
 
 Private Sub Combo1_Change()
 Form4.Combo1.Text = "00"
-LevelNumber = Form4.Combo1.Text
+LevelNumber = Mid(Form4.Combo1.Text, 1, 2)
 End Sub
 
 Private Sub Combo1_Click()
 If gbafilepath = "" Then Exit Sub
 Form4.Combo1.Enabled = False
-LevelNumber = Form4.Combo1.Text
+LevelNumber = Mid(Form4.Combo1.Text, 1, 2)
 Form4.List1.Clear
 Form4.List2.Clear
 Form4.List3.Clear
@@ -247,7 +247,7 @@ Form4.Label2.Caption = "process: Load pointers table for the Level......" & i - 
 Next i
 
 Dim BaseOffset As String
-BaseOffset = Mid(ROMallHex, Val("&H" & Form4.Combo1.Text) * 8 + 1 + 6, 2) & Mid(ROMallHex, Val("&H" & Form4.Combo1.Text) * 8 + 1 + 4, 2) & Mid(ROMallHex, Val("&H" & Form4.Combo1.Text) * 8 + 1 + 2, 2) & Mid(ROMallHex, Val("&H" & Form4.Combo1.Text) * 8 + 1, 2)
+BaseOffset = Mid(ROMallHex, Val("&H" & LevelIndex) * 8 + 1 + 6, 2) & Mid(ROMallHex, Val("&H" & LevelIndex) * 8 + 1 + 4, 2) & Mid(ROMallHex, Val("&H" & LevelIndex) * 8 + 1 + 2, 2) & Mid(ROMallHex, Val("&H" & LevelIndex) * 8 + 1, 2)
 BaseOffset = Hex(Val("&H" & BaseOffset) - Val("&H" & "8000000"))
 LevelAllRoomPointerandDataBaseOffset = BaseOffset
 Form4.Text2.Text = Form4.Text2.Text & "Base Offset for all the pointers and properties of layers for rooms：" & BaseOffset & vbCrLf
@@ -292,12 +292,12 @@ Form4.Label2.Caption = "process: Load data from pointer for room change info" & 
 Next i
 
 Dim RoomChangeMassageOffset As String
-LevelChangeRoomStreamPointerOffset = Hex(Val("&H" & offset_78F21C) + Val("&H" & Form4.Combo1.Text) * 4)
-tempoffset = Mid(ROMallHex, Val("&H" & Form4.Combo1.Text) * 8 + 1 + 6, 2) & Mid(ROMallHex, Val("&H" & Form4.Combo1.Text) * 8 + 1 + 4, 2) & Mid(ROMallHex, Val("&H" & Form4.Combo1.Text) * 8 + 1 + 2, 2) & Mid(ROMallHex, Val("&H" & Form4.Combo1.Text) * 8 + 1, 2)
+LevelChangeRoomStreamPointerOffset = Hex(Val("&H" & offset_78F21C) + Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 4)
+tempoffset = Mid(ROMallHex, Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 8 + 1 + 6, 2) & Mid(ROMallHex, Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 8 + 1 + 4, 2) & Mid(ROMallHex, Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 8 + 1 + 2, 2) & Mid(ROMallHex, Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 8 + 1, 2)
 RoomChangeMassageOffset = Hex(Val("&H" & tempoffset) - Val("&H" & "8000000"))
 Form4.Text2.Text = Form4.Text2.Text & "Base offset for room change info:" & RoomChangeMassageOffset & vbCrLf
 LevelChangeRoomStreamOffset = RoomChangeMassageOffset
-Form4.Text2.Text = Form4.Text2.Text & "the offset of the pointer:" & Hex(Val("&H" & offset_78F21C) + Val("&H" & Form4.Combo1.Text) * 4) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "the offset of the pointer:" & Hex(Val("&H" & offset_78F21C) + Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 4) & vbCrLf
 Form4TextBox2Temp = Form4.Text2.Text
 ROMallHex = ""
 
@@ -352,7 +352,7 @@ Form4.Combo1.FontSize = 12
 End Sub
 
 Private Sub List1_Click()
-If Form4.Text1.Text = Form4.List1.Text Then Exit Sub
+If Form4.Text1.Text = "00" Then Exit Sub
 Form4.List1.Enabled = False
 Form4.Text1.Text = Form4.List1.Text
 PointerOffset1 = Form4.List2.List(Form4.List1.ListIndex)
@@ -491,7 +491,7 @@ List6.TopIndex = List2.TopIndex
 End Sub
 
 Private Sub List3_Click()
-If Form4.Text1.Text = Form4.List3.Text Then Exit Sub
+If Form4.Text1.Text = "00" Then Exit Sub
 Form4.List3.Enabled = False
 Form4.Text1.Text = Form4.List3.Text
 PointerOffset1 = Form4.List4.List(Form4.List3.ListIndex)
@@ -630,7 +630,7 @@ List6.TopIndex = List4.TopIndex
 End Sub
 
 Private Sub List5_Click()
-If Form4.Text1.Text = Form4.List5.Text Then Exit Sub
+If Form4.Text1.Text = "00" Then Exit Sub
 Form4.List5.Enabled = False
 Form4.Text1.Text = Form4.List5.Text
 PointerOffset1 = Form4.List6.List(Form4.List5.ListIndex)
