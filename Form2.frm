@@ -486,6 +486,10 @@ MsgBox "Finish !"
 End Sub
 
 Private Sub Command16_Click()
+If MODfilepath = "" Then
+MsgBox "No MOD file Loaded", vbInformation, "Info"
+Exit Sub
+End If
 IsDeliver = True
 Form10.Visible = True
 End Sub

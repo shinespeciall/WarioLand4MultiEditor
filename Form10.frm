@@ -556,11 +556,9 @@ If IsDeliver = False Then
 ReDim L0_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L1_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L2_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
-ReDim L3_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L0_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L1_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L2_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
-ReDim L3_LB_001(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 
 For j = 1 To Val("&H" & MapHeight)
 For i = 1 To Val("&H" & MapLength)
@@ -568,11 +566,9 @@ For i = 1 To Val("&H" & MapLength)
 L0_LB_000(i - 1, j - 1) = "0000"
 L1_LB_000(i - 1, j - 1) = "0000"
 L2_LB_000(i - 1, j - 1) = "0000"
-L3_LB_000(i - 1, j - 1) = "0000"
 L0_LB_001(i - 1, j - 1) = "0000"
 L1_LB_001(i - 1, j - 1) = "0000"
 L2_LB_001(i - 1, j - 1) = "0000"
-L3_LB_001(i - 1, j - 1) = "0000"
 Next i
 Next j
 End If
@@ -948,12 +944,12 @@ Erase Tile88()
 Erase Palette256()
 'Erase TextMap()
 
+Erase L0_LB_000()
 Erase L1_LB_000()
 Erase L2_LB_000()
-Erase L3_LB_000()
+Erase L0_LB_001()
 Erase L1_LB_001()
 Erase L2_LB_001()
-Erase L3_LB_001()
 
 Erase TileMOD()
 End Sub

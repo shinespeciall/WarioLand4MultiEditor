@@ -117,13 +117,16 @@ If Len(Form7.Text1.Text) <> 0 Then GoTo PrintbyMyself
 TempPointer = "78EBF0"
 LenthMessage = "3B2C90"
 Dim LineNum As Integer
-SpritesID = InputBox("Sprites ID:", "Request", 1)
-
+SpritesID = InputBox("Sprites ID (more than 10 in Hex):", "Request", 1)
+If Val("&H" & SpritesID) < 17 Then
+MsgBox "Wrong ID !"
+Exit Sub
+End If
+SpritesID = Hex(Val("&H" & SpritesID) - 16)
 ReDim Palette16Color(16)
 '----------------------------------------------Make palette Beta Mode
 Dim paletteStr As String
 paletteStr = ReadFileHex(gbafilepath, Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID)), Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID) + 2))
-
 'paletteStr = Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)    'get offset
 paletteStr = Hex(Val("&H" & Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)) + 32 * Form7.Slider1.Value)
 

@@ -99,6 +99,7 @@ Begin VB.Form Form6
       MultiLine       =   -1  'True
       ScrollBars      =   2  'Vertical
       TabIndex        =   10
+      ToolTipText     =   "Find camera control as long as it exists in the pointers table"
       Top             =   3360
       Width           =   3735
    End

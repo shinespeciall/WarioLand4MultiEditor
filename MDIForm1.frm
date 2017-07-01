@@ -68,10 +68,10 @@ Begin VB.MDIForm MDIForm1
          Caption         =   "search pointer"
       End
       Begin VB.Menu mnuCheckLoadPropertyID 
-         Caption         =   "enimy flag string"
+         Caption         =   "Enumerate a Sprites Table"
       End
       Begin VB.Menu mnuFindPropertyTableID 
-         Caption         =   "find enimy flag"
+         Caption         =   "Find Sprites in table"
       End
    End
    Begin VB.Menu mnuLoad 
@@ -113,19 +113,19 @@ End Sub
 
 Private Sub mnuCheckLoadPropertyID_Click()
 Dim LoadPropertyTableID As String    'pointer table after 78EF78
-Dim strtxt As String, i As Integer
-LoadPropertyTableID = InputBox("input Property Table ID", "searching", 0)
+Dim strtxt As String, j As Integer
+LoadPropertyTableID = InputBox("input Sprites Table ID", "searching", 0)
 LoadPropertyTableID = ReadFileHex(gbafilepath, Hex(Val("&H" & LoadPropertyTableID) * 4 + Val("&H" & "78EF78")), Hex(Val("&H" & LoadPropertyTableID) * 4 + Val("&H" & "78EF78") + 3))
 LoadPropertyTableID = Mid(LoadPropertyTableID, 7, 2) & Mid(LoadPropertyTableID, 5, 2) & Mid(LoadPropertyTableID, 3, 2) & Mid(LoadPropertyTableID, 1, 2)
 LoadPropertyTableID = Hex(Val("&H" & LoadPropertyTableID) - Val("&H" & "8000000"))
 strtxt = ReadFileHex(gbafilepath, LoadPropertyTableID, Hex(Val("&H" & LoadPropertyTableID) + 128))
-For i = 0 To 30
-If Mid(strtxt, 4 * i + 1, 4) = "0000" Then Exit For
-Next
-Do
-MsgBox Mid(strtxt, 4 * i + 1, 4)
-i = i - 1
-Loop Until i = -1
+For j = 0 To 30
+If Mid(strtxt, 4 * j + 1, 4) = "0000" Then Exit For
+Form9.Text1.Text = Form9.Text1.Text & Mid(strtxt, 4 * j + 1, 4) & " "
+Next j
+Form9.Text1.Text = Form9.Text1.Text & vbCrLf
+Form9.Text1.Text = Form9.Text1.Text & "Finish !   PS: the first byte is the Sprites ID"
+Form9.Text1.Text = Form9.Text1.Text & vbCrLf
 End Sub
 
 Private Sub mnuCounterChange_Click()
@@ -183,7 +183,7 @@ End Sub
 Private Sub mnuFindPropertyTableID_Click()
 Dim LoadPropertyTableID As String    'pointer table after 78EF78
 Dim strtxt As String, i As Integer, j As Integer, FindStr As String
-FindStr = InputBox("input enimy's Porperty flag(more than 10)", "search", 11)
+FindStr = InputBox("input Sprite's ID (more than 10 in Hex)", "search", 11)
 For j = 0 To 89
 LoadPropertyTableID = ReadFileHex(gbafilepath, Hex(j * 4 + Val("&H" & "78EF78")), Hex(j * 4 + Val("&H" & "78EF78") + 3))
 LoadPropertyTableID = Mid(LoadPropertyTableID, 7, 2) & Mid(LoadPropertyTableID, 5, 2) & Mid(LoadPropertyTableID, 3, 2) & Mid(LoadPropertyTableID, 1, 2)
@@ -194,13 +194,13 @@ If Mid(strtxt, 4 * i + 1, 4) = "0000" Then Exit For
 Next i
 Do
 If Mid(strtxt, 4 * i + 1, 2) = FindStr Then
-MsgBox "Find Table index in Hex:" & Hex(j)
+Form9.Text1.Text = Form9.Text1.Text & "Table ID (Hex):" & Hex(j) & vbCrLf
 Exit Do
 End If
 i = i - 1
 Loop Until i = -1
 Next j
-MsgBox "Finish£¡"
+Form9.Text1.Text = Form9.Text1.Text & "Finish£¡" & vbCrLf
 End Sub
 
 Private Sub mnuLevelguidefrm_Click()

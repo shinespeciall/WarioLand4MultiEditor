@@ -16,9 +16,10 @@ Begin VB.Form Form4
    Begin VB.CommandButton Command3 
       Caption         =   "Edit Room"
       Height          =   375
-      Left            =   3000
+      Left            =   2640
       TabIndex        =   16
-      Top             =   6000
+      ToolTipText     =   "BG layer will be thrown"
+      Top             =   4080
       Width           =   1455
    End
    Begin VB.CommandButton Command2 
@@ -27,8 +28,8 @@ Begin VB.Form Form4
       Height          =   375
       Left            =   2640
       TabIndex        =   15
-      Top             =   3960
-      Width           =   1335
+      Top             =   4800
+      Width           =   1455
    End
    Begin VB.ListBox List6 
       Height          =   1680
@@ -93,7 +94,7 @@ Begin VB.Form Form4
       Height          =   375
       Left            =   3000
       TabIndex        =   5
-      Top             =   5520
+      Top             =   5760
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -330,7 +331,7 @@ SaveDatabuffer(i) = Right("00" & Hex(Val("&H" & RoomNumber) + 1), 2)
 RoomNumber = Right("00" & Hex(Val("&H" & RoomNumber) + 1), 2)
 SaveDataOffset(i + 1) = LevelAllRoomPointerandDataBaseOffset         '每个Room的layer指针和元素指针及Flag数据串保存基址
 
-SaveDatabuffer(i + 1) = LevelAllRoomPointerandDataallHex ' + "XX101010 20000000 63223F08 63223F08 63223F08 ???????? "     '缺少开始5个标志位信息，不能完成
+SaveDatabuffer(i + 1) = LevelAllRoomPointerandDataallHex ' & "XX101010 20000000 63223F08 63223F08 63223F08 7CDA5808 "     '缺少开始5个标志位信息，不能完成
 
 Form11.Visible = True
 End Sub
@@ -338,7 +339,8 @@ End Sub
 Private Sub Command3_Click()   ' UNFINISHED
 'get last LevelRoomIndex if exist
 If LevelRoomIndex = "" Then
-MsgBox "You haven't choose a Room yet !", vbExclamation + vbOKOnly, "Info"
+MsgBox "You haven't chose a Room yet !", vbExclamation + vbOKOnly, "Info"
+Exit Sub
 End If
 
 End Sub
@@ -350,7 +352,7 @@ Form4.Label1.FontSize = 13
 Form4.Label2.FontSize = 10
 Form4.Combo1.FontSize = 12
 
-'Form11.Visible = True          for test now
+'Form11.Visible = True          'for test
 End Sub
 
 Private Sub List1_Click()
