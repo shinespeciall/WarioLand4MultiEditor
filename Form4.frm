@@ -337,14 +337,58 @@ Form11.Visible = True
 End Sub
 
 Private Sub Command3_Click()   ' UNFINISHED
+If MODfilepath = "" Then
+MsgBox "No MOD file Loaded", vbInformation, "Info"
+Exit Sub
+End If
 'get last LevelRoomIndex if exist
 If LevelRoomIndex = "" Then
 MsgBox "You haven't chose a Room yet !", vbExclamation + vbOKOnly, "Info"
 Exit Sub
 End If
-
+Dim i As Integer, j As Integer
+' Exclude 08601854 and 083F2263
+'--------------------------------Layer 0
+Form9.Text1.Text = Form9.Text1.Text & "extracting and decompressing data..." & vbCrLf
+DoEvents
+Dim Poffset As String
+Poffset = Form4.List5.List(Val("&H" & LevelRoomIndex) - 1)
+If Poffset = "601854" Then
+ExistUnchangeableLayer0 = True
+ElseIf Poffset <> "3F2263" Then
+Poffset = DecompressRLE(Poffset)
+ReDim L0_LB_000(layerWidth, layerHeight)
+For j = 0 To layerHeight - 1
+For i = 0 To layerWidth - 1
+L0_LB_000(i, j) = TextMap(i, j)
+Next i
+Next j
+End If
+'--------------------------------Layer 2
+Poffset = Form4.List1.List(Val("&H" & LevelRoomIndex) - 1)
+If Poffset <> "3F2263" Then
+Poffset = DecompressRLE(Poffset)
+ReDim L1_LB_000(layerWidth, layerHeight)
+For j = 0 To layerHeight - 1
+For i = 0 To layerWidth - 1
+L1_LB_000(i, j) = TextMap(i, j)
+Next i
+Next j
+End If
+'--------------------------------Layer 3
+Poffset = Form4.List3.List(Val("&H" & LevelRoomIndex) - 1)
+If Poffset <> "3F2263" Then
+Poffset = DecompressRLE(Poffset)
+ReDim L2_LB_000(layerWidth, layerHeight)
+For j = 0 To layerHeight - 1
+For i = 0 To layerWidth - 1
+L2_LB_000(i, j) = TextMap(i, j)
+Next i
+Next j
+End If
+WholeRoomChange = True
+Form10.Visible = True
 End Sub
-
 
 Private Sub Form_Load()
 Form4.Move 0, 0, 4650, 9705

@@ -1,6 +1,8 @@
 Attribute VB_Name = "Module2"
 Public MODfilepath As String
 Public IsDeliver As Boolean
+Public WholeRoomChange As Boolean
+Public ExistUnchangeableLayer0 As Boolean
 
 Public Palette16Color() As Long   'used in form 7
 Public Palette256() As Long       'used in form 10
@@ -18,6 +20,8 @@ Public L2_LB_000() As String
 Public L0_LB_001() As String
 Public L1_LB_001() As String        'three for temp and undo
 Public L2_LB_001() As String
+
+Public layerPriority() As Integer
 
 Public Function RGB555ToRGB888(ByVal RGB555 As String) As Long
 If Len(RGB555) <> 4 Then

@@ -9,6 +9,30 @@ Begin VB.Form Form10
    ScaleHeight     =   15000
    ScaleWidth      =   24645
    Visible         =   0   'False
+   Begin VB.CheckBox Check3 
+      Caption         =   "layer 2"
+      Height          =   375
+      Left            =   20400
+      TabIndex        =   36
+      Top             =   1080
+      Width           =   1215
+   End
+   Begin VB.CheckBox Check2 
+      Caption         =   "layer 1"
+      Height          =   615
+      Left            =   20400
+      TabIndex        =   35
+      Top             =   480
+      Width           =   1335
+   End
+   Begin VB.CheckBox Check1 
+      Caption         =   "layer 0"
+      Height          =   495
+      Left            =   20400
+      TabIndex        =   34
+      Top             =   120
+      Width           =   1335
+   End
    Begin VB.Timer Timer1 
       Left            =   720
       Top             =   13080
@@ -18,7 +42,7 @@ Begin VB.Form Form10
       Enabled         =   0   'False
       Height          =   1215
       Left            =   23880
-      TabIndex        =   35
+      TabIndex        =   32
       Top             =   4560
       Width           =   735
    End
@@ -26,14 +50,14 @@ Begin VB.Form Form10
       Caption         =   "Camera Control"
       Height          =   2655
       Left            =   360
-      TabIndex        =   32
+      TabIndex        =   29
       Top             =   10200
       Width           =   3975
       Begin VB.CommandButton Command14 
          Caption         =   "Undo All"
          Height          =   375
          Left            =   2280
-         TabIndex        =   36
+         TabIndex        =   33
          Top             =   2040
          Width           =   1335
       End
@@ -41,7 +65,7 @@ Begin VB.Form Form10
          Caption         =   "Add New control"
          Height          =   375
          Left            =   240
-         TabIndex        =   34
+         TabIndex        =   31
          Top             =   2040
          Width           =   1935
       End
@@ -50,7 +74,7 @@ Begin VB.Form Form10
          Left            =   240
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   33
+         TabIndex        =   30
          Top             =   480
          Width           =   3495
       End
@@ -59,7 +83,7 @@ Begin VB.Form Form10
       Caption         =   "refresh"
       Height          =   375
       Left            =   21840
-      TabIndex        =   30
+      TabIndex        =   27
       Top             =   120
       Width           =   2775
    End
@@ -67,7 +91,7 @@ Begin VB.Form Form10
       Caption         =   "refresh with grid"
       Height          =   375
       Left            =   21840
-      TabIndex        =   29
+      TabIndex        =   26
       Top             =   1080
       Width           =   2775
    End
@@ -75,7 +99,7 @@ Begin VB.Form Form10
       Caption         =   "refresh with camera control"
       Height          =   375
       Left            =   21840
-      TabIndex        =   28
+      TabIndex        =   25
       ToolTipText     =   "If no camera control it will be simply refresh"
       Top             =   600
       Width           =   2775
@@ -86,7 +110,7 @@ Begin VB.Form Form10
       Left            =   240
       ScaleHeight     =   3315
       ScaleWidth      =   4065
-      TabIndex        =   27
+      TabIndex        =   24
       ToolTipText     =   "click to disable one Tile16"
       Top             =   6600
       Width           =   4125
@@ -95,7 +119,7 @@ Begin VB.Form Form10
       Caption         =   "Clear"
       Height          =   615
       Left            =   23880
-      TabIndex        =   26
+      TabIndex        =   23
       Top             =   1800
       Width           =   735
    End
@@ -103,34 +127,9 @@ Begin VB.Form Form10
       Caption         =   "Undo"
       Height          =   615
       Left            =   23880
-      TabIndex        =   22
+      TabIndex        =   19
       Top             =   2640
       Width           =   735
-   End
-   Begin VB.OptionButton Option3 
-      Caption         =   "to layer 3"
-      Height          =   255
-      Left            =   20400
-      TabIndex        =   21
-      Top             =   1080
-      Width           =   1335
-   End
-   Begin VB.OptionButton Option2 
-      Caption         =   "to layer 2"
-      Height          =   255
-      Left            =   20400
-      TabIndex        =   20
-      Top             =   600
-      Width           =   1335
-   End
-   Begin VB.OptionButton Option1 
-      Caption         =   "to layer 1"
-      Height          =   255
-      Left            =   20400
-      TabIndex        =   19
-      Top             =   120
-      Value           =   -1  'True
-      Width           =   1335
    End
    Begin VB.CommandButton Command4 
       Caption         =   "Save High Bytes"
@@ -222,7 +221,7 @@ Begin VB.Form Form10
          Caption         =   "Go"
          Height          =   495
          Left            =   2880
-         TabIndex        =   24
+         TabIndex        =   21
          Top             =   4320
          Width           =   615
       End
@@ -231,7 +230,7 @@ Begin VB.Form Form10
          ItemData        =   "Form10.frx":0000
          Left            =   240
          List            =   "Form10.frx":0002
-         TabIndex        =   23
+         TabIndex        =   20
          Text            =   "00  Debug room"
          Top             =   600
          Width           =   3495
@@ -288,7 +287,7 @@ Begin VB.Form Form10
          Caption         =   "(   ,   )"
          Height          =   495
          Left            =   2520
-         TabIndex        =   31
+         TabIndex        =   28
          Top             =   3600
          Width           =   1335
       End
@@ -296,7 +295,7 @@ Begin VB.Form Form10
          Caption         =   "select MOD:"
          Height          =   255
          Left            =   360
-         TabIndex        =   25
+         TabIndex        =   22
          Top             =   5040
          Width           =   1215
       End
@@ -401,40 +400,100 @@ Private Sub Command1_Click()
 Dim str1 As String, i As Integer, j As Integer
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-str1 = str1 & Mid(L1_LB_000(i, j), 3, 2)
+str1 = str1 & Mid(L0_LB_000(i, j), 3, 2)
 Next i
 Next j
 Form10.Text1.Text = str1
 End Sub
 
 Private Sub Command10_Click()
+Form10.Command10.Enabled = False
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 1
 Dim i As Integer, j As Integer, result As Boolean
-For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
-DoEvents
-Next i
-Next j
+If IsDeliver = True Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+ElseIf WholeRoomChange = True Then
+    Dim k As Integer
+    For k = 2 To 0 Step -1
+    If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    End If
+    Next k
+End If
 For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
 For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
 Form10.Picture1.Line (64 * 6 * i, 64 * 6 * j)-(64 * 6 * i + 64 * 6, 64 * 6 * j + 64 * 6), vbWhite, B
 DoEvents
 Next i
 Next j
+Form10.Command10.Enabled = True
 End Sub
 
 Private Sub Command11_Click()
+Form10.Command11.Enabled = False
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 2
 Dim i As Integer, j As Integer, result As Boolean
-For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
-DoEvents
-Next i
-Next j
+If IsDeliver = True Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+ElseIf WholeRoomChange = True Then
+    Dim k As Integer
+    For k = 2 To 0 Step -1
+    If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    End If
+    Next k
+End If
+Form10.Command11.Enabled = True
 End Sub
 
 Private Sub Command12_Click()
@@ -458,19 +517,19 @@ Hexstream2 = ""
 For j = 0 To Val("&H" & heighta2) - 1
 For i = 0 To Val("&H" & widtha1) - 1
 Hexstream1 = Hexstream1 & "00"
-If Mid(L1_LB_000(i, j), 1, 2) <> "00" Then IsHexstream2NeedWrite = True
+If Mid(L0_LB_000(i, j), 1, 2) <> "00" Then IsHexstream2NeedWrite = True
 Next i
 Next j
 For j = 0 To Val("&H" & heighta2) - 1
 For i = 0 To Val("&H" & widtha1) - 1
-Mid(Hexstream1, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid(L1_LB_000(i, j), 3, 2)
+Mid(Hexstream1, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid(L0_LB_000(i, j), 3, 2)
 If IsHexstream2NeedWrite = True Then Hexstream2 = Hexstream2 & "00"
 Next i
 Next j
 If IsHexstream2NeedWrite = True Then
 For j = 0 To Val("&H" & heighta2) - 1
 For i = 0 To Val("&H" & widtha1) - 1
-Mid(Hexstream2, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid(L1_LB_000(i, j), 1, 2)
+Mid(Hexstream2, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid(L0_LB_000(i, j), 1, 2)
 Next i
 Next j
 End If
@@ -483,6 +542,7 @@ IsHexstream2NeedWrite = SaveCameraString(str1)           'IsHexstream2NeedWrite 
 If IsHexstream2NeedWrite = False Then MsgBox "fail to save camera control !"
 If IsHexstream2NeedWrite = True Then MsgBox "the App save camera control in temp successfully!"
 End If
+IsDeliver = False
 Form10.Visible = False
 Form2.Visible = True
 Unload Form10
@@ -505,7 +565,7 @@ Private Sub Command2_Click()
 Dim str1 As String, i As Integer, j As Integer
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-str1 = str1 & Mid(L1_LB_000(i, j), 1, 2)
+str1 = str1 & Mid(L0_LB_000(i, j), 1, 2)
 Next i
 Next j
 Form10.Text1.Text = str1
@@ -518,7 +578,7 @@ str1 = Replace(str1, Chr(13), "")
 str1 = Replace(str1, Chr(10), "")
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-Mid(L1_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Mid(L0_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
 End Sub
@@ -530,7 +590,7 @@ str1 = Replace(str1, Chr(13), "")
 str1 = Replace(str1, Chr(10), "")
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
- Mid(L1_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+ Mid(L0_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
 End Sub
@@ -538,21 +598,17 @@ End Sub
 Private Sub Command5_Click()
 Dim TileOffset As String, TileLength2 As Long
 Dim TextMAPDataOffset As String, paletteOffset As String
-If gbafilepath = "" Then
-Form9.Text1.Text = Form9.Text1.Text & "Please Open the GBA file!!" & vbCrLf
-Exit Sub
-End If
 
 MapLength = Form10.Text8.Text
 MapHeight = Form10.Text9.Text
-If Val("&H" & MapLength) * Val("&H" & MapHeight) >= Val("&H" & "FFF") Then
-Form9.Text1.Text = Form9.Text1.Text & "Map too large, stop initrial !" & vbCrLf
-MsgBox "Map too large, please change the Length and Height value!!", vbInformation, "Info"
-Exit Sub
-End If
+'If Val("&H" & MapLength) * Val("&H" & MapHeight) >= Val("&H" & "FFF") Then
+'Form9.Text1.Text = Form9.Text1.Text & "Map too large, stop initrial !" & vbCrLf
+'MsgBox "Map too large, please change the Length and Height value!!", vbInformation, "Info"
+'Exit Sub
+'End If
 Dim i As Long, j As Long
-'initial MAP matrix
-If IsDeliver = False Then
+'initial MAP
+If IsDeliver = False And WholeRoomChange = False Then
 ReDim L0_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L1_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
 ReDim L2_LB_000(Val("&H" & MapLength) - 1, Val("&H" & MapHeight) - 1)
@@ -661,9 +717,8 @@ DoEvents
 Next i
 Next j
 
-If IsDeliver = False Then
+If IsDeliver = False And WholeRoomChange = False Then
 Form9.Text1.Text = Form9.Text1.Text & "No Map Text Data inport, create new map!" & vbCrLf
-'make grid for Tile16
 Form9.Text1.Text = Form9.Text1.Text & "Making grid......" & vbCrLf
 For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
 For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
@@ -671,16 +726,60 @@ Form10.Picture1.Line (64 * 6 * i, 64 * 6 * j)-(64 * 6 * i + 64 * 6, 64 * 6 * j +
 DoEvents
 Next i
 Next j
-'grid end            so each point = 24*24
 End If
 
 If IsDeliver = True Then
+Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+result = DrawTile16(i, j, L0_LB_000(i, j), Form10.Picture1)
+DoEvents
+Next i
+Next j
+End If
+
+If WholeRoomChange = True Then
+Dim Flag01 As Integer
+Flag01 = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + 52 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))     'eleventh byte flag
+If ((Flag01 < 5) Or (Flag01 And 3)) = 0 Then
+layerPriority(1) = 1: layerPriority(2) = 2
+ElseIf (Flag01 And 3) = 1 Then
+layerPriority(0) = 1: layerPriority(2) = 2
+ElseIf (Flag01 And 3) = 2 Then
+layerPriority(0) = 1: layerPriority(2) = 2
+Else
+layerPriority(0) = 2: layerPriority(2) = 1
+End If
+
+Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
+Dim k As Integer
+For k = 2 To 0 Step -1
+If layerPriority(0) = k Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+result = DrawTile16(i, j, L0_LB_000(i, j), Form10.Picture1)
+DoEvents
+Next i
+Next j
+ElseIf layerPriority(1) = k Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
 result = DrawTile16(i, j, L1_LB_000(i, j), Form10.Picture1)
 DoEvents
 Next i
 Next j
+ElseIf layerPriority(2) = k Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+result = DrawTile16(i, j, L2_LB_000(i, j), Form10.Picture1)
+DoEvents
+Next i
+Next j
+End If
+Next k
+Form10.Check1.Value = 1
+Form10.Check2.Value = 1
+Form10.Check3.Value = 1
 End If
 Form9.Text1.Text = Form9.Text1.Text & "Finish All" & vbCrLf
 Form10.Combo1.Enabled = True
@@ -691,13 +790,14 @@ Private Sub Command6_Click()
 Dim i As Integer, j As Integer, result As Boolean
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-L1_LB_000(i, j) = L1_LB_001(i, j)
-L1_LB_001(i, j) = "0000"
+L0_LB_000(i, j) = L0_LB_001(i, j)
+L0_LB_001(i, j) = "0000"
 Next i
 Next j
+Form10.Picture1.Cls
 For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
 For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
 DoEvents
 Next i
 Next j
@@ -709,12 +809,40 @@ Xshift = Val("&H" & Form10.Text6.Text)
 Yshift = Val("&H" & Form10.Text7.Text)
 Form10.Picture1.Cls
 Dim i As Integer, j As Integer, result As Boolean
-For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
-DoEvents
-Next i
-Next j
+If IsDeliver = True Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+ElseIf WholeRoomChange = True Then
+    Dim k As Integer
+    For k = 2 To 0 Step -1
+    If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    End If
+    Next k
+End If
 End Sub
 
 Private Sub Command8_Click()
@@ -722,15 +850,45 @@ Form10.Picture1.Cls
 End Sub
 
 Private Sub Command9_Click()
+Form10.Command9.Enabled = False
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 2
 Dim i As Integer, j As Integer, result As Boolean
-For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
-DoEvents
-Next i
-Next j
+If IsDeliver = True Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+ElseIf WholeRoomChange = True Then
+    Dim k As Integer
+    For k = 2 To 0 Step -1
+    If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
+    DoEvents
+    Next i
+    Next j
+    End If
+    Next k
+End If
+
 Dim OutputString As String, kk As Integer
 OutputString = Replace(Form10.Text2.Text, Chr(32), "")
 OutputString = Replace(OutputString, Chr(13), "")
@@ -770,6 +928,7 @@ If Len(OutputString) <> 0 Then
             End If
             Next j
 End If
+Form10.Command9.Enabled = True
 End Sub
 
 Private Sub Form_Load()
@@ -891,58 +1050,90 @@ Form10.Combo2.AddItem "5B  The Big Board end"
 Xshift = 0
 Yshift = 0
 WasCameraControlChange = False
+
 If IsDeliver = True Then
-ReDim L1_LB_000(Val("&H" & widtha1) - 1, Val("&H" & heighta2) - 1)
-ReDim L1_LB_001(Val("&H" & widtha1) - 1, Val("&H" & heighta2) - 1)
-For j = 1 To Val("&H" & heighta2)
-For i = 1 To Val("&H" & widtha1)
-L1_LB_000(i - 1, j - 1) = "0000"
-L1_LB_001(i - 1, j - 1) = "0000"
-Next i
-Next j
-Form10.Text8.Text = widtha1
-Form10.Text9.Text = heighta2
+    ReDim L0_LB_000(Val("&H" & widtha1) - 1, Val("&H" & heighta2) - 1)
+    ReDim L0_LB_001(Val("&H" & widtha1) - 1, Val("&H" & heighta2) - 1)
+    For j = 1 To Val("&H" & heighta2)
+    For i = 1 To Val("&H" & widtha1)
+    L0_LB_000(i - 1, j - 1) = "0000"
+    L0_LB_001(i - 1, j - 1) = "0000"
+    Next i
+    Next j
+    Form10.Text8.Text = widtha1
+    Form10.Text9.Text = heighta2
 
-For j = 0 To Val("&H" & heighta2) - 1
-For i = 0 To Val("&H" & widtha1) - 1
-Mid(L1_LB_000(i, j), 3, 2) = Mid(Hexstream1, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2)
-Next i
-Next j
+    For j = 0 To Val("&H" & heighta2) - 1
+    For i = 0 To Val("&H" & widtha1) - 1
+    Mid(L0_LB_000(i, j), 3, 2) = Mid(Hexstream1, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2)
+    Next i
+    Next j
 
-If Hexstream2 <> "" Then
-For j = 0 To Val("&H" & heighta2) - 1
-For i = 0 To Val("&H" & widtha1) - 1
- Mid(L1_LB_000(i, j), 1, 2) = Mid(Hexstream2, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2)
-Next i
-Next j
-End If
+    If Hexstream2 <> "" Then
+    For j = 0 To Val("&H" & heighta2) - 1
+    For i = 0 To Val("&H" & widtha1) - 1
+     Mid(L0_LB_000(i, j), 1, 2) = Mid(Hexstream2, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2)
+    Next i
+    Next j
+    End If
 
-Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
-Form10.Command13.Enabled = True
-Command5_Click
+    Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
+    Form10.Command13.Enabled = True
+    Form10.Check1.Enabled = False
+    Form10.Check2.Enabled = False
+    Form10.Check3.Enabled = False
+    Command5_Click
 
-If Len(CameraCotrolString) <> 0 Then
-Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
-For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
-Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
-Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
-Next i
-Else
-Form10.Text2.Text = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) & "00" & vbCrLf
-End If
-If WasCameraControlStringChange = True Then
-Form10.Command12.Enabled = False
-Form10.Command14.Enabled = False
-End If
-
+    If Len(CameraCotrolString) <> 0 Then
+    Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
+    For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
+    Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
+    Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
+    Next i
+    Else
+    Form10.Text2.Text = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) & "00" & vbCrLf
+    End If
+    If WasCameraControlStringChange = True Then
+    Form10.Command12.Enabled = False
+    Form10.Command14.Enabled = False
+    End If
+ElseIf WholeRoomChange = True Then
+    Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
+    Form10.Command13.Enabled = False
+    Form10.Text8.Text = Hex(layerWidth)
+    Form10.Text9.Text = Hex(layerHeight)
+    layerHeight = 0
+    layerWidth = 0
+    Erase TextMap()
+    ReDim layerPriority(2)
+    layerPriority(0) = 0
+    layerPriority(1) = 0
+    layerPriority(2) = 0
+    Command5_Click
+    
+    If Len(CameraCotrolString) <> 0 Then
+    Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
+    For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
+    Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
+    Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
+    Next i
+    Else
+    Form10.Text2.Text = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) & "00" & vbCrLf
+    End If
+    If WasCameraControlStringChange = True Then
+    Form10.Command12.Enabled = False
+    Form10.Command14.Enabled = False
+    End If
 End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
+IsDeliver = False
+WholeRoomChange = False
+
 Erase Tile16()
 Erase Tile88()
 Erase Palette256()
-'Erase TextMap()
 
 Erase L0_LB_000()
 Erase L1_LB_000()
@@ -952,6 +1143,7 @@ Erase L1_LB_001()
 Erase L2_LB_001()
 
 Erase TileMOD()
+Erase layerPriority()
 End Sub
 
 Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -969,14 +1161,14 @@ Dim i As Integer, j As Integer
 If IsMakingCameraRec = False Then
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
-    L1_LB_001(i, j) = L1_LB_000(i, j)
+    L0_LB_001(i, j) = L0_LB_000(i, j)
     Next i
     Next j
     For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
     For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
     If NowTileMOD(i, j) <> "0000" Then
     result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
-    L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+    L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
     Form10.Command6.Enabled = True
     End If
     Next i
@@ -984,8 +1176,8 @@ If IsMakingCameraRec = False Then
 
     If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" Then
     result = DrawTile16(MouseX, MouseY, NowTileMOD(0, 0), Form10.Picture1)
-    L1_LB_001(MouseX + Xshift, MouseY + Yshift) = L1_LB_000(MouseX + Xshift, MouseY + Yshift)
-    L1_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+    L0_LB_001(MouseX + Xshift, MouseY + Yshift) = L0_LB_000(MouseX + Xshift, MouseY + Yshift)
+    L0_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
     End If
 Else
 IsClick = True
