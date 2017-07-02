@@ -161,7 +161,7 @@ heipos = heipos * 24 * 16
 k = BIN_to_DEC(Mid(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
-If Val("&H" & "0" & Tile8(j, i)) <> 0 Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If (Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -198,7 +198,7 @@ heipos = heipos
 k = BIN_to_DEC(Mid(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
-If Val("&H" & "0" & Tile8(j, i)) <> 0 Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If (Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -235,7 +235,7 @@ heipos = heipos + 24 * 8
 k = BIN_to_DEC(Mid(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
-If Val("&H" & "0" & Tile8(j, i)) <> 0 Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If (Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -272,7 +272,7 @@ heipos = heipos
 k = BIN_to_DEC(Mid(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
-If Val("&H" & "0" & Tile8(j, i)) <> 0 Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If (Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 

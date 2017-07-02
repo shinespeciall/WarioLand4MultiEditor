@@ -1100,6 +1100,7 @@ If IsDeliver = True Then
 ElseIf WholeRoomChange = True Then
     Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
     Form10.Command13.Enabled = False
+    Form10.Command13.Visible = False
     Form10.Text8.Text = Hex(layerWidth)
     Form10.Text9.Text = Hex(layerHeight)
     layerHeight = 0
