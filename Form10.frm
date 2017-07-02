@@ -220,9 +220,9 @@ Begin VB.Form Form10
       Begin VB.CommandButton Command7 
          Caption         =   "Go"
          Height          =   495
-         Left            =   2880
+         Left            =   2640
          TabIndex        =   21
-         Top             =   4320
+         Top             =   3960
          Width           =   615
       End
       Begin VB.ComboBox Combo2 
@@ -285,11 +285,11 @@ Begin VB.Form Form10
       End
       Begin VB.Label Label3 
          Caption         =   "(   ,   )"
-         Height          =   495
+         Height          =   255
          Left            =   2520
          TabIndex        =   28
          Top             =   3600
-         Width           =   1335
+         Width           =   1455
       End
       Begin VB.Label Label2 
          Caption         =   "select MOD:"
@@ -1128,6 +1128,10 @@ ElseIf WholeRoomChange = True Then
 End If
 End Sub
 
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Form10.Shape1.Visible = False
+End Sub
+
 Private Sub Form_Unload(Cancel As Integer)
 IsDeliver = False
 WholeRoomChange = False
@@ -1145,6 +1149,14 @@ Erase L2_LB_001()
 
 Erase TileMOD()
 Erase layerPriority()
+End Sub
+
+Private Sub Frame1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Form10.Shape1.Visible = False
+End Sub
+
+Private Sub Frame2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Form10.Shape1.Visible = False
 End Sub
 
 Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
