@@ -358,17 +358,28 @@ ExistUnchangeableLayer0 = True
 ElseIf Poffset <> "3F2263" Then
 Poffset = DecompressRLE(Poffset)
 ReDim L0_LB_000(layerWidth, layerHeight)
+ReDim L0_LB_001(layerWidth, layerHeight)
 For j = 0 To layerHeight - 1
 For i = 0 To layerWidth - 1
 L0_LB_000(i, j) = TextMap(i, j)
 Next i
 Next j
 End If
-'--------------------------------Layer 2
+'--------------------------------Layer 2  which must be exist
 Poffset = Form4.List1.List(Val("&H" & LevelRoomIndex) - 1)
 If Poffset <> "3F2263" Then
 Poffset = DecompressRLE(Poffset)
 ReDim L1_LB_000(layerWidth, layerHeight)
+ReDim L1_LB_001(layerWidth, layerHeight)
+If ExistUnchangeableLayer0 = True Or Form4.List5.List(Val("&H" & LevelRoomIndex) - 1) = "3F2263" Then
+ReDim L0_LB_000(layerWidth, layerHeight)
+ReDim L0_LB_001(layerWidth, layerHeight)
+For j = 0 To layerHeight - 1
+For i = 0 To layerWidth - 1
+L0_LB_000(i, j) = "0000"
+Next i
+Next j
+End If
 For j = 0 To layerHeight - 1
 For i = 0 To layerWidth - 1
 L1_LB_000(i, j) = TextMap(i, j)
@@ -380,9 +391,18 @@ Poffset = Form4.List3.List(Val("&H" & LevelRoomIndex) - 1)
 If Poffset <> "3F2263" Then
 Poffset = DecompressRLE(Poffset)
 ReDim L2_LB_000(layerWidth, layerHeight)
+ReDim L2_LB_001(layerWidth, layerHeight)
 For j = 0 To layerHeight - 1
 For i = 0 To layerWidth - 1
 L2_LB_000(i, j) = TextMap(i, j)
+Next i
+Next j
+Else
+ReDim L2_LB_000(layerWidth, layerHeight)
+ReDim L2_LB_001(layerWidth, layerHeight)
+For j = 0 To layerHeight - 1
+For i = 0 To layerWidth - 1
+L0_LB_000(i, j) = "0000"
 Next i
 Next j
 End If
@@ -560,8 +580,8 @@ Dim TenthByte_scrollBG As String
 
 TenthByte_scrollBG = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List3.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List3.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List3.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List3.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List3.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List3.ListIndex * 44 * 2, 2) & vbCrLf
 '********************************************读文件过程
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
@@ -699,8 +719,8 @@ Dim TenthByte_scrollBG As String
 
 TenthByte_scrollBG = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List5.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List5.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List5.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List5.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List5.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List5.ListIndex * 44 * 2, 2) & vbCrLf
 '********************************************读文件过程
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
