@@ -100,7 +100,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
 'On Error GoTo errorhandle
- 
+
 If Form1.Text1.Text = "601854" Then
 MsgBox "This Layer cannot be decompressed!", vbInformation, "Info"
 Exit Sub
@@ -149,7 +149,7 @@ DoEvents
 a3 = Mid(ROMallHex, Val(nowoffset) + 5, 2)
 totlesize = Val("&H" & a1) * Val("&H" & a2)
 Form1.Picture1.Print "start offset of compressed data:" & startoffset & "                 room 初始参数：" & a1 & a2 & a3
-Form1.Picture1.Print "room width Hex:" & a1 & "    " & "room height Hex:" & a2
+Form1.Picture1.Print "room width Hex:" & a1 & "    room height Hex:" & a2 & "      Decompress Type:   " & a3
 
 nowoffset = nowoffset + 6
 
@@ -299,24 +299,68 @@ End If
 IfisNewRoom = False
 
 If Mid(ROMallHex, nowoffset + 1, 4) = "0002" Then
-Hexstream2 = ""
-layer2compressdatalength = 0
-leftdata1 = Mid(ROMallHex, Val(nowoffset) + 5, 4)
-nowoffset = nowoffset + 4 + 4     'just ignore the next two byte, it is Hex "8" and three 8-bit length data
-                                  'and then count how many "00" are lefted
-  For i = 0 To Len(ROMallHex)      'a not accurate value, just to say the stored data cannot be less than "00" data in general
+j = 0
+nowoffset = nowoffset + 4
+Do
+'*******************************************************这一块是解压并写入的一次循环
+str1 = Mid(ROMallHex, nowoffset + 1, 4)
+If CLng("&H" & str1) > 32768 Then               '对于大于8000h的情况
+tilenum = CLng("&H" & str1) - 32768
+str2 = Mid(ROMallHex, nowoffset + 5, 2)
+  For i = 1 To tilenum
+  decompressHex(i + j - 1) = str2
+  Next i
+j = j + tilenum
+nowoffset = nowoffset + 6
+ElseIf str1 = "0000" Then
+Exit Do
+Else                                        '小于等于8000h
+tilenum = CLng("&H" & str1)
+str2 = Mid(ROMallHex, nowoffset + 5, 2 * tilenum)
+  For i = 1 To tilenum
+  decompressHex(i + j - 1) = Mid(str2, i * 2 - 1, 2)
+  Next i
+j = j + tilenum
+nowoffset = nowoffset + tilenum * 2 + 4
+End If
+Loop
+
+For j = 0 To Val("&H" & a2) - 1 '写列
+    For i = 0 To Val("&H" & a1) - 1 '写行
+    Hexstream2 = Hexstream2 & decompressHex(i + j * Val("&H" & a1))
+    Next i
+Next j
+nowoffset = nowoffset + 4
+
+layer2compressdatalength = nowoffset - 6 - layer1compressdatalength
+  For i = 0 To Len(ROMallHex)
     j = i * 2
     If Mid(ROMallHex, Val(nowoffset) + 1 + 2 * i, 2) <> "00" Then
     Exit For
     End If
   Next i
-layer1compressdatalength = layer1compressdatalength + j
 leftzerozero1 = j / 2
 
 Form1.Picture1.Print ""
+Form1.Picture1.Print ""
+Form1.Picture1.Print "                  layer 2:"
+Form1.Picture1.Print ""
+
+For i = 1 To Val("&H" & a1)  '写行标
+Form1.Picture1.Print Right("00" & Hex(i - 1), 2) & " ";
+Next i
+Form1.Picture1.Print ""
+Form1.Picture1.Print ""
+
+For j = 0 To Val("&H" & a2) - 1   '写列
+    For i = 0 To Val("&H" & a1) - 1   '写行
+    Form1.Picture1.Print decompressHex(i + j * Val("&H" & a1)) & " ";
+    Next i
+Form1.Picture1.Print "       " & Hex(j)
+Next j
+
 Erase decompressHex()
 Erase ROMallbyte()
-
 
 '******************************************************注出改变Room的事件地址
 MessageStream = ReadFileHex(gbafilepath, LevelChangeRoomStreamOffset, Right("0000" & Hex(Val("&H" & LevelChangeRoomStreamOffset) + 512), 8))
@@ -490,14 +534,16 @@ Form1.Picture1.CurrentY = (BeforeLine + 8 + Val("&H" & heighta2)) * TextHeight("
 Form1.Picture1.CurrentX = 0
 Form1.Picture1.ForeColor = RGB(250, 50, 250)
 Form1.Picture1.Print "Room change event Block ====> Blue rectangle: protal or door   Red rectangle: immediate change room block    Green rectangle: change room with event or destination block"
+Form1.Picture1.CurrentY = (BeforeLine + 8 + 7 + 2 * Val("&H" & heighta2)) * TextHeight("FF")
 Form1.Picture1.ForeColor = vbBlack
 '******************************************************
 MDIForm1.mnuroomchange.Enabled = True
 Form1.Text1.Enabled = True
-BeforeLine = BeforeLine + 9 + Val("&H" & a2)
+BeforeLine = BeforeLine + 8 + 7 + 2 * Val("&H" & a2)
 Form1.Label2.Caption = "information：finish All ! You can change Map by Ctrl + R"
 Exit Sub
 Else          '存在layer2
+
 MessageStream = ReadFileHex(gbafilepath, LevelChangeRoomStreamOffset, Right("0000" & Hex(Val("&H" & LevelChangeRoomStreamOffset) + 512), 8))
 ReDim UsedLineTop(600)
 For ii = 0 To 6

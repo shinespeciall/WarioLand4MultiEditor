@@ -127,7 +127,7 @@ Begin VB.Form Form4
       Width           =   4095
    End
    Begin VB.Label Label5 
-      Caption         =   "Backlayer 2 pointer offset"
+      Caption         =   "layer 0   pointer offset"
       Height          =   375
       Left            =   120
       TabIndex        =   14
@@ -143,7 +143,7 @@ Begin VB.Form Form4
       Width           =   1455
    End
    Begin VB.Label Label3 
-      Caption         =   "Frontlayer pointeroffset Backlayer pointeroffset"
+      Caption         =   "layer 1    pointeroffset layer 2   pointeroffset"
       Height          =   255
       Left            =   120
       TabIndex        =   6
@@ -364,8 +364,10 @@ For i = 0 To layerWidth - 1
 L0_LB_000(i, j) = TextMap(i, j)
 Next i
 Next j
+Layer0Height = layerHeight
+Layer0Width = layerWidth
 End If
-'--------------------------------Layer 2  which must be exist
+'--------------------------------Layer 1  which must be exist
 Poffset = Form4.List1.List(Val("&H" & LevelRoomIndex) - 1)
 If Poffset <> "3F2263" Then
 Poffset = DecompressRLE(Poffset)
@@ -386,7 +388,7 @@ L1_LB_000(i, j) = TextMap(i, j)
 Next i
 Next j
 End If
-'--------------------------------Layer 3
+'--------------------------------Layer 2
 Poffset = Form4.List3.List(Val("&H" & LevelRoomIndex) - 1)
 If Poffset <> "3F2263" Then
 Poffset = DecompressRLE(Poffset)

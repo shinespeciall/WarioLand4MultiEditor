@@ -398,11 +398,36 @@ End Sub
 
 Private Sub Command1_Click()
 Dim str1 As String, i As Integer, j As Integer
+If IsDeliver = True Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
 str1 = str1 & Mid(L0_LB_000(i, j), 3, 2)
 Next i
 Next j
+ElseIf WholeRoomChange = True Then
+If Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0 Then
+For j = 0 To Layer0Height - 1
+For i = 0 To Layer0Width - 1
+str1 = str1 & Mid(L0_LB_000(i, j), 3, 2)
+Next i
+Next j
+ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0 Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+str1 = str1 & Mid(L1_LB_000(i, j), 3, 2)
+Next i
+Next j
+ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1 Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+str1 = str1 & Mid(L2_LB_000(i, j), 3, 2)
+Next i
+Next j
+Else
+MsgBox "You can only choose one checkbox !", vbOKOnly, "Info"
+Exit Sub
+End If
+End If
 Form10.Text1.Text = str1
 End Sub
 
@@ -422,8 +447,8 @@ ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
     If layerPriority(0) = k And Form10.Check1.Value = 1 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
+    For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
@@ -470,8 +495,8 @@ ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
     If layerPriority(0) = k And Form10.Check1.Value = 1 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
+    For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
@@ -563,11 +588,36 @@ End Sub
 
 Private Sub Command2_Click()
 Dim str1 As String, i As Integer, j As Integer
+If IsDeliver = True Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
 str1 = str1 & Mid(L0_LB_000(i, j), 1, 2)
 Next i
 Next j
+ElseIf WholeRoomChange = True Then
+If Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0 Then
+For j = 0 To Layer0Height - 1
+For i = 0 To Layer0Width - 1
+str1 = str1 & Mid(L0_LB_000(i, j), 1, 2)
+Next i
+Next j
+ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0 Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+str1 = str1 & Mid(L1_LB_000(i, j), 1, 2)
+Next i
+Next j
+ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1 Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+str1 = str1 & Mid(L2_LB_000(i, j), 1, 2)
+Next i
+Next j
+Else
+MsgBox "You can only choose one checkbox !", vbOKOnly, "Info"
+Exit Sub
+End If
+End If
 Form10.Text1.Text = str1
 End Sub
 
@@ -576,11 +626,36 @@ Dim str1 As String, i As Integer, j As Integer
 str1 = Replace(Form10.Text1.Text, Chr(32), "")
 str1 = Replace(str1, Chr(13), "")
 str1 = Replace(str1, Chr(10), "")
+If IsDeliver = True Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
 Mid(L0_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
+ElseIf WholeRoomChange = True Then
+If Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0 Then
+For j = 0 To Layer0Height - 1
+For i = 0 To Layer0Width - 1
+Mid(L0_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Layer0Width * 2 + 1, 2)
+Next i
+Next j
+ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0 Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+Mid(L1_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Next i
+Next j
+ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1 Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+Mid(L2_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Next i
+Next j
+Else
+MsgBox "You can only choose one checkbox !", vbOKOnly, "Info"
+Exit Sub
+End If
+End If
 End Sub
 
 Private Sub Command4_Click()
@@ -588,11 +663,36 @@ Dim str1 As String, i As Integer, j As Integer
 str1 = Replace(Form10.Text1.Text, Chr(32), "")
 str1 = Replace(str1, Chr(13), "")
 str1 = Replace(str1, Chr(10), "")
+If IsDeliver = True Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
- Mid(L0_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Mid(L0_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
+ElseIf WholeRoomChange = True Then
+If Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0 Then
+For j = 0 To Layer0Height - 1
+For i = 0 To Layer0Width - 1
+Mid(L0_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Layer0Width * 2 + 1, 2)
+Next i
+Next j
+ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0 Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+Mid(L1_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Next i
+Next j
+ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1 Then
+For j = 0 To Val("&H" & MapHeight) - 1
+For i = 0 To Val("&H" & MapLength) - 1
+Mid(L2_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Next i
+Next j
+Else
+MsgBox "You can only choose one checkbox !", vbOKOnly, "Info"
+Exit Sub
+End If
+End If
 End Sub
 
 Private Sub Command5_Click()
@@ -755,8 +855,8 @@ Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
 Dim k As Integer
 For k = 2 To 0 Step -1
 If layerPriority(0) = k Then
-For j = 0 To Val("&H" & MapHeight) - 1
-For i = 0 To Val("&H" & MapLength) - 1
+For j = 0 To Layer0Height - 1
+For i = 0 To Layer0Width - 1
 result = DrawTile16(i, j, L0_LB_000(i, j), Form10.Picture1)
 DoEvents
 Next i
@@ -820,8 +920,8 @@ ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
     If layerPriority(0) = k And Form10.Check1.Value = 1 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
+    For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
@@ -865,8 +965,8 @@ ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
     If layerPriority(0) = k And Form10.Check1.Value = 1 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
+    For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i

@@ -23,6 +23,9 @@ Public L2_LB_001() As String
 
 Public layerPriority() As Integer
 
+Public Layer0Height As Integer
+Public Layer0Width As Integer
+
 Public Function RGB555ToRGB888(ByVal RGB555 As String) As Long
 If Len(RGB555) <> 4 Then
 RGB555ToRGB888 = 0
