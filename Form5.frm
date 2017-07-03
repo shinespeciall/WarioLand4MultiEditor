@@ -111,8 +111,6 @@ Form4.Visible = False
 Form6.Visible = False
 Form7.Visible = False
 Form8.Visible = False
-Form9.Visible = False
-Form10.Visible = False
 
 WasCameraControlStringChange = False
 

@@ -555,16 +555,28 @@ ALLCOMPRESSDATA = ALLCOMPRESSDATA & CompressDataOnly(Hexstream1)
 'MsgBox "layer 1 压缩数据长度超出原压缩数据，若要写入请重新修改ROM的指针。", vbOKOnly, "Warning"
 'End If
 Dim transleftzero1 As Long
+Dim i As Long, j As Long, no1 As Boolean
+no1 = True
+For j = 0 To CLng("&H" & heighta2) - 1
+For i = 0 To CLng("&H" & widtha1) - 1
+If Mid(Hexstream2, 2 * i + 2 * j * Val("&H" & widtha1) + 1, 2) <> "00" Then
+no1 = False
+End If
+Next i
+Next j
+If no1 = True Then
+Hexstream2 = ""
+End If
 
 If Hexstream2 = "" Then
-If leftzerozero1 > 4 Then
-transleftzero1 = 4
+If leftzerozero1 > 6 Then
+transleftzero1 = 6
 Else
 transleftzero1 = leftzerozero1
 End If
     
     If Len(ALLCOMPRESSDATA) > layer1compressdatalength + 6 - 2 * transleftzero1 Then '尽量别把关卡要素和怪物放在Room边缘
-    MsgBox "layer 1 too long, new offset for inport, you can do it yourself or the porgram will do it automatically！", vbOKOnly, "Warning"
+    MsgBox "New Data too long, new offset should be input, you can do it yourself or the porgram will do it automatically！", vbOKOnly, "Warning"
         If layer1compressdatalength = 0 Then MsgBox "making new Layer needs you to change pointer in yourself.", vbOKOnly + vbInformation, "information!"
     Else
     Form2.Text6.Text = startoffset
@@ -572,9 +584,9 @@ End If
 
 'to get rid of the difficulty in meet with the lowest digit and second lowest digit are all equal to 0
 If (Val("&H" & "8000") + Val("&H" & widtha1) * Val("&H" & heighta2) Mod 256) = 0 Then
-ALLCOMPRESSDATA = ALLCOMPRESSDATA & "0002" & Right(Hex(Val("&H" & "8000") + Val("&H" & widtha1) * Val("&H" & heighta2) + 10), 4) 'Hex函数有奇怪的BUG
+ALLCOMPRESSDATA = ALLCOMPRESSDATA & "0002" & Right(Hex(CLng("&H" & "8000") + CLng("&H" & widtha1) * CLng("&H" & heighta2) + 10), 4)
 Else
-ALLCOMPRESSDATA = ALLCOMPRESSDATA & "0002" & Right(Hex(Val("&H" & "8000") + Val("&H" & widtha1) * Val("&H" & heighta2)), 4) 'Hex函数有奇怪的BUG
+ALLCOMPRESSDATA = ALLCOMPRESSDATA & "0002" & Right(Hex(CLng("&H" & "8000") + CLng("&H" & widtha1) * CLng("&H" & heighta2)), 4)
 End If
 
 ALLCOMPRESSDATA = ALLCOMPRESSDATA & "000000"
