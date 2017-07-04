@@ -5,7 +5,7 @@ Public TextMap() As String
 Public layerWidth As Integer, layerHeight As Integer
 '##########################################
 
-Public Function DecompressRLE(ByVal DataOffset As String) As String              'UNFINISHED need more code for rearrangement
+Public Function DecompressRLE(ByVal DataOffset As String) As String             'UNFINISHED need more code for rearrangement
 Dim strdata As String, src As Integer, DecompressMap() As String, NeedRearrange As Boolean
 src = 1
 strdata = ReadFileHex(gbafilepath, DataOffset, Hex(Val("&H" & DataOffset) + 5120))

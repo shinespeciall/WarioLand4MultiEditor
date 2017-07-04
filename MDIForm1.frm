@@ -54,7 +54,7 @@ Begin VB.MDIForm MDIForm1
       End
    End
    Begin VB.Menu mnufrm 
-      Caption         =   "Form"
+      Caption         =   "Function"
       Begin VB.Menu mnuLevelguidefrm 
          Caption         =   "Level guide"
       End

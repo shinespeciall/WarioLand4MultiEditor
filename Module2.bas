@@ -22,6 +22,7 @@ Public L1_LB_001() As String        'three for temp and undo
 Public L2_LB_001() As String
 
 Public layerPriority() As Integer
+Public LastLayerChange As Integer
 
 Public Layer0Height As Integer
 Public Layer0Width As Integer
@@ -123,7 +124,7 @@ Loop
 D2B = Replace(xx, Chr(32), "") '返回字串
 End Function
 
-Public Function DrawTile16(ByVal lenpos As Long, ByVal heipos As Long, ByVal TileWord As String, ByVal picbox As PictureBox) As Boolean
+Public Function DrawTile16(ByVal lenpos As Long, ByVal heipos As Long, ByVal TileWord As String, ByVal picbox As PictureBox, Optional Cover As Boolean) As Boolean
 On Error Resume Next
 'lenpos and heipos are position Index for Tile16
 Dim Wrd As String      '处理当前字段
@@ -164,6 +165,7 @@ heipos = heipos * 24 * 16
 k = BIN_to_DEC(Mid(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
+If Cover = True Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), vbBlack, BF
 If (Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
@@ -201,6 +203,7 @@ heipos = heipos
 k = BIN_to_DEC(Mid(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
+If Cover = True Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), vbBlack, BF
 If (Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
@@ -238,6 +241,7 @@ heipos = heipos + 24 * 8
 k = BIN_to_DEC(Mid(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
+If Cover = True Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), vbBlack, BF
 If (Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
@@ -275,6 +279,7 @@ heipos = heipos
 k = BIN_to_DEC(Mid(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
+If Cover = True Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), vbBlack, BF
 If (Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002" Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i

@@ -376,6 +376,10 @@ Public IsMakingCameraRec As Boolean
 Public IsClick As Boolean
 Public WillBeResize As Integer
 
+Public IsLayer0Change As Boolean
+Public IsLayer1Change As Boolean
+Public IsLayer2Change As Boolean
+
 Private Sub Combo1_Click()
 Form10.Picture2.Cls
 Dim width As Integer, height As Integer, i As Integer, j As Integer, result As Boolean
@@ -446,21 +450,21 @@ If IsDeliver = True Then
 ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
-    If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+    If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
     For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
     Next j
-    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
     result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
     Next j
-    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
     result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
@@ -494,21 +498,21 @@ If IsDeliver = True Then
 ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
-    If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+    If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
     For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
     Next j
-    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
     result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
     Next j
-    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
     result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
@@ -570,6 +574,7 @@ End If
 IsDeliver = False
 Form10.Visible = False
 Form2.Visible = True
+MDIForm1.Enabled = True
 Unload Form10
 End Sub
 
@@ -881,8 +886,11 @@ Form10.Check1.Value = 1
 Form10.Check2.Value = 1
 Form10.Check3.Value = 1
 End If
+
 Form9.Text1.Text = Form9.Text1.Text & "Finish All" & vbCrLf
 Form10.Combo1.Enabled = True
+Form10.Command5.Enabled = False
+MDIForm1.Enabled = False
 End Sub
 
 
@@ -919,21 +927,21 @@ If IsDeliver = True Then
 ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
-    If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+    If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
     For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
     Next j
-    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
     result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
     Next j
-    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
     result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
@@ -964,21 +972,21 @@ If IsDeliver = True Then
 ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
-    If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+    If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
     For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
     Next j
-    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
     result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
     DoEvents
     Next i
     Next j
-    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
     result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
@@ -1210,6 +1218,7 @@ ElseIf WholeRoomChange = True Then
     layerPriority(0) = 0
     layerPriority(1) = 0
     layerPriority(2) = 0
+    LastLayerChange = 4
     Command5_Click
     
     If Len(CameraCotrolString) <> 0 Then
@@ -1249,6 +1258,8 @@ Erase L2_LB_001()
 
 Erase TileMOD()
 Erase layerPriority()
+
+MDIForm1.Enabled = True
 End Sub
 
 Private Sub Frame1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -1271,31 +1282,164 @@ End Sub
 Private Sub Picture1_Click()
 Dim i As Integer, j As Integer
 
-If IsMakingCameraRec = False Then
-    For j = 0 To Val("&H" & MapHeight) - 1
-    For i = 0 To Val("&H" & MapLength) - 1
-    L0_LB_001(i, j) = L0_LB_000(i, j)
-    Next i
-    Next j
-    For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
-    For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
-    If NowTileMOD(i, j) <> "0000" Then
-    result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
-    L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
-    Form10.Command6.Enabled = True
-    End If
-    Next i
-    Next j
+If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a new room is not support
+    If IsDeliver = True Then
+        For j = 0 To Val("&H" & MapHeight) - 1
+        For i = 0 To Val("&H" & MapLength) - 1
+        L0_LB_001(i, j) = L0_LB_000(i, j)
+        Next i
+        Next j
+        
+        For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
+        For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
+        If NowTileMOD(i, j) <> "0000" Then
+        result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+        L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+        Form10.Command6.Enabled = True
+        End If
+        Next i
+        Next j
+        
+        If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" And NowTileMOD(1, 0) = "0000" And NowTileMOD(0, 1) = "0000" And NowTileMOD(1, 1) = "0000" Then
+        result = DrawTile16(MouseX, MouseY, NowTileMOD(0, 0), Form10.Picture1)
+        L0_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+        End If
+    ElseIf WholeRoomChange = True Then
+        If Form10.Check1.Value = 1 Then
+        For j = 0 To Layer0Height - 1
+        For i = 0 To Layer0Width - 1
+        L0_LB_001(i, j) = L0_LB_000(i, j)
+        Next i
+        Next j
+        IsLayer0Change = True
+        LastLayerChange = 0
+        ElseIf Form10.Check2.Value = 1 Then
+        For j = 0 To Val("&H" & MapHeight) - 1
+        For i = 0 To Val("&H" & MapLength) - 1
+        L1_LB_001(i, j) = L1_LB_000(i, j)
+        Next i
+        Next j
+        IsLayer1Change = True
+        LastLayerChange = 1
+        ElseIf Form10.Check2.Value = 1 Then
+        For j = 0 To Val("&H" & MapHeight) - 1
+        For i = 0 To Val("&H" & MapLength) - 1
+        L2_LB_001(i, j) = L2_LB_000(i, j)
+        Next i
+        Next j
+        IsLayer2Change = True
+        LastLayerChange = 2
+        End If
+        
+        Dim k As Integer
+        
+        If LastLayerChange = 0 Then
+        For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
+        For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
+        If NowTileMOD(i, j) <> "0000" Then
+            result = DrawTile16(MouseX + i, MouseY + j, "0000", Form10.Picture1, True)
+            For k = 2 To 0 Step -1
+            If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            End If
+            Next k
+            L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        Next i
+        Next j
 
-    If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" Then
-    result = DrawTile16(MouseX, MouseY, NowTileMOD(0, 0), Form10.Picture1)
-    L0_LB_001(MouseX + Xshift, MouseY + Yshift) = L0_LB_000(MouseX + Xshift, MouseY + Yshift)
-    L0_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+        If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" And NowTileMOD(1, 0) = "0000" And NowTileMOD(0, 1) = "0000" And NowTileMOD(1, 1) = "0000" Then
+            result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1, True)
+            For k = 2 To 0 Step -1
+            If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+            result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1)
+            ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            End If
+            Next k
+        L0_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+        End If
+
+        ElseIf LastLayerChange = 1 Then
+        For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
+        For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
+        If NowTileMOD(i, j) <> "0000" Then
+            result = DrawTile16(MouseX + i, MouseY + j, "0000", Form10.Picture1, True)
+            For k = 2 To 0 Step -1
+            If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            End If
+            Next k
+            L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        Next i
+        Next j
+        
+        If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" And NowTileMOD(1, 0) = "0000" And NowTileMOD(0, 1) = "0000" And NowTileMOD(1, 1) = "0000" Then
+            result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1, True)
+            For k = 2 To 0 Step -1
+            If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+            result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1)
+            ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            End If
+            Next k
+        L1_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+        End If
+
+        ElseIf LastLayerChange = 2 Then
+        For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
+        For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
+        If NowTileMOD(i, j) <> "0000" Then
+            result = DrawTile16(MouseX + i, MouseY + j, "0000", Form10.Picture1, True)
+            For k = 2 To 0 Step -1
+            If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            End If
+            Next k
+            L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        Next i
+        Next j
+
+        If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" And NowTileMOD(1, 0) = "0000" And NowTileMOD(0, 1) = "0000" And NowTileMOD(1, 1) = "0000" Then
+            result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1, True)
+            For k = 2 To 0 Step -1
+            If layerPriority(0) = k And Form10.Check1.Value = 1 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
+            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+            result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1)
+            End If
+            Next k
+        L2_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+        End If
+
+        End If
     End If
 Else
 IsClick = True
 End If
-
 End Sub
 
 Private Sub Picture2_Click()
