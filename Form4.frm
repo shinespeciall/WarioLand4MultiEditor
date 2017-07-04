@@ -373,9 +373,11 @@ If Poffset <> "3F2263" Then
 Poffset = DecompressRLE(Poffset)
 ReDim L1_LB_000(layerWidth, layerHeight)
 ReDim L1_LB_001(layerWidth, layerHeight)
-If ExistUnchangeableLayer0 = True Or Form4.List5.List(Val("&H" & LevelRoomIndex) - 1) = "3F2263" Then
+If Form4.List5.List(Val("&H" & LevelRoomIndex) - 1) = "3F2263" Or ExistUnchangeableLayer0 = True Then
 ReDim L0_LB_000(layerWidth, layerHeight)
 ReDim L0_LB_001(layerWidth, layerHeight)
+Layer0Height = layerHeight
+Layer0Width = layerWidth
 For j = 0 To layerHeight - 1
 For i = 0 To layerWidth - 1
 L0_LB_000(i, j) = "0000"
