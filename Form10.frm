@@ -436,6 +436,9 @@ Form10.Text1.Text = str1
 End Sub
 
 Private Sub Command10_Click()
+Form10.Check1.Enabled = False
+Form10.Check2.Enabled = False
+Form10.Check3.Enabled = False
 Form10.Command10.Enabled = False
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 1
@@ -480,10 +483,18 @@ Form10.Picture1.Line (64 * 6 * i, 64 * 6 * j)-(64 * 6 * i + 64 * 6, 64 * 6 * j +
 DoEvents
 Next i
 Next j
+If IsDeliver = False Then
+Form10.Check1.Enabled = True
+Form10.Check2.Enabled = True
+Form10.Check3.Enabled = True
+End If
 Form10.Command10.Enabled = True
 End Sub
 
 Private Sub Command11_Click()
+Form10.Check1.Enabled = False
+Form10.Check2.Enabled = False
+Form10.Check3.Enabled = False
 Form10.Command11.Enabled = False
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 2
@@ -521,6 +532,11 @@ ElseIf WholeRoomChange = True Then
     Next j
     End If
     Next k
+End If
+If IsDeliver = False Then
+Form10.Check1.Enabled = True
+Form10.Check2.Enabled = True
+Form10.Check3.Enabled = True
 End If
 Form10.Command11.Enabled = True
 End Sub
@@ -896,19 +912,38 @@ End Sub
 
 Private Sub Command6_Click()
 Dim i As Integer, j As Integer, result As Boolean
-For j = 0 To Val("&H" & MapHeight) - 1
-For i = 0 To Val("&H" & MapLength) - 1
-L0_LB_000(i, j) = L0_LB_001(i, j)
-L0_LB_001(i, j) = "0000"
-Next i
-Next j
-Form10.Picture1.Cls
-For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1)
-DoEvents
-Next i
-Next j
+If IsDeliver = True Then
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    L0_LB_000(i, j) = L0_LB_001(i, j)
+    L0_LB_001(i, j) = "0000"
+    Next i
+    Next j
+ElseIf WholeRoomChange = True Then
+    If LastLayerChange = 0 Then
+    For j = 0 To Layer0Height - 1
+    For i = 0 To Layer0Width - 1
+    L0_LB_000(i, j) = L0_LB_001(i, j)
+    L0_LB_001(i, j) = "0000"
+    Next i
+    Next j
+    ElseIf LastLayerChange = 1 Then
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    L1_LB_000(i, j) = L1_LB_001(i, j)
+    L1_LB_001(i, j) = "0000"
+    Next i
+    Next j
+    ElseIf LastLayerChange = 2 Then
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    L2_LB_000(i, j) = L2_LB_001(i, j)
+    L2_LB_001(i, j) = "0000"
+    Next i
+    Next j
+    End If
+End If
+Command11_Click
 Form10.Command6.Enabled = False
 End Sub
 
@@ -958,6 +993,9 @@ Form10.Picture1.Cls
 End Sub
 
 Private Sub Command9_Click()
+Form10.Check1.Enabled = False
+Form10.Check2.Enabled = False
+Form10.Check3.Enabled = False
 Form10.Command9.Enabled = False
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 2
@@ -1035,6 +1073,11 @@ If Len(OutputString) <> 0 Then
             Form10.Picture1.Line ((b1 - Xshift + 0.5) * 24 * 16, (b3 - Yshift + 0.5) * 24 * 16)-((b1 - Xshift + 1) * 24 * 16, (b3 - Yshift + 1) * 24 * 16), vbWhite, BF
             End If
             Next j
+End If
+If IsDeliver = False Then
+Form10.Check1.Enabled = True
+Form10.Check2.Enabled = True
+Form10.Check3.Enabled = True
 End If
 Form10.Command9.Enabled = True
 End Sub
