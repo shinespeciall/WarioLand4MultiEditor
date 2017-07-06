@@ -3,10 +3,11 @@ Attribute VB_Name = "Module3"
 '########################################## for decompress, make sure to call the function and erase these variaties after get the value in one sub or procedure
 Public TextMap() As String
 Public layerWidth As Integer, layerHeight As Integer
+Public DataByteNumber As Long
 '##########################################
 
-Public Function DecompressRLE(ByVal DataOffset As String) As String             'UNFINISHED need more code for rearrangement
-Dim strdata As String, src As Integer, DecompressMap() As String, NeedRearrange As Boolean
+Public Function DecompressRLE(ByVal DataOffset As String, Optional returnDataLength As Boolean) As String             'UNFINISHED
+Dim strdata As String, src As Long, DecompressMap() As String, NeedRearrange As Boolean
 src = 1
 strdata = ReadFileHex(gbafilepath, DataOffset, Hex(Val("&H" & DataOffset) + 5120))
 If Mid(strdata, 1, 2) = "00" Then
@@ -88,6 +89,7 @@ ElseIf Mid(strdata, src, 2) = "02" Then
     Loop
 End If
 Next ii
+If returnDataLength = True Then DataByteNumber = (src - 1) / 2
 For jj = 0 To layerHeight - 1
 For ii = 0 To layerWidth - 1
 TextMap(ii, jj) = DecompressMap(ii + layerWidth * jj)

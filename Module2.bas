@@ -21,7 +21,12 @@ Public L0_LB_001() As String
 Public L1_LB_001() As String        'three for temp and undo
 Public L2_LB_001() As String
 
+Public L0_PostCompDataLength As Long
+Public L1_PostCompDataLength As Long
+Public L2_PostCompDataLength As Long
+
 Public layerPriority() As Integer
+Public PostlayerCompDataLength() As Long
 Public LastLayerChange As Integer
 
 Public Layer0Height As Integer

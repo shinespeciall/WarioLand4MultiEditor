@@ -613,6 +613,7 @@ Form6.Text6.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 4 + (Val("&H" & Lev
 Form6.Text7.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 6 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Fourth byte flag    Layer 2 Visible Flag
 Form6.Text2.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'tenth byte flag
 Form6.Text5.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 52 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)     'eleventh byte flag
+Form6.Text3.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)
 
     Dim FirstPointer As String
     FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))

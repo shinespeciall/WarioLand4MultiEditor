@@ -277,8 +277,6 @@ tempoffset = Mid(ROMallHex, 25 + 6 + i * 44 * 2 - 8, 2) & Mid(ROMallHex, 25 + 4 
 tempoffset = Val("&H" & tempoffset) - Val("&H" & "8000000")
 Form4.List5.AddItem Hex(tempoffset)
 Form4.List6.AddItem Hex(Val("&H" & BaseOffset) + 12 + i * 44 - 4)
-'输出检查第1-5个标志位
-'Debug.Print Mid(ROMallHex, 25 + i * 44 * 2 - 8 - 8 - 6, 8)
 Next i
 ROMallHex = ""
 
@@ -347,6 +345,7 @@ MsgBox "You haven't chose a Room yet !", vbExclamation + vbOKOnly, "Info"
 Exit Sub
 End If
 Dim i As Integer, j As Integer
+ReDim PostlayerCompDataLength(2)
 ' Exclude 08601854 and 083F2263
 '--------------------------------Layer 0
 Form9.Text1.Text = Form9.Text1.Text & "extracting and decompressing data..." & vbCrLf
@@ -355,10 +354,12 @@ Dim Poffset As String
 Poffset = Form4.List5.List(Val("&H" & LevelRoomIndex) - 1)
 If Poffset = "601854" Then
 ExistUnchangeableLayer0 = True
+PostlayerCompDataLength(0) = 0
 ElseIf Poffset <> "3F2263" Then
-Poffset = DecompressRLE(Poffset)
+Poffset = DecompressRLE(Poffset, True)
 ReDim L0_LB_000(layerWidth, layerHeight)
 ReDim L0_LB_001(layerWidth, layerHeight)
+PostlayerCompDataLength(0) = DataByteNumber
 For j = 0 To layerHeight - 1
 For i = 0 To layerWidth - 1
 L0_LB_000(i, j) = TextMap(i, j)
@@ -370,12 +371,14 @@ End If
 '--------------------------------Layer 1  which must be exist
 Poffset = Form4.List1.List(Val("&H" & LevelRoomIndex) - 1)
 If Poffset <> "3F2263" Then
-Poffset = DecompressRLE(Poffset)
+Poffset = DecompressRLE(Poffset, True)
 ReDim L1_LB_000(layerWidth, layerHeight)
 ReDim L1_LB_001(layerWidth, layerHeight)
+PostlayerCompDataLength(1) = DataByteNumber
 If Form4.List5.List(Val("&H" & LevelRoomIndex) - 1) = "3F2263" Or ExistUnchangeableLayer0 = True Then
 ReDim L0_LB_000(layerWidth, layerHeight)
 ReDim L0_LB_001(layerWidth, layerHeight)
+PostlayerCompDataLength(0) = 0
 Layer0Height = layerHeight
 Layer0Width = layerWidth
 For j = 0 To layerHeight - 1
@@ -393,9 +396,10 @@ End If
 '--------------------------------Layer 2
 Poffset = Form4.List3.List(Val("&H" & LevelRoomIndex) - 1)
 If Poffset <> "3F2263" Then
-Poffset = DecompressRLE(Poffset)
+Poffset = DecompressRLE(Poffset, True)
 ReDim L2_LB_000(layerWidth, layerHeight)
 ReDim L2_LB_001(layerWidth, layerHeight)
+PostlayerCompDataLength(2) = DataByteNumber
 For j = 0 To layerHeight - 1
 For i = 0 To layerWidth - 1
 L2_LB_000(i, j) = TextMap(i, j)
@@ -404,6 +408,7 @@ Next j
 Else
 ReDim L2_LB_000(layerWidth, layerHeight)
 ReDim L2_LB_001(layerWidth, layerHeight)
+PostlayerCompDataLength(2) = 0
 For j = 0 To layerHeight - 1
 For i = 0 To layerWidth - 1
 L0_LB_000(i, j) = "0000"

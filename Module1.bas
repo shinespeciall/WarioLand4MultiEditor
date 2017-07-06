@@ -50,7 +50,7 @@ Public LengthOfAllPointer As Long               '指针表总长，单位是Byte
 Public WasCameraControlStringChange As Boolean
 '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Public Function CompressDataOnly(ByVal Hexstream As String) As String   'compress data only, and value "FF" has not been try.
+Public Function CompressDataOnly(ByVal Hexstream As String) As String   'compress data only, and value "FF" has not been check
 Dim OutputStream As String
 Dim str1 As String, str2 As String    'store now text in byte
 
@@ -491,4 +491,68 @@ Select Case level
 End Select
 r3 = Hex(Val("&H" & r3) + 4 * X)
 GetLevelNamePointer = ReadFileHex(gbafilepath, r3, Hex(Val("&H" & r3) + 3))
+End Function
+
+Public Function SaveRoomCompData(Offset_ofPostDataPointer As String, compData As String, PostDataLength As Long) As Boolean
+
+Dim i As Integer, j As Long
+Dim TempAddress As Long
+Dim returnstr As String
+Dim str1 As String
+
+For i = 1 To 100
+    If SaveDataOffset(i) = "" Then Exit For
+Next i
+If SaveDataOffset(95) <> "" Then
+SaveRoomCompData = False
+Exit Function
+End If
+
+TempAddress = CLng("&H" & SaveDatabuffer(0))
+
+    returnstr = FindSpace(gbafilepath, "598EEC", "59F291", "00", Len(compData) / 2 + 6)
+    If returnstr = "FFFFFFFF" Then
+    returnstr = FindSpace(gbafilepath, "78F97F", SaveDatabuffer(0), "00", 6 + Len(compData) / 2 + 6)
+    End If
+    '------------------------出问题的地址可以在此处设置
+    'If CLng("&H" & returnstr) >= CLng("&H59AD20") And CLng("&H" & returnstr) <= CLng("&H59AE63") Then
+    'returnstr = FindSpace(gbafilepath, "59AE63", "59F291", "00", Len(compData)/ 2 + 6)
+    'If returnstr = "FFFFFFFF" Then
+    'returnstr = FindSpace(gbafilepath, "78F97F", SaveDatabuffer(0), "00", 6 + Len(compData)/ 2 + 6)
+    'End If
+    'End If
+    '-------------------------------------------------
+If returnstr = "FFFFFFFF" Then
+    SaveDataOffset(i) = SaveDatabuffer(0)
+    SaveDatabuffer(i) = compData
+    SaveDataOffset(i + 1) = Offset_ofPostDataPointer
+    TempAddress = CLng("&H" & "8000000") + CLng("&H" & SaveDataOffset(i))
+    SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    TempAddress = CLng(ReadFileHex(gbafilepath, Offset_ofPostDataPointer, Hex(CLng("&H" & Offset_ofPostDataPointer) + 3)))
+    TempAddress = TempAddress - 8
+    If PostDataLength > 0 Then
+    SaveDataOffset(i + 2) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    For j = 1 To PostDataLength
+    str1 = str1 + "00"
+    Next j
+    SaveDatabuffer(i + 2) = str1
+    End If
+    SaveDatabuffer(0) = Hex(CLng("&H" & SaveDatabuffer(0)) + Len(compData) / 2)
+Else
+    SaveDataOffset(i) = Hex(CLng("&H" + returnstr) + 3)
+    SaveDatabuffer(i) = compData
+    SaveDataOffset(i + 1) = Offset_ofPostDataPointer
+    TempAddress = CLng("&H" & "8000000") + CLng("&H" & SaveDataOffset(i))
+    SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    TempAddress = CLng(ReadFileHex(gbafilepath, Offset_ofPostDataPointer, Hex(CLng("&H" & Offset_ofPostDataPointer) + 3)))
+    TempAddress = TempAddress - 8
+    If PostDataLength > 0 Then
+    SaveDataOffset(i + 2) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    For j = 1 To PostDataLength
+    str1 = str1 + "00"
+    Next j
+    SaveDatabuffer(i + 2) = str1
+    End If
+End If
+SaveRoomCompData = True
 End Function

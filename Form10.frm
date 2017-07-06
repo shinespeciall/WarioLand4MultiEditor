@@ -9,6 +9,14 @@ Begin VB.Form Form10
    ScaleHeight     =   15000
    ScaleWidth      =   24645
    Visible         =   0   'False
+   Begin VB.CommandButton Command15 
+      Caption         =   "Save All"
+      Height          =   615
+      Left            =   23880
+      TabIndex        =   37
+      Top             =   5880
+      Width           =   735
+   End
    Begin VB.CheckBox Check3 
       Caption         =   "layer 2"
       Height          =   375
@@ -607,6 +615,108 @@ Form10.Text2.Text = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) & "00" 
 End If
 End Sub
 
+Private Sub Command15_Click()
+Dim str1 As String
+str1 = Replace(Form10.Text2.Text, Chr(32), "")
+str1 = Replace(str1, Chr(13), "")
+str1 = Replace(str1, Chr(10), "")
+If WasCameraControlChange = True And WasCameraControlStringChange = False Then      'the latter one is for global use
+IsHexstream2NeedWrite = SaveCameraString(str1)           'IsHexstream2NeedWrite is reused for another thing
+If IsHexstream2NeedWrite = False Then MsgBox "fail to save camera control !"
+If IsHexstream2NeedWrite = True Then MsgBox "the App save camera control in temp successfully!"
+End If
+
+Dim i As Long, j As Long, strtmp1 As String
+Dim compressData As String
+Dim SaveResult As Boolean
+
+If SaveDataOffset(90) <> "" Then
+MsgBox "Too, much temp, Save Room Failed !", vbOKOnly, "Info"
+Exit Sub
+End If
+
+If WholeRoomChange = True Then
+    '----------------------------------------Layer 0
+    If IsLayer0Change = True Then
+    compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    strtmp1 = strtmp1 & Mid(L0_LB_000(i, j), 3, 2)
+    Next i
+    Next j
+    compressData = compressData & CompressDataOnly(strtmp1)
+    compressData = compressData & "0001"
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    strtmp1 = strtmp1 & Mid(L0_LB_000(i, j), 1, 2)
+    Next i
+    Next j
+    compressData = compressData & CompressDataOnly(strtmp1)
+    compressData = compressData & "000000FF"
+    SaveResult = SaveRoomCompData(Hex(CLng(LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng(LevelRoomIndex) - 1) + 9), compressData, PostlayerCompDataLength(0))
+    End If
+    '----------------------------------------Layer 1
+    If IsLayer1Change = True Then
+    compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    strtmp1 = strtmp1 & Mid(L1_LB_000(i, j), 3, 2)
+    Next i
+    Next j
+    compressData = compressData & CompressDataOnly(strtmp1)
+    compressData = compressData & "0001"
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    strtmp1 = strtmp1 & Mid(L1_LB_000(i, j), 1, 2)
+    Next i
+    Next j
+    compressData = compressData & CompressDataOnly(strtmp1)
+    compressData = compressData & "000000FF"
+    SaveResult = SaveRoomCompData(Hex(CLng(LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng(LevelRoomIndex) - 1) + 13), compressData, PostlayerCompDataLength(1))
+    End If
+    '----------------------------------------Layer 2
+    If IsLayer2Change = True Then
+    compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    strtmp1 = strtmp1 & Mid(L2_LB_000(i, j), 3, 2)
+    Next i
+    Next j
+    compressData = compressData & CompressDataOnly(strtmp1)
+    compressData = compressData & "0001"
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For i = 0 To Val("&H" & MapLength) - 1
+    strtmp1 = strtmp1 & Mid(L2_LB_000(i, j), 1, 2)
+    Next i
+    Next j
+    compressData = compressData & CompressDataOnly(strtmp1)
+    compressData = compressData & "000000FF"
+    SaveResult = SaveRoomCompData(Hex(CLng(LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng(LevelRoomIndex) - 1) + 17), compressData, PostlayerCompDataLength(2))
+    End If
+
+    WholeRoomChange = False
+
+    Erase Tile16()
+    Erase Tile88()
+    Erase Palette256()
+
+    Erase L0_LB_000()
+    Erase L1_LB_000()
+    Erase L2_LB_000()
+    Erase L0_LB_001()
+    Erase L1_LB_001()
+    Erase L2_LB_001()
+
+    Erase TileMOD()
+    Erase layerPriority()
+    Erase PostlayerCompDataLength()
+
+    MDIForm1.Enabled = True
+    Form10.Visible = False
+    Unload Form10
+End If
+End Sub
+
 Private Sub Command2_Click()
 Dim str1 As String, i As Integer, j As Integer
 If IsDeliver = True Then
@@ -862,11 +972,11 @@ End If
 If WholeRoomChange = True Then
 Dim Flag01 As Integer
 Flag01 = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + 52 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))     'eleventh byte flag
-If ((Flag01 < 5) Or (Flag01 And 3)) = 0 Then
+If (Flag01 Mod 4) = 0 Then
 layerPriority(1) = 1: layerPriority(2) = 2
-ElseIf (Flag01 And 3) = 1 Then
+ElseIf (Flag01 Mod 4) = 1 Then
 layerPriority(0) = 1: layerPriority(2) = 2
-ElseIf (Flag01 And 3) = 2 Then
+ElseIf (Flag01 Mod 4) = 2 Then
 layerPriority(0) = 1: layerPriority(2) = 2
 Else
 layerPriority(0) = 2: layerPriority(2) = 1
@@ -899,6 +1009,10 @@ Next j
 End If
 Next k
 Form10.Check1.Value = 1
+If ExistUnchangeableLayer0 = True Then
+Form10.Check1.Enabled = False
+Form10.Check1.Value = 0
+End If
 Form10.Check2.Value = 1
 Form10.Check3.Value = 1
 End If
@@ -1203,6 +1317,8 @@ Yshift = 0
 WasCameraControlChange = False
 
 If IsDeliver = True Then
+    Form10.Command15.Enabled = False
+    Form10.Command15.Visible = False
     ReDim L0_LB_000(Val("&H" & widtha1) - 1, Val("&H" & heighta2) - 1)
     ReDim L0_LB_001(Val("&H" & widtha1) - 1, Val("&H" & heighta2) - 1)
     For j = 1 To Val("&H" & heighta2)
@@ -1301,6 +1417,7 @@ Erase L2_LB_001()
 
 Erase TileMOD()
 Erase layerPriority()
+Erase PostlayerCompDataLength()
 
 MDIForm1.Enabled = True
 End Sub
