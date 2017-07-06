@@ -510,15 +510,15 @@ End If
 
 TempAddress = CLng("&H" & SaveDatabuffer(0))
 
-    returnstr = FindSpace(gbafilepath, "598EEC", "59F291", "00", Len(compData) / 2 + 6)
+    returnstr = FindSpace(gbafilepath, "598EEC", "59F291", "00", Len(compData) / 2 + 8)
     If returnstr = "FFFFFFFF" Then
-    returnstr = FindSpace(gbafilepath, "78F97F", SaveDatabuffer(0), "00", 6 + Len(compData) / 2 + 6)
+    returnstr = FindSpace(gbafilepath, "78F97F", SaveDatabuffer(0), "00", 6 + Len(compData) / 2 + 8)
     End If
     '------------------------出问题的地址可以在此处设置
     'If CLng("&H" & returnstr) >= CLng("&H59AD20") And CLng("&H" & returnstr) <= CLng("&H59AE63") Then
     'returnstr = FindSpace(gbafilepath, "59AE63", "59F291", "00", Len(compData)/ 2 + 6)
     'If returnstr = "FFFFFFFF" Then
-    'returnstr = FindSpace(gbafilepath, "78F97F", SaveDatabuffer(0), "00", 6 + Len(compData)/ 2 + 6)
+    'returnstr = FindSpace(gbafilepath, "78F97F", SaveDatabuffer(0), "00", 6 + Len(compData)/ 2 + 8)
     'End If
     'End If
     '-------------------------------------------------
@@ -528,7 +528,7 @@ If returnstr = "FFFFFFFF" Then
     SaveDataOffset(i + 1) = Offset_ofPostDataPointer
     TempAddress = CLng("&H" & "8000000") + CLng("&H" & SaveDataOffset(i))
     SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
-    TempAddress = CLng(ReadFileHex(gbafilepath, Offset_ofPostDataPointer, Hex(CLng("&H" & Offset_ofPostDataPointer) + 3)))
+    TempAddress = CLng("&H" & ReadFileHex(gbafilepath, Offset_ofPostDataPointer, Hex(CLng("&H" & Offset_ofPostDataPointer) + 3)))
     TempAddress = TempAddress - 8
     If PostDataLength > 0 Then
     SaveDataOffset(i + 2) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
@@ -539,12 +539,12 @@ If returnstr = "FFFFFFFF" Then
     End If
     SaveDatabuffer(0) = Hex(CLng("&H" & SaveDatabuffer(0)) + Len(compData) / 2)
 Else
-    SaveDataOffset(i) = Hex(CLng("&H" + returnstr) + 3)
+    SaveDataOffset(i) = Hex(CLng("&H" & returnstr) + 4)
     SaveDatabuffer(i) = compData
     SaveDataOffset(i + 1) = Offset_ofPostDataPointer
     TempAddress = CLng("&H" & "8000000") + CLng("&H" & SaveDataOffset(i))
     SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
-    TempAddress = CLng(ReadFileHex(gbafilepath, Offset_ofPostDataPointer, Hex(CLng("&H" & Offset_ofPostDataPointer) + 3)))
+    TempAddress = CLng("&H" & ReadFileHex(gbafilepath, Offset_ofPostDataPointer, Hex(CLng("&H" & Offset_ofPostDataPointer) + 3)))
     TempAddress = TempAddress - 8
     If PostDataLength > 0 Then
     SaveDataOffset(i + 2) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)

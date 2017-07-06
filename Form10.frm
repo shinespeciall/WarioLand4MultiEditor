@@ -597,7 +597,6 @@ IsHexstream2NeedWrite = SaveCameraString(str1)           'IsHexstream2NeedWrite 
 If IsHexstream2NeedWrite = False Then MsgBox "fail to save camera control !"
 If IsHexstream2NeedWrite = True Then MsgBox "the App save camera control in temp successfully!"
 End If
-IsDeliver = False
 Form10.Visible = False
 Form2.Visible = True
 MDIForm1.Enabled = True
@@ -640,6 +639,7 @@ End If
 If WholeRoomChange = True Then
     '----------------------------------------Layer 0
     If IsLayer0Change = True Then
+    strtmp1 = ""
     compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
@@ -648,6 +648,7 @@ If WholeRoomChange = True Then
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
     compressData = compressData & "0001"
+    strtmp1 = ""
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
     strtmp1 = strtmp1 & Mid(L0_LB_000(i, j), 1, 2)
@@ -655,10 +656,11 @@ If WholeRoomChange = True Then
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
     compressData = compressData & "000000FF"
-    SaveResult = SaveRoomCompData(Hex(CLng(LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng(LevelRoomIndex) - 1) + 9), compressData, PostlayerCompDataLength(0))
+    SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 8), compressData, PostlayerCompDataLength(0))
     End If
     '----------------------------------------Layer 1
     If IsLayer1Change = True Then
+    strtmp1 = ""
     compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
@@ -667,6 +669,7 @@ If WholeRoomChange = True Then
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
     compressData = compressData & "0001"
+    strtmp1 = ""
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
     strtmp1 = strtmp1 & Mid(L1_LB_000(i, j), 1, 2)
@@ -674,10 +677,11 @@ If WholeRoomChange = True Then
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
     compressData = compressData & "000000FF"
-    SaveResult = SaveRoomCompData(Hex(CLng(LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng(LevelRoomIndex) - 1) + 13), compressData, PostlayerCompDataLength(1))
+    SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 12), compressData, PostlayerCompDataLength(1))
     End If
     '----------------------------------------Layer 2
     If IsLayer2Change = True Then
+    strtmp1 = ""
     compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
@@ -686,6 +690,7 @@ If WholeRoomChange = True Then
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
     compressData = compressData & "0001"
+    strtmp1 = ""
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
     strtmp1 = strtmp1 & Mid(L2_LB_000(i, j), 1, 2)
@@ -693,27 +698,9 @@ If WholeRoomChange = True Then
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
     compressData = compressData & "000000FF"
-    SaveResult = SaveRoomCompData(Hex(CLng(LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng(LevelRoomIndex) - 1) + 17), compressData, PostlayerCompDataLength(2))
+    SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 16), compressData, PostlayerCompDataLength(2))
     End If
-
-    WholeRoomChange = False
-
-    Erase Tile16()
-    Erase Tile88()
-    Erase Palette256()
-
-    Erase L0_LB_000()
-    Erase L1_LB_000()
-    Erase L2_LB_000()
-    Erase L0_LB_001()
-    Erase L1_LB_001()
-    Erase L2_LB_001()
-
-    Erase TileMOD()
-    Erase layerPriority()
-    Erase PostlayerCompDataLength()
-
-    MDIForm1.Enabled = True
+    
     Form10.Visible = False
     Unload Form10
 End If
@@ -1467,7 +1454,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         L0_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
         End If
     ElseIf WholeRoomChange = True Then
-        If Form10.Check1.Value = 1 Then
+        If Form10.Check1.Value = 1 And layerPriority(0) < layerPriority(1) And layerPriority(0) < layerPriority(2) Then
         For j = 0 To Layer0Height - 1
         For i = 0 To Layer0Width - 1
         L0_LB_001(i, j) = L0_LB_000(i, j)
@@ -1475,7 +1462,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         Next j
         IsLayer0Change = True
         LastLayerChange = 0
-        ElseIf Form10.Check2.Value = 1 Then
+        ElseIf Form10.Check2.Value = 1 And layerPriority(1) < layerPriority(2) Then
         For j = 0 To Val("&H" & MapHeight) - 1
         For i = 0 To Val("&H" & MapLength) - 1
         L1_LB_001(i, j) = L1_LB_000(i, j)
@@ -1521,12 +1508,12 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
             If layerPriority(0) = k And Form10.Check1.Value = 1 Then
             result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1)
             ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            result = DrawTile16(MouseX, MouseY, L1_LB_000(MouseX + Xshift, MouseY + Yshift), Form10.Picture1)
             ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            result = DrawTile16(MouseX, MouseY, L2_LB_000(MouseX + Xshift, MouseY + Yshift), Form10.Picture1)
             End If
             Next k
-        L0_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+        L0_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)      '"0000"
         End If
 
         ElseIf LastLayerChange = 1 Then
@@ -1553,14 +1540,14 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
             result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1, True)
             For k = 2 To 0 Step -1
             If layerPriority(0) = k And Form10.Check1.Value = 1 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            result = DrawTile16(MouseX, MouseY, L0_LB_000(MouseX + Xshift, MouseY + Yshift), Form10.Picture1)
             ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
             result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1)
             ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            result = DrawTile16(MouseX, MouseY, L2_LB_000(MouseX + Xshift, MouseY + Yshift), Form10.Picture1)
             End If
             Next k
-        L1_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+        L1_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)      '"0000"
         End If
 
         ElseIf LastLayerChange = 2 Then
@@ -1587,14 +1574,14 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
             result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1, True)
             For k = 2 To 0 Step -1
             If layerPriority(0) = k And Form10.Check1.Value = 1 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            result = DrawTile16(MouseX, MouseY, L0_LB_000(MouseX + Xshift, MouseY + Yshift), Form10.Picture1)
             ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1)
+            result = DrawTile16(MouseX, MouseY, L1_LB_000(MouseX + Xshift, MouseY + Yshift), Form10.Picture1)
             ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
             result = DrawTile16(MouseX, MouseY, "0000", Form10.Picture1)
             End If
             Next k
-        L2_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
+        L2_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)      '"0000"
         End If
 
         End If
