@@ -10,7 +10,7 @@
 ##      6. Sprites stuffs and positions can only change in textmode, it's not wise to change them if you don't know how the code function. By the way, Its will be a lot of work if I make a wizard for this, so it will be a long way to get there. 
 ##
 ##      I am going to make a release version when I finished some inportant parts of the App and make it stable enougth on running.
-##      If you want to run the App hurriedly, you will need COMDLG32.OCX (x86) and comctl32.ocx (x86) to run the App properlly.(download them and put it in the path of the exe file, the files are in old version so I suppose you to download them althougth they are contained in any of your Microsoft .NET framework.)
+##      If you want to run the App hurriedly, you will need COMDLG32.OCX (x86) and comctl32.ocx (x86) to run the App properly.(download them and put them in the same path of the App, the files are in old version so I suppose you to download them althougth they are contained in any of your Microsoft .NET framework.)
 ##    I recently change the language from Chinese to English for publishing, all the important parts has been translated but there are something excluded and some bad expressions haven't been fixed. so until now not all the messages are showed in English.
 ##      If you want to rebuild the level but not for a test (now you can only find suitable Tile text for yourself in the room or other rooms use the same tileset to make suitable change Or try to use the incompleted Visual editor), you need to expand your source gba file, which is available as a patch program here now, rewrite data usually need more room.
 ##      This is an example for what it can do:
