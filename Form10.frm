@@ -80,6 +80,7 @@ Begin VB.Form Form10
       Begin VB.TextBox Text2 
          Height          =   1335
          Left            =   240
+         Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
          TabIndex        =   30
@@ -238,6 +239,7 @@ Begin VB.Form Form10
          ItemData        =   "Form10.frx":0000
          Left            =   240
          List            =   "Form10.frx":0002
+         Locked          =   -1  'True
          TabIndex        =   20
          Text            =   "00  Debug room"
          Top             =   600
