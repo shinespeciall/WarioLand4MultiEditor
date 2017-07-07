@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form Form7 
    Caption         =   "Sprites and Tiles Editor"
    ClientHeight    =   5400
@@ -10,15 +10,15 @@ Begin VB.Form Form7
    ScaleHeight     =   5760
    ScaleMode       =   0  'User
    ScaleWidth      =   22830
-   Begin ComctlLib.Slider Slider1 
+   Begin MSComctlLib.Slider Slider1 
       Height          =   555
       Left            =   20880
-      TabIndex        =   8
+      TabIndex        =   9
       Top             =   4680
-      Width           =   1935
-      _ExtentX        =   3413
+      Width           =   1815
+      _ExtentX        =   3201
       _ExtentY        =   979
-      _Version        =   327682
+      _Version        =   393216
       Max             =   15
    End
    Begin VB.PictureBox Picture2 
@@ -83,7 +83,7 @@ Begin VB.Form Form7
       Caption         =   "Palette adjustor"
       Height          =   375
       Left            =   21120
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   4200
       Width           =   1575
    End
@@ -192,6 +192,7 @@ Form7.Command2.Enabled = True
 Form7.Command3.Enabled = True
 Form7.Command4.Enabled = True
 Form7.Picture1.Enabled = True
+Form7.Slider1.Enabled = True
 End Sub
 
 Private Sub Command2_Click()
@@ -253,6 +254,9 @@ Form7.Command2.Enabled = False
 Form7.Command3.Enabled = False
 Form7.Command4.Enabled = False
 Form7.Picture1.Enabled = False
+Form7.Slider1.Enabled = False
+
+MDIForm1.Enabled = False
 End Sub
 
 Private Sub Form_Resize()                 ' 80 twip(ç¾ ¶Áti£¬µÚ¶þÉù) per height and width
@@ -264,6 +268,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
 Erase Palette16Color()
+MDIForm1.Enabled = True
 End Sub
 
 Private Sub Picture1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
