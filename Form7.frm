@@ -166,6 +166,7 @@ Form7.Command2.Enabled = True
 Form7.Command3.Enabled = True
 Form7.Command4.Enabled = True
 Form7.Picture1.Enabled = True
+Form7.Slider1.Enabled = True
 Exit Sub
 
 PrintbyMyself:
@@ -192,7 +193,6 @@ Form7.Command2.Enabled = True
 Form7.Command3.Enabled = True
 Form7.Command4.Enabled = True
 Form7.Picture1.Enabled = True
-Form7.Slider1.Enabled = True
 End Sub
 
 Private Sub Command2_Click()

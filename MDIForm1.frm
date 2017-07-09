@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.OCX"
 Begin VB.MDIForm MDIForm1 
    BackColor       =   &H8000000C&
    Caption         =   "WL4 MultiEditor"
@@ -88,6 +88,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub MDIForm_Load()
+MDIForm1.Icon = LoadResPicture(101, vbResIcon)
+
 Form1.Visible = False
 Form2.Visible = False
 Form3.Visible = False

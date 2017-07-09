@@ -34,6 +34,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
 Form9.Text1.Text = ""
+If MODfilepath <> "" Then Form9.Text1.Text = "Load MOD File, now you can make room visually!!" & vbCrLf
 End Sub
 
 Private Sub Form_Load()

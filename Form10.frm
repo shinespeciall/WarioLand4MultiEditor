@@ -9,12 +9,20 @@ Begin VB.Form Form10
    ScaleHeight     =   15000
    ScaleWidth      =   24645
    Visible         =   0   'False
+   Begin VB.CommandButton Command16 
+      Caption         =   "Make a model"
+      Height          =   615
+      Left            =   23880
+      TabIndex        =   38
+      Top             =   2880
+      Width           =   735
+   End
    Begin VB.CommandButton Command15 
       Caption         =   "Save All"
       Height          =   615
       Left            =   23880
       TabIndex        =   37
-      Top             =   5880
+      Top             =   7080
       Width           =   735
    End
    Begin VB.CheckBox Check3 
@@ -51,7 +59,7 @@ Begin VB.Form Form10
       Height          =   1215
       Left            =   23880
       TabIndex        =   32
-      Top             =   4560
+      Top             =   5760
       Width           =   735
    End
    Begin VB.Frame Frame2 
@@ -126,7 +134,7 @@ Begin VB.Form Form10
    End
    Begin VB.CommandButton Command8 
       Caption         =   "Clear"
-      Height          =   615
+      Height          =   495
       Left            =   23880
       TabIndex        =   23
       Top             =   1800
@@ -134,10 +142,10 @@ Begin VB.Form Form10
    End
    Begin VB.CommandButton Command6 
       Caption         =   "Undo"
-      Height          =   615
+      Height          =   375
       Left            =   23880
       TabIndex        =   19
-      Top             =   2640
+      Top             =   2400
       Width           =   735
    End
    Begin VB.CommandButton Command4 

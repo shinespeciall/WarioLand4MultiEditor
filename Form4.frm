@@ -122,7 +122,6 @@ Begin VB.Form Form4
       Left            =   240
       List            =   "Form4.frx":001A
       TabIndex        =   0
-      Text            =   "00"
       Top             =   480
       Width           =   4095
    End
@@ -159,7 +158,7 @@ Begin VB.Form Form4
       Width           =   4215
    End
    Begin VB.Label Label1 
-      Caption         =   "Level Index"
+      Caption         =   "Level"
       Height          =   375
       Left            =   240
       TabIndex        =   1
@@ -426,6 +425,7 @@ Form4.Label2.FontSize = 10
 Form4.Combo1.FontSize = 12
 
 'Form11.Visible = True          'for test
+'Form12.Visible = True          'for test
 End Sub
 
 Private Sub List1_Click()
@@ -435,7 +435,7 @@ Form4.Text1.Text = Form4.List1.Text
 PointerOffset1 = Form4.List2.List(Form4.List1.ListIndex)
 LevelRoomIndex = Hex(Form4.List1.ListIndex + 1)
 Form4.Text2.Text = Form4TextBox2Temp & "Room Index:" & Form4.List1.ListIndex + 1 & "(Hex:" & Hex(Form4.List1.ListIndex + 1) & ")" & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Offset of pointer for Room Front layer: " & PointerOffset1 & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Offset of pointer for Room layer 1 Data: " & PointerOffset1 & vbCrLf
 
 Dim offset_3F2298 As String, ReadFileOffset As String
 offset_3F2298 = "3F2298"
@@ -574,7 +574,7 @@ Form4.Text1.Text = Form4.List3.Text
 PointerOffset1 = Form4.List4.List(Form4.List3.ListIndex)
 LevelRoomIndex = Hex(Form4.List3.ListIndex + 1)
 Form4.Text2.Text = Form4TextBox2Temp & "Room Index:" & Form4.List3.ListIndex + 1 & "(Hex:" & Hex(Form4.List3.ListIndex + 1) & ")" & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "指向该Room Back Layer的指针所在地址: " & PointerOffset1 & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Offset of pointer for Room layer 2 Data: " & PointerOffset1 & vbCrLf
 
 Dim offset_3F2298 As String, ReadFileOffset As String
 offset_3F2298 = "3F2298"
@@ -713,7 +713,7 @@ Form4.Text1.Text = Form4.List5.Text
 PointerOffset1 = Form4.List6.List(Form4.List5.ListIndex)
 LevelRoomIndex = Hex(Form4.List5.ListIndex + 1)
 Form4.Text2.Text = Form4TextBox2Temp & "Room Index:" & Form4.List5.ListIndex + 1 & "(Hex:" & Hex(Form4.List5.ListIndex + 1) & ")" & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "指向该Room Back layer 2的指针所在地址: " & PointerOffset1 & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Offset of pointer for Room layer 0 Data: " & PointerOffset1 & vbCrLf
 
 Dim offset_3F2298 As String, ReadFileOffset As String
 offset_3F2298 = "3F2298"

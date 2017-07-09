@@ -817,15 +817,6 @@ Form1.Text1.FontSize = 15
 Form1.Label1.FontSize = 15
 Form1.Label2.FontSize = 15
 Form1.Move 4650, 0, 18500, 11535
-Load Form9
-End Sub
-
-Private Sub Form_GotFocus()
-Form1.Visible = False
-End Sub
-
-Private Sub Form_Load()
-Form1.Visible = False
 End Sub
 
 Private Sub HScroll1_Change()
