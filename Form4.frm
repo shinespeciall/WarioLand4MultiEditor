@@ -304,6 +304,8 @@ Form4.Combo1.Enabled = True
 Form4.List1.Enabled = True
 Form4.List3.Enabled = True
 Form4.List5.Enabled = True
+MDIForm1.mnuCounterChange.Enabled = True
+MDIForm1.mnuRoomConnectionBeta.Enabled = True
 End Sub
 
 Private Sub Command1_Click()
@@ -520,6 +522,8 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
     Next i
 End If
 
+MDIForm1.mnudecompress.Enabled = True
+MDIForm1.mnuRoomElement.Enabled = True
 Form4.List1.Enabled = True
 End Sub
 
@@ -659,6 +663,8 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
     Next i
 End If
 
+MDIForm1.mnudecompress.Enabled = True
+MDIForm1.mnuRoomElement.Enabled = True
 Form4.List3.Enabled = True
 End Sub
 
@@ -798,6 +804,8 @@ If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 
     Next i
 End If
 
+MDIForm1.mnudecompress.Enabled = True
+MDIForm1.mnuRoomElement.Enabled = True
 Form4.List5.Enabled = True
 End Sub
 

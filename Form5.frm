@@ -104,6 +104,12 @@ MDIForm1.mnuFindBaseOffset.Enabled = False
 MDIForm1.mnuRoomConnectionBeta.Enabled = False
 MDIForm1.mnuLevelguidefrm.Enabled = False
 MDIForm1.mnuopenfile.Enabled = True
+MDIForm1.mnuOutputSpritesTiles.Enabled = False
+MDIForm1.mnuCheckLoadPropertyID.Enabled = False
+MDIForm1.mnuFindPropertyTableID.Enabled = False
+MDIForm1.mnuCounterChange.Enabled = False
+MDIForm1.mnudecompress.Enabled = False
+MDIForm1.mnuRoomElement.Enabled = False
 
 Form1.Visible = False
 Form2.Visible = False

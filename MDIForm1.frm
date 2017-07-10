@@ -93,13 +93,18 @@ Attribute VB_Exposed = False
 Private Sub MDIForm_Load()
 MDIForm1.Icon = LoadResPicture(101, vbResIcon)
 
-Load Form9
-
 MDIForm1.mnuedit.Enabled = False
 MDIForm1.mnusave.Enabled = False
 MDIForm1.mnuroomchange.Enabled = False
 MDIForm1.mnuFindBaseOffset.Enabled = False
 MDIForm1.mnuLevelguidefrm.Enabled = False
+MDIForm1.mnuOutputSpritesTiles.Enabled = False
+MDIForm1.mnuCheckLoadPropertyID.Enabled = False
+MDIForm1.mnuFindPropertyTableID.Enabled = False
+MDIForm1.mnuCounterChange.Enabled = False
+MDIForm1.mnuRoomConnectionBeta.Enabled = False
+MDIForm1.mnudecompress.Enabled = False
+MDIForm1.mnuRoomElement.Enabled = False
 
 WasCameraControlStringChange = False
 IfisNewRoom = False
@@ -248,7 +253,9 @@ End If
 MDIForm1.Caption = gbafilepath & "——Open"
 MDIForm1.mnuedit.Enabled = True
 MDIForm1.mnuFindBaseOffset.Enabled = True
-MDIForm1.mnuRoomConnectionBeta.Enabled = True
+MDIForm1.mnuOutputSpritesTiles.Enabled = True
+MDIForm1.mnuCheckLoadPropertyID.Enabled = True
+MDIForm1.mnuFindPropertyTableID.Enabled = True
 Form4.Text1.Enabled = True
 MDIForm1.mnusave.Enabled = True
 ReDim SaveDatabuffer(100)     '记录条数最大值为101
@@ -302,7 +309,7 @@ MDIForm1.mnuopenfile.Enabled = False
 End Sub
 
 Private Sub mnuoutput_Click()
-Form9.Show
+Load Form9
 End Sub
 
 Private Sub mnuOutputSpritesTiles_Click()
