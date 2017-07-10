@@ -61,6 +61,9 @@ Begin VB.MDIForm MDIForm1
       Begin VB.Menu mnuOutputSpritesTiles 
          Caption         =   "enimies bitmap editor"
       End
+      Begin VB.Menu mnuoutput 
+         Caption         =   "Output"
+      End
    End
    Begin VB.Menu mnuTool 
       Caption         =   "tools"
@@ -90,11 +93,7 @@ Attribute VB_Exposed = False
 Private Sub MDIForm_Load()
 MDIForm1.Icon = LoadResPicture(101, vbResIcon)
 
-Form1.Visible = False
-Form2.Visible = False
-Form3.Visible = False
-Form4.Visible = False
-Form9.Visible = True
+Load Form9
 
 MDIForm1.mnuedit.Enabled = False
 MDIForm1.mnusave.Enabled = False
@@ -284,17 +283,6 @@ Load Form4
 Form4.Visible = True
 
 Form4TextBox2Temp = ""
-Form4.List1.Clear
-Form4.List2.Clear
-Form4.List3.Clear
-Form4.List4.Clear
-Form4.List5.Clear
-Form4.List6.Clear
-Form4.Text1.Text = ""
-Form4.Text2.Text = ""
-Form1.Text1.Text = ""
-Form1.Picture1.Cls
-BeforeLine = 0
 WasCameraControlStringChange = False
 
 Dim k As Long, str5 As String                  ' Initialize form4 combo1
@@ -310,6 +298,11 @@ Next i
 Form4.Combo1.AddItem Right("00" & Hex(k), 2) & str0
 Next k
 MDIForm1.mnuLevelguidefrm.Enabled = True
+MDIForm1.mnuopenfile.Enabled = False
+End Sub
+
+Private Sub mnuoutput_Click()
+Form9.Show
 End Sub
 
 Private Sub mnuOutputSpritesTiles_Click()

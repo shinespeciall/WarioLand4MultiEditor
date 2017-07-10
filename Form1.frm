@@ -819,6 +819,10 @@ Form1.Label2.FontSize = 15
 Form1.Move 4650, 0, 18500, 11535
 End Sub
 
+Private Sub Form_Unload(Cancel As Integer)
+BeforeLine = 0
+End Sub
+
 Private Sub HScroll1_Change()
 Form1.Picture1.Left = -HScroll1.Value
 DoEvents

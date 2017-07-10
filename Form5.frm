@@ -103,13 +103,13 @@ MDIForm1.mnusave.Enabled = False
 MDIForm1.mnuFindBaseOffset.Enabled = False
 MDIForm1.mnuRoomConnectionBeta.Enabled = False
 MDIForm1.mnuLevelguidefrm.Enabled = False
+MDIForm1.mnuopenfile.Enabled = True
 
 Form1.Visible = False
 Form2.Visible = False
 Form3.Visible = False
 Form4.Visible = False
 Form6.Visible = False
-Form7.Visible = False
 Form8.Visible = False
 
 WasCameraControlStringChange = False

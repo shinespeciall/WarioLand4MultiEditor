@@ -1,5 +1,4 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form Form7 
    Caption         =   "Sprites and Tiles Editor"
    ClientHeight    =   5400
@@ -10,16 +9,15 @@ Begin VB.Form Form7
    ScaleHeight     =   5760
    ScaleMode       =   0  'User
    ScaleWidth      =   22830
-   Begin MSComctlLib.Slider Slider1 
-      Height          =   555
-      Left            =   20880
+   Begin VB.ComboBox Combo1 
+      Height          =   300
+      ItemData        =   "Form7.frx":0000
+      Left            =   21000
+      List            =   "Form7.frx":0002
       TabIndex        =   9
+      Text            =   "0"
       Top             =   4680
-      Width           =   1815
-      _ExtentX        =   3201
-      _ExtentY        =   979
-      _Version        =   393216
-      Max             =   15
+      Width           =   1695
    End
    Begin VB.PictureBox Picture2 
       Height          =   375
@@ -80,7 +78,7 @@ Begin VB.Form Form7
       Width           =   1695
    End
    Begin VB.Label Label2 
-      Caption         =   "Palette adjustor"
+      Caption         =   "Palette"
       Height          =   375
       Left            =   21120
       TabIndex        =   8
@@ -107,6 +105,17 @@ Public ColorHByte As String
 Public ifMouseDowm As Boolean
 Public SpritesID As String
 
+Private Sub Combo1_Click()
+Dim paletteStr As String, i As Integer
+paletteStr = ReadFileHex(gbafilepath, Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID)), Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID) + 2))
+paletteStr = Hex(Val("&H" & Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)) + 32 * Val(Form7.Combo1.Text))
+paletteStr = ReadFileHex(gbafilepath, paletteStr, Hex(Val("&H" & paletteStr) + 31))
+For i = 0 To 15
+Palette16Color(i) = RGB555ToRGB888(Mid(paletteStr, 4 * i + 1, 4))
+Next i
+Command3_Click
+End Sub
+
 Private Sub Command1_Click()
 If Len(gbafilepath) = 0 Then Exit Sub
 Form7.Picture1.Cls
@@ -128,7 +137,7 @@ ReDim Palette16Color(16)
 Dim paletteStr As String
 paletteStr = ReadFileHex(gbafilepath, Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID)), Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID) + 2))
 'paletteStr = Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)    'get offset
-paletteStr = Hex(Val("&H" & Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)) + 32 * Form7.Slider1.Value)
+paletteStr = Hex(Val("&H" & Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)) + 32 * Val(Form7.Combo1.Text))
 
 paletteStr = ReadFileHex(gbafilepath, paletteStr, Hex(Val("&H" & paletteStr) + 31))
 
@@ -166,7 +175,8 @@ Form7.Command2.Enabled = True
 Form7.Command3.Enabled = True
 Form7.Command4.Enabled = True
 Form7.Picture1.Enabled = True
-Form7.Slider1.Enabled = True
+Form7.Combo1.Enabled = True
+'Form7.Slider1.Enabled = True
 Exit Sub
 
 PrintbyMyself:
@@ -250,11 +260,29 @@ Form7.Text1.Text = ""
 Form7.Text1.FontSize = 12
 ifMouseDowm = False
 
+Form7.Combo1.AddItem "0"
+Form7.Combo1.AddItem "1"
+Form7.Combo1.AddItem "2"
+Form7.Combo1.AddItem "3"
+Form7.Combo1.AddItem "4"
+Form7.Combo1.AddItem "5"
+Form7.Combo1.AddItem "6"
+Form7.Combo1.AddItem "7"
+Form7.Combo1.AddItem "8"
+Form7.Combo1.AddItem "9"
+Form7.Combo1.AddItem "10"
+Form7.Combo1.AddItem "11"
+Form7.Combo1.AddItem "12"
+Form7.Combo1.AddItem "13"
+Form7.Combo1.AddItem "14"
+Form7.Combo1.AddItem "15"
+
 Form7.Command2.Enabled = False
 Form7.Command3.Enabled = False
 Form7.Command4.Enabled = False
 Form7.Picture1.Enabled = False
-Form7.Slider1.Enabled = False
+Form7.Combo1.Enabled = False
+'Form7.Slider1.Enabled = False
 
 MDIForm1.Enabled = False
 End Sub
@@ -292,18 +320,6 @@ End Sub
 
 Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 ifMouseDowm = False
-End Sub
-
-Private Sub Slider1_Change()
-Dim paletteStr As String, i As Integer
-paletteStr = ReadFileHex(gbafilepath, Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID)), Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID) + 2))
-'paletteStr = Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)    'get offset
-paletteStr = Hex(Val("&H" & Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)) + 32 * Form7.Slider1.Value)
-paletteStr = ReadFileHex(gbafilepath, paletteStr, Hex(Val("&H" & paletteStr) + 31))
-For i = 0 To 15
-Palette16Color(i) = RGB555ToRGB888(Mid(paletteStr, 4 * i + 1, 4))
-Next i
-Command3_Click
 End Sub
 
 Private Sub Text1_Keypress(KeyCode As Integer)

@@ -38,6 +38,16 @@ If MODfilepath <> "" Then Form9.Text1.Text = "Load MOD File, now you can make ro
 End Sub
 
 Private Sub Form_Load()
-Form9.Move Form4.width + 18510, 0, MDIForm1.width - Form4.width - 18510 - 450, MDIForm1.height - 1150
 Form9.Text1.FontSize = 14
+Form9.Icon = LoadResPicture(101, vbResIcon)
+If (Screen.width - 4650 - 18510 - 450) > 2000 Then
+Form9.Move 4650 + 18510 + 20, 0, Screen.width - 4650 - 18510 - 450, Screen.height - 1500  'Form4.Widht = 4650
+Else
+Form9.Move Screen.width - Me.width, 0, 5440, Screen.height - 1500 'Form4.Widht = 4650
+Form9.Hide
+End If
+End Sub
+
+Private Sub Form_Resize()
+Form9.Text1.width = Form9.width - 450
 End Sub
