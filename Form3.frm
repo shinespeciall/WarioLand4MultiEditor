@@ -208,28 +208,6 @@ Form3.Command1.Enabled = False
 Form3.Command3.Enabled = False
 
 If gbafilepath = "" Then Exit Sub
-
-'Dim MessageStream As String, i As Long, j As Long
-'Dim checkStream As String
-'Dim tenthByte As String
-'Dim PointersLowWordLowByte As String, PointersLowWordLowByte1 As String
-'MessageStream = ReadFileHex(gbafilepath, LevelChangeRoomStreamOffset, Right("0000" & Hex(Val("&H" & LevelChangeRoomStreamOffset) + 1024), 8))
-'For i = 0 To 50     'i dont think there is more than 50 change position can be made
-'checkStream = Mid(MessageStream, i * 24 + 1, 24)
-'    If checkStream = "000000000000000000000000" Then
-'    Form3.Text1.Text = Form3.Text1.Text & "00 00 00 00 00 00 00 00 00 00 00 00 "
-'    Exit Sub
-'    End If
-'tenthByte = Mid(MessageStream, i * 24 + 19, 2)              '*******************     this part is for analyse the Sprites table
-'PointersLowWordLowByte = ReadFileHex(gbafilepath, Hex(Val("&H" & "78EF78") + 4 * Val("&H" & tenthByte)), Hex(Val("&H" & "78EF78") + 4 * Val("&H" & tenthByte) + 4))
-'PointersLowWordLowByte1 = Mid(PointersLowWordLowByte, 1, 2)
-'PointersLowWordLowByte = Mid(PointersLowWordLowByte, 7, 2) & Mid(PointersLowWordLowByte, 5, 2) & Mid(PointersLowWordLowByte, 3, 2) & Mid(PointersLowWordLowByte, 1, 2)
-'For j = 1 To 12
-'Form3.Text1.Text = Form3.Text1.Text & Mid(checkStream, 2 * j - 1, 2) & " "
-'Next j'
-'Form3.Text1.Text = Form3.Text1.Text & "     First Byte: " & PointersLowWordLowByte1
-'Form3.Text1.Text = Form3.Text1.Text & "     Pointer: " & PointersLowWordLowByte & vbCrLf
-'Next i
 Command2_Click
 End Sub
 

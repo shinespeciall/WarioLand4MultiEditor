@@ -217,17 +217,20 @@ End Sub
 Private Sub mnuLoadMOD_Click()
 CommonDialog1.Filter = "MOD File (*.txt)|*.txt"
 CommonDialog1.FilterIndex = 0
-CommonDialog1.CancelError = True ' 设置“CancelError”为 True
+CommonDialog1.CancelError = False ' 设置“CancelError”为 False
+CommonDialog1.FileName = ""
 On Error Resume Next
 
 CommonDialog1.ShowOpen
 
 MODfilepath = CommonDialog1.FileName
-Form9.Text1.Text = Form9.Text1.Text & "Load MOD File, now you can make room visually!!" & vbCrLf
 If MODfilepath = "" Then
 MsgBox "no file loaded", vbCritical, "Info"
 Exit Sub
 End If
+Load Form9
+Form9.Text1.Text = ""
+If MODfilepath <> "" Then Form9.Text1.Text = "Load MOD File, now you can make room visually!!" & vbCrLf
 End Sub
 
 Private Sub mnunewmap_Click()
@@ -238,7 +241,8 @@ End Sub
 Private Sub mnuopenfile_Click()
 CommonDialog1.Filter = "GBAROM File (*.gba)|*.gba"
 CommonDialog1.FilterIndex = 0
-CommonDialog1.CancelError = True ' 设置“CancelError”为 True
+CommonDialog1.CancelError = False ' 设置“CancelError”为 False
+CommonDialog1.FileName = ""
 On Error Resume Next
 
 CommonDialog1.ShowOpen

@@ -1,18 +1,19 @@
 VERSION 5.00
 Begin VB.Form Form10 
-   Caption         =   "Visual MAP Editor"
-   ClientHeight    =   15000
+   Caption         =   "Visual MAP Editor (Beta)"
+   ClientHeight    =   14085
    ClientLeft      =   1125
    ClientTop       =   465
-   ClientWidth     =   24645
+   ClientWidth     =   23505
    LinkTopic       =   "Form1"
-   ScaleHeight     =   15000
-   ScaleWidth      =   24645
+   MaxButton       =   0   'False
+   ScaleHeight     =   14085
+   ScaleWidth      =   23505
    Visible         =   0   'False
    Begin VB.CommandButton Command16 
       Caption         =   "Make a model"
       Height          =   615
-      Left            =   23880
+      Left            =   22560
       TabIndex        =   38
       Top             =   2880
       Width           =   735
@@ -20,7 +21,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command15 
       Caption         =   "Save All"
       Height          =   615
-      Left            =   23880
+      Left            =   22560
       TabIndex        =   37
       Top             =   7080
       Width           =   735
@@ -28,7 +29,7 @@ Begin VB.Form Form10
    Begin VB.CheckBox Check3 
       Caption         =   "layer 2"
       Height          =   375
-      Left            =   20400
+      Left            =   19200
       TabIndex        =   36
       Top             =   1080
       Width           =   1215
@@ -36,7 +37,7 @@ Begin VB.Form Form10
    Begin VB.CheckBox Check2 
       Caption         =   "layer 1"
       Height          =   615
-      Left            =   20400
+      Left            =   19200
       TabIndex        =   35
       Top             =   480
       Width           =   1335
@@ -44,20 +45,20 @@ Begin VB.Form Form10
    Begin VB.CheckBox Check1 
       Caption         =   "layer 0"
       Height          =   495
-      Left            =   20400
+      Left            =   19200
       TabIndex        =   34
       Top             =   120
       Width           =   1335
    End
    Begin VB.Timer Timer1 
-      Left            =   720
-      Top             =   13080
+      Left            =   840
+      Top             =   12960
    End
    Begin VB.CommandButton Command13 
       Caption         =   "Return to hex Editor"
       Enabled         =   0   'False
       Height          =   1215
-      Left            =   23880
+      Left            =   22560
       TabIndex        =   32
       Top             =   5760
       Width           =   735
@@ -99,7 +100,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command11 
       Caption         =   "refresh"
       Height          =   375
-      Left            =   21840
+      Left            =   20640
       TabIndex        =   27
       Top             =   120
       Width           =   2775
@@ -107,7 +108,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command10 
       Caption         =   "refresh with grid"
       Height          =   375
-      Left            =   21840
+      Left            =   20640
       TabIndex        =   26
       Top             =   1080
       Width           =   2775
@@ -115,7 +116,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command9 
       Caption         =   "refresh with camera control"
       Height          =   375
-      Left            =   21840
+      Left            =   20640
       TabIndex        =   25
       ToolTipText     =   "If no camera control it will be simply refresh"
       Top             =   600
@@ -135,7 +136,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command8 
       Caption         =   "Clear"
       Height          =   495
-      Left            =   23880
+      Left            =   22560
       TabIndex        =   23
       Top             =   1800
       Width           =   735
@@ -143,7 +144,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command6 
       Caption         =   "Undo"
       Height          =   375
-      Left            =   23880
+      Left            =   22560
       TabIndex        =   19
       Top             =   2400
       Width           =   735
@@ -151,7 +152,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command4 
       Caption         =   "Save High Bytes"
       Height          =   495
-      Left            =   18480
+      Left            =   17280
       TabIndex        =   6
       Top             =   840
       Width           =   1815
@@ -159,7 +160,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command3 
       Caption         =   "Save Low Bytes"
       Height          =   495
-      Left            =   18480
+      Left            =   17280
       TabIndex        =   5
       Top             =   240
       Width           =   1815
@@ -167,7 +168,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command2 
       Caption         =   "High Bytes"
       Height          =   495
-      Left            =   16800
+      Left            =   15600
       TabIndex        =   4
       Top             =   840
       Width           =   1455
@@ -175,7 +176,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command1 
       Caption         =   "Low Bytes"
       Height          =   495
-      Left            =   16800
+      Left            =   15600
       TabIndex        =   3
       Top             =   240
       Width           =   1455
@@ -187,18 +188,18 @@ Begin VB.Form Form10
       ScrollBars      =   2  'Vertical
       TabIndex        =   2
       Top             =   240
-      Width           =   12135
+      Width           =   10935
    End
    Begin VB.PictureBox Picture1 
       AutoRedraw      =   -1  'True
       BackColor       =   &H00FFFFFF&
-      Height          =   13035
+      Height          =   12315
       Left            =   4560
-      ScaleHeight     =   12975
-      ScaleWidth      =   19095
+      ScaleHeight     =   12255
+      ScaleWidth      =   17655
       TabIndex        =   1
       Top             =   1560
-      Width           =   19155
+      Width           =   17715
       Begin VB.Shape Shape3 
          BorderColor     =   &H000000FF&
          BorderWidth     =   2
@@ -457,6 +458,8 @@ Private Sub Command10_Click()
 Form10.Check1.Enabled = False
 Form10.Check2.Enabled = False
 Form10.Check3.Enabled = False
+Form10.Command11.Enabled = True
+Form10.Command9.Enabled = False
 Form10.Command10.Enabled = False
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 1
@@ -506,7 +509,9 @@ Form10.Check1.Enabled = True
 Form10.Check2.Enabled = True
 Form10.Check3.Enabled = True
 End If
-Form10.Command10.Enabled = True
+Form10.Command11.Enabled = True
+Form10.Command9.Enabled = False
+Form10.Command10.Enabled = False
 End Sub
 
 Private Sub Command11_Click()
@@ -514,6 +519,8 @@ Form10.Check1.Enabled = False
 Form10.Check2.Enabled = False
 Form10.Check3.Enabled = False
 Form10.Command11.Enabled = False
+Form10.Command9.Enabled = False
+Form10.Command10.Enabled = False
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 2
 Dim i As Integer, j As Integer, result As Boolean
@@ -557,6 +564,8 @@ Form10.Check2.Enabled = True
 Form10.Check3.Enabled = True
 End If
 Form10.Command11.Enabled = True
+Form10.Command9.Enabled = False
+Form10.Command10.Enabled = False
 End Sub
 
 Private Sub Command12_Click()
@@ -1107,7 +1116,9 @@ Private Sub Command9_Click()
 Form10.Check1.Enabled = False
 Form10.Check2.Enabled = False
 Form10.Check3.Enabled = False
+Form10.Command11.Enabled = True
 Form10.Command9.Enabled = False
+Form10.Command10.Enabled = False
 Form10.Picture1.Cls
 Form10.Picture1.DrawWidth = 2
 Dim i As Integer, j As Integer, result As Boolean
@@ -1190,7 +1201,9 @@ Form10.Check1.Enabled = True
 Form10.Check2.Enabled = True
 Form10.Check3.Enabled = True
 End If
-Form10.Command9.Enabled = True
+Form10.Command11.Enabled = True
+Form10.Command9.Enabled = False
+Form10.Command10.Enabled = False
 End Sub
 
 Private Sub Form_Load()

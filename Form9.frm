@@ -46,4 +46,6 @@ End Sub
 
 Private Sub Form_Resize()
 Form9.Text1.width = Form9.width - 450
+Form9.Text1.height = Form9.height - Form9.Command1.height - 800
+Form9.Command1.Top = Form9.Text1.height + Form9.Text1.Top + 50
 End Sub
