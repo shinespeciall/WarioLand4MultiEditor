@@ -122,7 +122,7 @@ If shiftoffset = Len(Hexstream) - 3 Then
 Exit Do
 End If
 
-Form2.Label1.Caption = "Output:" & str(shiftoffset) & "/" & str(Len(Hexstream) - 2)
+If Form10.Visible = False Then Form2.Label1.Caption = "Output:" & str(shiftoffset) & "/" & str(Len(Hexstream) - 2)
 Loop
 
 CompressDataOnly = OutputStream
@@ -494,7 +494,6 @@ GetLevelNamePointer = ReadFileHex(gbafilepath, r3, Hex(Val("&H" & r3) + 3))
 End Function
 
 Public Function SaveRoomCompData(Offset_ofPostDataPointer As String, compData As String, PostDataLength As Long) As Boolean
-
 Dim i As Integer, j As Long
 Dim TempAddress As Long
 Dim returnstr As String
