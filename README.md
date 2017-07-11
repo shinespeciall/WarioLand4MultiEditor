@@ -9,6 +9,8 @@
 ##      5. You can Edit Sprites Tiles by input a Index. but only bitmap-direct-change available. The sprites editor sometimes will not render the sprites in right colors, you need to use the slider to correct it.
 ##      6. Sprites stuffs and their positions can only change in textmode, it's not wise to change them if you don't know how the characters function. By the way, Its will be a lot of work if I make a wizard for this, so it will be a long way to get there. 
 ##
+##      Although VB6 App can run on various Windows platform, but due to I coding on Windows 10 Creater with a HD wide screen, the App UI always not suitable for average screen. I am trying to fix the problem now.
+##
 ##      I am going to make a release version when I finished the inportant parts of the App and make it stable enougth on running.
 ##      If you want to rebuild the level but not for a test (now you can find suitable Tile textcode for yourself in the room or other rooms use the same tileset to make suitable changes Or try to use the Visual editor), you need to expand your source gba file, which is available as a patch program here now, rewrite data usually need more room.
 ##      This is an example for what it can do:
