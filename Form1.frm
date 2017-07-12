@@ -108,6 +108,7 @@ End If
 
 startoffset = Form1.Text1.Text
 Form1.Text1.Enabled = False
+LayerCanBeChange = True
 
 Hexstream1 = ""       ' clear Room decompressed all Hex stream
 Hexstream2 = ""

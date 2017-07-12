@@ -1,19 +1,19 @@
 VERSION 5.00
 Begin VB.Form Form10 
    Caption         =   "Visual MAP Editor (Beta)"
-   ClientHeight    =   14085
-   ClientLeft      =   1125
+   ClientHeight    =   12930
+   ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   23505
+   ClientWidth     =   19770
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   14085
-   ScaleWidth      =   23505
+   ScaleHeight     =   12930
+   ScaleWidth      =   19770
    Visible         =   0   'False
    Begin VB.CommandButton Command16 
       Caption         =   "Make a model"
       Height          =   615
-      Left            =   22560
+      Left            =   18960
       TabIndex        =   38
       Top             =   2880
       Width           =   735
@@ -21,7 +21,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command15 
       Caption         =   "Save All"
       Height          =   615
-      Left            =   22560
+      Left            =   18960
       TabIndex        =   37
       Top             =   7080
       Width           =   735
@@ -29,7 +29,7 @@ Begin VB.Form Form10
    Begin VB.CheckBox Check3 
       Caption         =   "layer 2"
       Height          =   375
-      Left            =   19200
+      Left            =   15480
       TabIndex        =   36
       Top             =   1080
       Width           =   1215
@@ -37,7 +37,7 @@ Begin VB.Form Form10
    Begin VB.CheckBox Check2 
       Caption         =   "layer 1"
       Height          =   615
-      Left            =   19200
+      Left            =   15480
       TabIndex        =   35
       Top             =   480
       Width           =   1335
@@ -45,20 +45,20 @@ Begin VB.Form Form10
    Begin VB.CheckBox Check1 
       Caption         =   "layer 0"
       Height          =   495
-      Left            =   19200
+      Left            =   15480
       TabIndex        =   34
       Top             =   120
       Width           =   1335
    End
    Begin VB.Timer Timer1 
-      Left            =   840
-      Top             =   12960
+      Left            =   600
+      Top             =   12000
    End
    Begin VB.CommandButton Command13 
       Caption         =   "Return to hex Editor"
       Enabled         =   0   'False
       Height          =   1215
-      Left            =   22560
+      Left            =   18960
       TabIndex        =   32
       Top             =   5760
       Width           =   735
@@ -68,7 +68,7 @@ Begin VB.Form Form10
       Height          =   2655
       Left            =   360
       TabIndex        =   29
-      Top             =   10200
+      Top             =   9120
       Width           =   3975
       Begin VB.CommandButton Command14 
          Caption         =   "Undo All"
@@ -100,7 +100,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command11 
       Caption         =   "refresh"
       Height          =   375
-      Left            =   20640
+      Left            =   16920
       TabIndex        =   27
       Top             =   120
       Width           =   2775
@@ -108,7 +108,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command10 
       Caption         =   "refresh with grid"
       Height          =   375
-      Left            =   20640
+      Left            =   16920
       TabIndex        =   26
       Top             =   1080
       Width           =   2775
@@ -116,7 +116,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command9 
       Caption         =   "refresh with camera control"
       Height          =   375
-      Left            =   20640
+      Left            =   16920
       TabIndex        =   25
       ToolTipText     =   "If no camera control it will be simply refresh"
       Top             =   600
@@ -130,13 +130,13 @@ Begin VB.Form Form10
       ScaleWidth      =   4065
       TabIndex        =   24
       ToolTipText     =   "click to disable one Tile16"
-      Top             =   6600
+      Top             =   5520
       Width           =   4125
    End
    Begin VB.CommandButton Command8 
       Caption         =   "Clear"
       Height          =   495
-      Left            =   22560
+      Left            =   18960
       TabIndex        =   23
       Top             =   1800
       Width           =   735
@@ -144,7 +144,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command6 
       Caption         =   "Undo"
       Height          =   375
-      Left            =   22560
+      Left            =   18960
       TabIndex        =   19
       Top             =   2400
       Width           =   735
@@ -152,7 +152,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command4 
       Caption         =   "Save High Bytes"
       Height          =   495
-      Left            =   17280
+      Left            =   13560
       TabIndex        =   6
       Top             =   840
       Width           =   1815
@@ -160,7 +160,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command3 
       Caption         =   "Save Low Bytes"
       Height          =   495
-      Left            =   17280
+      Left            =   13560
       TabIndex        =   5
       Top             =   240
       Width           =   1815
@@ -168,7 +168,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command2 
       Caption         =   "High Bytes"
       Height          =   495
-      Left            =   15600
+      Left            =   11880
       TabIndex        =   4
       Top             =   840
       Width           =   1455
@@ -176,7 +176,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command1 
       Caption         =   "Low Bytes"
       Height          =   495
-      Left            =   15600
+      Left            =   11880
       TabIndex        =   3
       Top             =   240
       Width           =   1455
@@ -188,18 +188,18 @@ Begin VB.Form Form10
       ScrollBars      =   2  'Vertical
       TabIndex        =   2
       Top             =   240
-      Width           =   10935
+      Width           =   7335
    End
    Begin VB.PictureBox Picture1 
       AutoRedraw      =   -1  'True
       BackColor       =   &H00FFFFFF&
-      Height          =   12315
+      Height          =   11115
       Left            =   4560
-      ScaleHeight     =   12255
-      ScaleWidth      =   17655
+      ScaleHeight     =   11055
+      ScaleWidth      =   14175
       TabIndex        =   1
-      Top             =   1560
-      Width           =   17715
+      Top             =   1680
+      Width           =   14235
       Begin VB.Shape Shape3 
          BorderColor     =   &H000000FF&
          BorderWidth     =   2
@@ -213,8 +213,8 @@ Begin VB.Form Form10
          BorderColor     =   &H000000FF&
          BorderWidth     =   2
          Height          =   780
-         Left            =   11040
-         Top             =   3720
+         Left            =   7320
+         Top             =   2280
          Visible         =   0   'False
          Width           =   780
       End
@@ -222,25 +222,34 @@ Begin VB.Form Form10
          BorderColor     =   &H00FF0000&
          BorderWidth     =   2
          Height          =   3840
-         Left            =   3600
-         Top             =   3120
+         Left            =   600
+         Top             =   1320
          Visible         =   0   'False
          Width           =   5760
       End
    End
    Begin VB.Frame Frame1 
       Caption         =   "MAP Properties"
-      Height          =   6375
+      Height          =   5295
       Left            =   240
       TabIndex        =   0
       Top             =   120
       Width           =   4095
+      Begin VB.CommandButton Command17 
+         Caption         =   "Tile size"
+         Height          =   375
+         Left            =   360
+         TabIndex        =   39
+         ToolTipText     =   "You can render Tiles in different size"
+         Top             =   2280
+         Width           =   1335
+      End
       Begin VB.CommandButton Command7 
          Caption         =   "Go"
          Height          =   495
          Left            =   2640
          TabIndex        =   21
-         Top             =   3960
+         Top             =   3720
          Width           =   615
       End
       Begin VB.ComboBox Combo2 
@@ -259,7 +268,7 @@ Begin VB.Form Form10
          Height          =   300
          Left            =   240
          TabIndex        =   18
-         Top             =   5640
+         Top             =   4800
          Width           =   3615
       End
       Begin VB.TextBox Text9 
@@ -283,7 +292,7 @@ Begin VB.Form Form10
          Left            =   1320
          TabIndex        =   13
          Text            =   "0"
-         Top             =   4080
+         Top             =   3840
          Width           =   1095
       End
       Begin VB.TextBox Text6 
@@ -291,13 +300,13 @@ Begin VB.Form Form10
          Left            =   1320
          TabIndex        =   10
          Text            =   "0"
-         Top             =   3600
+         Top             =   3360
          Width           =   1095
       End
       Begin VB.CommandButton Command5 
          Caption         =   "Load All"
          Height          =   375
-         Left            =   1200
+         Left            =   2040
          TabIndex        =   8
          Top             =   2280
          Width           =   1095
@@ -307,7 +316,7 @@ Begin VB.Form Form10
          Height          =   255
          Left            =   2520
          TabIndex        =   28
-         Top             =   3600
+         Top             =   3360
          Width           =   1455
       End
       Begin VB.Label Label2 
@@ -315,15 +324,15 @@ Begin VB.Form Form10
          Height          =   255
          Left            =   360
          TabIndex        =   22
-         Top             =   5040
+         Top             =   4440
          Width           =   1215
       End
       Begin VB.Line Line1 
          BorderStyle     =   2  'Dash
          X1              =   0
          X2              =   3960
-         Y1              =   3120
-         Y2              =   3120
+         Y1              =   2880
+         Y2              =   2880
       End
       Begin VB.Label Label9 
          Caption         =   "Height(Hex)"
@@ -346,7 +355,7 @@ Begin VB.Form Form10
          Height          =   375
          Left            =   240
          TabIndex        =   12
-         Top             =   4080
+         Top             =   3840
          Width           =   975
       End
       Begin VB.Label Label6 
@@ -354,15 +363,15 @@ Begin VB.Form Form10
          Height          =   375
          Left            =   240
          TabIndex        =   11
-         Top             =   3600
+         Top             =   3360
          Width           =   1095
       End
       Begin VB.Label Label5 
          Caption         =   "upper left show position in Hex"
          Height          =   255
-         Left            =   600
+         Left            =   240
          TabIndex        =   9
-         Top             =   3240
+         Top             =   3000
          Width           =   3135
       End
       Begin VB.Label Label1 
@@ -721,6 +730,22 @@ If WholeRoomChange = True Then
     Form10.Visible = False
     Unload Form10
 End If
+End Sub
+
+Private Sub Command17_Click()
+Dim a As Integer
+a = Val(InputBox("Input size number for Tile under 25 and above 16, the default value is 24", "Info", 24))
+If a < 17 Or a > 24 Then
+MsgBox "illegal value !", vbOKOnly + vbCritical, "Info"
+Exit Sub
+End If
+DotSize = a
+Command11_Click
+Form10.Shape1.width = 15 * 16 * DotSize
+Form10.Shape1.height = 10 * 16 * DotSize
+Form10.Shape3.width = DotSize
+Form10.Shape3.height = DotSize
+Form10.Shape3.Visible = False
 End Sub
 
 Private Sub Command2_Click()
@@ -1099,7 +1124,7 @@ ElseIf WholeRoomChange = True Then
     ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture, , DotSize)
+    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
     Next j
@@ -1325,7 +1350,7 @@ Form10.Combo2.AddItem "5B  The Big Board end"
 Xshift = 0
 Yshift = 0
 WasCameraControlChange = False
-DotSize = 24                          '-----------------------UNFINISHED
+DotSize = 24
 
 If IsDeliver = True Then
     Form10.Command15.Enabled = False
@@ -1443,8 +1468,8 @@ End Sub
 
 Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Form10.Shape1.Visible = True
-MouseX = X \ (24 * 16)
-MouseY = Y \ (24 * 16)
+MouseX = X \ (DotSize * 16)
+MouseY = Y \ (DotSize * 16)
 Form10.Label3.Caption = "(" & Hex(MouseX) & " , " & Hex(MouseY) & ")"
 Form10.Shape1.Left = X - Xshift
 Form10.Shape1.Top = Y - Yshift
@@ -1764,3 +1789,4 @@ Form10.Text2.Text = Form10.Text2.Text & Mid(str, 18 * i + 15, 8) & vbCrLf
 Next i
 End If
 End Sub
+

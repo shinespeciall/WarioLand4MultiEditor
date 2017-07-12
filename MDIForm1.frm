@@ -322,6 +322,11 @@ Form7.Visible = True
 End Sub
 
 Private Sub mnuroomchange_Click()
+If LayerCanBeChange = False Then
+MsgBox "You have chosen another layer after decompressing the previous one, which will cause a bug in the App. you need to rechoose a layer and decompress it again!", vbOKOnly + vbCritical, "Info"
+Form9.Text1.Text = Form9.Text1.Text & "you need to rechoose a layer and decompress it again to avoid a bug !" & vbCrLf
+Exit Sub
+End If
 Load Form2
 Form2.Show
 Form2.Visible = True

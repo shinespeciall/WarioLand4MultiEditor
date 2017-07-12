@@ -37,6 +37,7 @@ Begin VB.Form Form4
       Left            =   1200
       List            =   "Form4.frx":0002
       TabIndex        =   13
+      ToolTipText     =   "offset is for pointer"
       Top             =   4080
       Width           =   975
    End
@@ -57,6 +58,7 @@ Begin VB.Form Form4
       Left            =   3360
       List            =   "Form4.frx":000A
       TabIndex        =   11
+      ToolTipText     =   "offset is for pointer"
       Top             =   2040
       Width           =   975
    End
@@ -77,6 +79,7 @@ Begin VB.Form Form4
       Left            =   1200
       List            =   "Form4.frx":0012
       TabIndex        =   9
+      ToolTipText     =   "offset is for pointer"
       Top             =   2040
       Width           =   975
    End
@@ -126,10 +129,11 @@ Begin VB.Form Form4
       Width           =   4095
    End
    Begin VB.Label Label5 
-      Caption         =   "layer 0   pointer offset"
+      Caption         =   "layer 0     offset"
       Height          =   375
       Left            =   120
       TabIndex        =   14
+      ToolTipText     =   "offset is for pointer"
       Top             =   3840
       Width           =   2415
    End
@@ -142,10 +146,11 @@ Begin VB.Form Form4
       Width           =   1455
    End
    Begin VB.Label Label3 
-      Caption         =   "layer 1    pointeroffset layer 2   pointeroffset"
+      Caption         =   "layer 1     offset      layer 2     offset"
       Height          =   255
       Left            =   120
       TabIndex        =   6
+      ToolTipText     =   "offset is for pointer"
       Top             =   1680
       Width           =   4335
    End
@@ -433,6 +438,7 @@ End Sub
 Private Sub List1_Click()
 If Form4.Text1.Text = "00" Then Exit Sub
 Form4.List1.Enabled = False
+LayerCanBeChange = False
 Form4.Text1.Text = Form4.List1.Text
 PointerOffset1 = Form4.List2.List(Form4.List1.ListIndex)
 LevelRoomIndex = Hex(Form4.List1.ListIndex + 1)
@@ -574,6 +580,7 @@ End Sub
 Private Sub List3_Click()
 If Form4.Text1.Text = "00" Then Exit Sub
 Form4.List3.Enabled = False
+LayerCanBeChange = False
 Form4.Text1.Text = Form4.List3.Text
 PointerOffset1 = Form4.List4.List(Form4.List3.ListIndex)
 LevelRoomIndex = Hex(Form4.List3.ListIndex + 1)
@@ -715,6 +722,7 @@ End Sub
 Private Sub List5_Click()
 If Form4.Text1.Text = "00" Then Exit Sub
 Form4.List5.Enabled = False
+LayerCanBeChange = False
 Form4.Text1.Text = Form4.List5.Text
 PointerOffset1 = Form4.List6.List(Form4.List5.ListIndex)
 LevelRoomIndex = Hex(Form4.List5.ListIndex + 1)

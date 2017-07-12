@@ -17,6 +17,7 @@ Public BeforeLine As Integer           'for Form1 drawing line, rectangle and pr
 Public layer1compressdatalength As Long    'store layer compress data length, 单位是4个bit，半个字节
 Public layer2compressdatalength As Long
 
+Public LayerCanBeChange As Boolean
 Public startoffset As String     'Just store in Hex, if use, we can change it to Dec.
 Public PointerOffset1 As String  'make index in case of expand other pointer Offset varients
 
