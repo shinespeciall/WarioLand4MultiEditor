@@ -40,7 +40,7 @@ End Sub
 Private Sub Form_Load()
 Form9.Text1.FontSize = 14
 Form9.Icon = LoadResPicture(101, vbResIcon)
-Form9.Move 0, 9705, 4650, 4540  'Form4.Widht = 4650
+Form9.Move 0, 8950, 4650, 4540
 If MODfilepath <> "" Then Form9.Text1.Text = "Load MOD File, now you can make room visually!!" & vbCrLf
 End Sub
 

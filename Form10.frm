@@ -1,19 +1,19 @@
 VERSION 5.00
 Begin VB.Form Form10 
    Caption         =   "Visual MAP Editor (Beta)"
-   ClientHeight    =   12930
+   ClientHeight    =   12450
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   19770
+   ClientWidth     =   19305
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   12930
-   ScaleWidth      =   19770
+   ScaleHeight     =   12450
+   ScaleWidth      =   19305
    Visible         =   0   'False
    Begin VB.CommandButton Command16 
       Caption         =   "Make a model"
       Height          =   615
-      Left            =   18960
+      Left            =   18480
       TabIndex        =   38
       Top             =   2880
       Width           =   735
@@ -21,7 +21,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command15 
       Caption         =   "Save All"
       Height          =   615
-      Left            =   18960
+      Left            =   18480
       TabIndex        =   37
       Top             =   7080
       Width           =   735
@@ -29,7 +29,7 @@ Begin VB.Form Form10
    Begin VB.CheckBox Check3 
       Caption         =   "layer 2"
       Height          =   375
-      Left            =   15480
+      Left            =   15000
       TabIndex        =   36
       Top             =   1080
       Width           =   1215
@@ -37,7 +37,7 @@ Begin VB.Form Form10
    Begin VB.CheckBox Check2 
       Caption         =   "layer 1"
       Height          =   615
-      Left            =   15480
+      Left            =   15000
       TabIndex        =   35
       Top             =   480
       Width           =   1335
@@ -45,27 +45,27 @@ Begin VB.Form Form10
    Begin VB.CheckBox Check1 
       Caption         =   "layer 0"
       Height          =   495
-      Left            =   15480
+      Left            =   15000
       TabIndex        =   34
       Top             =   120
       Width           =   1335
    End
    Begin VB.Timer Timer1 
-      Left            =   600
-      Top             =   12000
+      Left            =   480
+      Top             =   11400
    End
    Begin VB.CommandButton Command13 
       Caption         =   "Return to hex Editor"
       Enabled         =   0   'False
       Height          =   1215
-      Left            =   18960
+      Left            =   18480
       TabIndex        =   32
       Top             =   5760
       Width           =   735
    End
    Begin VB.Frame Frame2 
       Caption         =   "Camera Control"
-      Height          =   2655
+      Height          =   2175
       Left            =   360
       TabIndex        =   29
       Top             =   9120
@@ -75,7 +75,7 @@ Begin VB.Form Form10
          Height          =   375
          Left            =   2280
          TabIndex        =   33
-         Top             =   2040
+         Top             =   1680
          Width           =   1335
       End
       Begin VB.CommandButton Command12 
@@ -83,11 +83,11 @@ Begin VB.Form Form10
          Height          =   375
          Left            =   240
          TabIndex        =   31
-         Top             =   2040
+         Top             =   1680
          Width           =   1935
       End
       Begin VB.TextBox Text2 
-         Height          =   1335
+         Height          =   975
          Left            =   240
          Locked          =   -1  'True
          MultiLine       =   -1  'True
@@ -100,7 +100,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command11 
       Caption         =   "refresh"
       Height          =   375
-      Left            =   16920
+      Left            =   16440
       TabIndex        =   27
       Top             =   120
       Width           =   2775
@@ -108,7 +108,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command10 
       Caption         =   "refresh with grid"
       Height          =   375
-      Left            =   16920
+      Left            =   16440
       TabIndex        =   26
       Top             =   1080
       Width           =   2775
@@ -116,7 +116,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command9 
       Caption         =   "refresh with camera control"
       Height          =   375
-      Left            =   16920
+      Left            =   16440
       TabIndex        =   25
       ToolTipText     =   "If no camera control it will be simply refresh"
       Top             =   600
@@ -136,7 +136,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command8 
       Caption         =   "Clear"
       Height          =   495
-      Left            =   18960
+      Left            =   18480
       TabIndex        =   23
       Top             =   1800
       Width           =   735
@@ -144,7 +144,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command6 
       Caption         =   "Undo"
       Height          =   375
-      Left            =   18960
+      Left            =   18480
       TabIndex        =   19
       Top             =   2400
       Width           =   735
@@ -152,7 +152,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command4 
       Caption         =   "Save High Bytes"
       Height          =   495
-      Left            =   13560
+      Left            =   13080
       TabIndex        =   6
       Top             =   840
       Width           =   1815
@@ -160,7 +160,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command3 
       Caption         =   "Save Low Bytes"
       Height          =   495
-      Left            =   13560
+      Left            =   13080
       TabIndex        =   5
       Top             =   240
       Width           =   1815
@@ -168,7 +168,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command2 
       Caption         =   "High Bytes"
       Height          =   495
-      Left            =   11880
+      Left            =   11400
       TabIndex        =   4
       Top             =   840
       Width           =   1455
@@ -176,7 +176,7 @@ Begin VB.Form Form10
    Begin VB.CommandButton Command1 
       Caption         =   "Low Bytes"
       Height          =   495
-      Left            =   11880
+      Left            =   11400
       TabIndex        =   3
       Top             =   240
       Width           =   1455
@@ -188,18 +188,18 @@ Begin VB.Form Form10
       ScrollBars      =   2  'Vertical
       TabIndex        =   2
       Top             =   240
-      Width           =   7335
+      Width           =   6735
    End
    Begin VB.PictureBox Picture1 
       AutoRedraw      =   -1  'True
       BackColor       =   &H00FFFFFF&
-      Height          =   11115
+      Height          =   10635
       Left            =   4560
-      ScaleHeight     =   11055
-      ScaleWidth      =   14175
+      ScaleHeight     =   10575
+      ScaleWidth      =   13575
       TabIndex        =   1
       Top             =   1680
-      Width           =   14235
+      Width           =   13635
       Begin VB.Shape Shape3 
          BorderColor     =   &H000000FF&
          BorderWidth     =   2
@@ -238,7 +238,7 @@ Begin VB.Form Form10
       Begin VB.CommandButton Command17 
          Caption         =   "Tile size"
          Height          =   375
-         Left            =   360
+         Left            =   240
          TabIndex        =   39
          ToolTipText     =   "You can render Tiles in different size"
          Top             =   2280
@@ -273,7 +273,7 @@ Begin VB.Form Form10
       End
       Begin VB.TextBox Text9 
          Height          =   375
-         Left            =   2040
+         Left            =   2520
          TabIndex        =   17
          Text            =   "10"
          Top             =   1680
@@ -306,10 +306,19 @@ Begin VB.Form Form10
       Begin VB.CommandButton Command5 
          Caption         =   "Load All"
          Height          =   375
-         Left            =   2040
+         Left            =   2520
          TabIndex        =   8
          Top             =   2280
          Width           =   1095
+      End
+      Begin VB.Label Label4 
+         Caption         =   "24"
+         Height          =   375
+         Left            =   1800
+         TabIndex        =   40
+         ToolTipText     =   "Present Tile Size"
+         Top             =   2400
+         Width           =   495
       End
       Begin VB.Label Label3 
          Caption         =   "(   ,   )"
@@ -337,7 +346,7 @@ Begin VB.Form Form10
       Begin VB.Label Label9 
          Caption         =   "Height(Hex)"
          Height          =   375
-         Left            =   2040
+         Left            =   2520
          TabIndex        =   15
          Top             =   1320
          Width           =   1095
@@ -471,11 +480,10 @@ Form10.Command11.Enabled = False
 Form10.Command9.Enabled = False
 Form10.Command10.Enabled = False
 Form10.Picture1.Cls
-Form10.Picture1.DrawWidth = 1
 Dim i As Integer, j As Integer, result As Boolean
 If IsDeliver = True Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
@@ -484,22 +492,22 @@ ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
     If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
-    For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
+    For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
     Next j
     ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
     Next j
     ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
@@ -507,8 +515,8 @@ ElseIf WholeRoomChange = True Then
     End If
     Next k
 End If
-For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
 Form10.Picture1.Line (16 * DotSize * i, 16 * DotSize * j)-(16 * DotSize * i + 16 * DotSize, 16 * DotSize * j + 16 * DotSize), vbWhite, B
 DoEvents
 Next i
@@ -531,11 +539,10 @@ Form10.Command11.Enabled = False
 Form10.Command9.Enabled = False
 Form10.Command10.Enabled = False
 Form10.Picture1.Cls
-Form10.Picture1.DrawWidth = 2
 Dim i As Integer, j As Integer, result As Boolean
 If IsDeliver = True Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
@@ -544,22 +551,22 @@ ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
     If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
-    For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
+    For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
     Next j
     ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
     Next j
     ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
@@ -734,12 +741,15 @@ End Sub
 
 Private Sub Command17_Click()
 Dim a As Integer
-a = Val(InputBox("Input size number for Tile under 25 and above 16, the default value is 24", "Info", 24))
-If a < 17 Or a > 24 Then
+a = Val(InputBox("Input size number for Tile, the default value is 24", "Info", 24))
+If a < 1 Or a > Min(Form10.Picture1.height, Form10.Picture1.width) Then
 MsgBox "illegal value !", vbOKOnly + vbCritical, "Info"
 Exit Sub
 End If
 DotSize = a
+Form10.Label4.Caption = str(a)
+Form10.Picture2.Cls
+Form10.Combo1.Text = ""
 Command11_Click
 Form10.Shape1.width = 15 * 16 * DotSize
 Form10.Shape1.height = 10 * 16 * DotSize
@@ -982,8 +992,8 @@ Next j
 If IsDeliver = False And WholeRoomChange = False Then
 Form9.Text1.Text = Form9.Text1.Text & "No Map Text Data inport, create new map!" & vbCrLf
 Form9.Text1.Text = Form9.Text1.Text & "Making grid......" & vbCrLf
-For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
 Form10.Picture1.Line (64 * 6 * i, 64 * 6 * j)-(64 * 6 * i + 64 * 6, 64 * 6 * j + 64 * 6), vbWhite, B
 DoEvents
 Next i
@@ -992,8 +1002,8 @@ End If
 
 If IsDeliver = True Then
 Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
-For j = 0 To Val("&H" & MapHeight) - 1
-For i = 0 To Val("&H" & MapLength) - 1
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
 result = DrawTile16(i, j, L0_LB_000(i, j), Form10.Picture1)
 DoEvents
 Next i
@@ -1017,22 +1027,22 @@ Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
 Dim k As Integer
 For k = 2 To 0 Step -1
 If layerPriority(0) = k Then
-For j = 0 To Layer0Height - 1
-For i = 0 To Layer0Width - 1
+For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.height \ DotSize)
+For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.width \ DotSize)
 result = DrawTile16(i, j, L0_LB_000(i, j), Form10.Picture1, , DotSize)
 DoEvents
 Next i
 Next j
 ElseIf layerPriority(1) = k Then
-For j = 0 To Val("&H" & MapHeight) - 1
-For i = 0 To Val("&H" & MapLength) - 1
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
 result = DrawTile16(i, j, L1_LB_000(i, j), Form10.Picture1, , DotSize)
 DoEvents
 Next i
 Next j
 ElseIf layerPriority(2) = k Then
-For j = 0 To Val("&H" & MapHeight) - 1
-For i = 0 To Val("&H" & MapLength) - 1
+For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
 result = DrawTile16(i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize)
 DoEvents
 Next i
@@ -1145,11 +1155,10 @@ Form10.Command11.Enabled = False
 Form10.Command9.Enabled = False
 Form10.Command10.Enabled = False
 Form10.Picture1.Cls
-Form10.Picture1.DrawWidth = 2
 Dim i As Integer, j As Integer, result As Boolean
 If IsDeliver = True Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
@@ -1158,22 +1167,22 @@ ElseIf WholeRoomChange = True Then
     Dim k As Integer
     For k = 2 To 0 Step -1
     If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
-    For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
+    For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
     Next j
     ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
     Next j
     ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
     result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
     DoEvents
     Next i
@@ -1351,6 +1360,7 @@ Xshift = 0
 Yshift = 0
 WasCameraControlChange = False
 DotSize = 24
+Form10.Label4.Caption = str(DotSize)
 
 If IsDeliver = True Then
     Form10.Command15.Enabled = False

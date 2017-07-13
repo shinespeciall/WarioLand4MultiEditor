@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form Form4 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Level guide"
-   ClientHeight    =   9270
+   ClientHeight    =   8520
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   4560
@@ -10,7 +10,7 @@ Begin VB.Form Form4
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   9270
+   ScaleHeight     =   8520
    ScaleWidth      =   4560
    Visible         =   0   'False
    Begin VB.CommandButton Command3 
@@ -19,7 +19,7 @@ Begin VB.Form Form4
       Left            =   2640
       TabIndex        =   16
       ToolTipText     =   "BG layer will be thrown"
-      Top             =   4080
+      Top             =   3720
       Width           =   1455
    End
    Begin VB.CommandButton Command2 
@@ -28,32 +28,32 @@ Begin VB.Form Form4
       Height          =   375
       Left            =   2640
       TabIndex        =   15
-      Top             =   4800
+      Top             =   4440
       Width           =   1455
    End
    Begin VB.ListBox List6 
-      Height          =   1680
+      Height          =   1320
       ItemData        =   "Form4.frx":0000
       Left            =   1200
       List            =   "Form4.frx":0002
       TabIndex        =   13
       ToolTipText     =   "offset is for pointer"
-      Top             =   4080
+      Top             =   3720
       Width           =   975
    End
    Begin VB.ListBox List5 
       Enabled         =   0   'False
-      Height          =   1680
+      Height          =   1320
       ItemData        =   "Form4.frx":0004
       Left            =   120
       List            =   "Form4.frx":0006
       TabIndex        =   12
       ToolTipText     =   "double click to change value"
-      Top             =   4080
+      Top             =   3720
       Width           =   975
    End
    Begin VB.ListBox List4 
-      Height          =   1680
+      Height          =   1320
       ItemData        =   "Form4.frx":0008
       Left            =   3360
       List            =   "Form4.frx":000A
@@ -64,7 +64,7 @@ Begin VB.Form Form4
    End
    Begin VB.ListBox List3 
       Enabled         =   0   'False
-      Height          =   1680
+      Height          =   1320
       ItemData        =   "Form4.frx":000C
       Left            =   2280
       List            =   "Form4.frx":000E
@@ -74,7 +74,7 @@ Begin VB.Form Form4
       Width           =   975
    End
    Begin VB.ListBox List2 
-      Height          =   1680
+      Height          =   1320
       ItemData        =   "Form4.frx":0010
       Left            =   1200
       List            =   "Form4.frx":0012
@@ -89,7 +89,7 @@ Begin VB.Form Form4
       MultiLine       =   -1  'True
       ScrollBars      =   3  'Both
       TabIndex        =   8
-      Top             =   6840
+      Top             =   6120
       Width           =   4335
    End
    Begin VB.CommandButton Command1 
@@ -97,7 +97,7 @@ Begin VB.Form Form4
       Height          =   375
       Left            =   3000
       TabIndex        =   5
-      Top             =   5760
+      Top             =   5160
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -105,12 +105,12 @@ Begin VB.Form Form4
       Height          =   375
       Left            =   120
       TabIndex        =   4
-      Top             =   5760
+      Top             =   5160
       Width           =   2775
    End
    Begin VB.ListBox List1 
       Enabled         =   0   'False
-      Height          =   1680
+      Height          =   1320
       ItemData        =   "Form4.frx":0014
       Left            =   120
       List            =   "Form4.frx":0016
@@ -134,7 +134,7 @@ Begin VB.Form Form4
       Left            =   120
       TabIndex        =   14
       ToolTipText     =   "offset is for pointer"
-      Top             =   3840
+      Top             =   3480
       Width           =   2415
    End
    Begin VB.Label Label4 
@@ -142,7 +142,7 @@ Begin VB.Form Form4
       Height          =   255
       Left            =   120
       TabIndex        =   7
-      Top             =   6360
+      Top             =   5640
       Width           =   1455
    End
    Begin VB.Label Label3 
@@ -426,7 +426,7 @@ Form10.Visible = True
 End Sub
 
 Private Sub Form_Load()
-Form4.Move 0, 0, 4650, 9705
+Form4.Move 0, 0, 4650, 8950
 Form4.Label1.FontSize = 13
 Form4.Label2.FontSize = 10
 Form4.Combo1.FontSize = 12
