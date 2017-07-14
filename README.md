@@ -7,7 +7,7 @@
 ##      3. there are some other things the App can do, but are only for an alpha test, without WL4 hacking information, it will be hard to use them properly when you try to edit enimies and timers etc. I will try to make wizards if any part of hacking is completed.
 ##      4. Camera control modification is available in Visual MAP Editor visually, there are two types available and the textbox just show the exact control characters in the ROM file.
 ##      5. You can Edit Sprites Tiles by input a Index. but only bitmap-direct-change available. The sprites editor sometimes will not render the sprites in right colors, you need to use the slider to correct it.
-##      6. Sprites stuffs and their positions can only change in textmode, it's not wise to change them if you don't know how the characters function. By the way, Its will be a lot of work if I make a wizard for this, so it will be a long way to get there. 
+##      6. Sprites stuffs and their positions can only change in textmode, it's not wise to change them if you don't know how the characters function. By the way, there will be a lot of work if I make a wizard for this, so it will be a long way to get there. 
 ##
 ##      Although VB6 App can run on various Windows platform, but due to I coding on Windows 10 Creater with a HD wide screen, the App UI always not suitable for average screen. I am trying to fix the problem now.
 ##
