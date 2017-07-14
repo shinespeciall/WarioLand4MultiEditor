@@ -2,10 +2,11 @@ VERSION 5.00
 Begin VB.Form Form7 
    Caption         =   "Sprites and Tiles Editor"
    ClientHeight    =   5400
-   ClientLeft      =   2385
-   ClientTop       =   2325
+   ClientLeft      =   120
+   ClientTop       =   465
    ClientWidth     =   22830
    LinkTopic       =   "Form7"
+   MDIChild        =   -1  'True
    ScaleHeight     =   5760
    ScaleMode       =   0  'User
    ScaleWidth      =   22830
@@ -282,21 +283,20 @@ Form7.Command3.Enabled = False
 Form7.Command4.Enabled = False
 Form7.Picture1.Enabled = False
 Form7.Combo1.Enabled = False
-'Form7.Slider1.Enabled = False
-
-MDIForm1.Enabled = False
+Form7.Picture1.Move 0, 0, 20560, Form7.height - 640     'height: 640 per 2 line   Width: 20480
+Form7.Move 0, 0, 23070, 5985
+Form7.Icon = LoadResPicture(101, vbResIcon)
 End Sub
 
 Private Sub Form_Resize()                 ' 80 twip(ç¾ ¶Áti£¬µÚ¶þÉù) per height and width
 If Form7.height < 1700 Then Exit Sub
-Form7.Picture1.Move 60, 60, 20560, (Form7.height \ 640 - 1) * 640 'height: 640 per 2 line   Width: 20480
+Form7.Picture1.Move 0, 0, 20560, Form7.height - 640     'height: 640 per 2 line   Width: 20480
 ColorHByte = "1"
 If TileLength <> "" Then Form7.Picture2.BackColor = Palette16Color(Val("&H" & ColorHByte))
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
 Erase Palette16Color()
-MDIForm1.Enabled = True
 End Sub
 
 Private Sub Picture1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)

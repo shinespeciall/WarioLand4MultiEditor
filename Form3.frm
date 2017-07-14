@@ -206,6 +206,7 @@ Form3.Label1.FontSize = 15
 Form3.Text1.Text = ""
 Form3.Command1.Enabled = False
 Form3.Command3.Enabled = False
+Form3.Icon = LoadResPicture(101, vbResIcon)
 
 If gbafilepath = "" Then Exit Sub
 Command2_Click

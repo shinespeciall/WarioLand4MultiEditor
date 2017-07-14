@@ -880,6 +880,7 @@ End Sub
 
 Private Sub Form_Activate()
 Form2.Text6.Text = ""
+Form2.Icon = LoadResPicture(101, vbResIcon)
 
 If IfisNewRoom = True Then
     Form2.Caption = "new Layer"

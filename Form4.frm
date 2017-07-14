@@ -430,6 +430,7 @@ Form4.Move 0, 0, 4650, 8950
 Form4.Label1.FontSize = 13
 Form4.Label2.FontSize = 10
 Form4.Combo1.FontSize = 12
+Form4.Icon = LoadResPicture(101, vbResIcon)
 
 'Form11.Visible = True          'for test
 'Form12.Visible = True          'for test

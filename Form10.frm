@@ -739,6 +739,11 @@ If WholeRoomChange = True Then
 End If
 End Sub
 
+Private Sub Command16_Click()
+Form12.Visible = True
+Form10.Enabled = False
+End Sub
+
 Private Sub Command17_Click()
 Dim a As Integer
 a = Val(InputBox("Input size number for Tile, the default value is 24", "Info", 24))
@@ -1105,42 +1110,7 @@ End Sub
 Private Sub Command7_Click()
 Xshift = Val("&H" & Form10.Text6.Text)
 Yshift = Val("&H" & Form10.Text7.Text)
-Form10.Picture1.Cls
-Dim i As Integer, j As Integer, result As Boolean
-If IsDeliver = True Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
-ElseIf WholeRoomChange = True Then
-    Dim k As Integer
-    For k = 2 To 0 Step -1
-    If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Layer0Height - 1 - Yshift, 50)
-    For i = 0 To Min(Layer0Width - 1 - Xshift, 50)
-    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
-    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-    result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
-    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, 50)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, 50)
-    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
-    End If
-    Next k
-End If
+Command11.Click
 End Sub
 
 Private Sub Command8_Click()
@@ -1241,6 +1211,7 @@ Form10.Command10.Enabled = True
 End Sub
 
 Private Sub Form_Load()
+Form10.Icon = LoadResPicture(101, vbResIcon)
 IsMakingCameraRec = False
 IsClick = False
 If MODfilepath = "" Then

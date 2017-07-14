@@ -63,5 +63,6 @@ End Sub
 
 Private Sub Form_Load()
 Form8.Visible = False
+Form8.Icon = LoadResPicture(101, vbResIcon)
 End Sub
 

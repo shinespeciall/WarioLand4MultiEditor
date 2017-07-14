@@ -818,6 +818,7 @@ Form1.Text1.FontSize = 15
 Form1.Label1.FontSize = 15
 Form1.Label2.FontSize = 15
 Form1.Move 4650, 0, 18500, 11535
+Form1.Icon = LoadResPicture(101, vbResIcon)
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

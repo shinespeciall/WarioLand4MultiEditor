@@ -125,6 +125,7 @@ End Sub
 
 Private Sub Form_Activate()
 Form5.Move 0, 0, 4650, 9705
+Form5.Icon = LoadResPicture(101, vbResIcon)
 Dim i As Integer
 
 Form5.List1.Clear

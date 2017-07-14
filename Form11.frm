@@ -197,6 +197,7 @@ Private Sub Form_Load()
 Form11.width = 15825
 Form11.height = 8565
 Form11.Left = Form4.width
+Form11.Icon = LoadResPicture(101, vbResIcon)
 Form11.Top = 0
 Form11.Combo1.FontSize = 15
 Form11.Combo1.AddItem "00  Debug room"

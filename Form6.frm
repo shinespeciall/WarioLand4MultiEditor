@@ -600,6 +600,7 @@ End Sub
 
 Private Sub Form_Activate()
 Form6.Move 4650, 1000, 5550, 8910
+Form6.Icon = LoadResPicture(101, vbResIcon)
 If LevelRoomIndex = "" Then Exit Sub
 Form6.Text4.Text = ""
 If LevelAllRoomPointerandDataallHex = "" Then
