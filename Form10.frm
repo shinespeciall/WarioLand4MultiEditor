@@ -740,6 +740,13 @@ End If
 End Sub
 
 Private Sub Command16_Click()
+ReDim MODforSave(11, 16)
+Dim i As Integer, j As Integer
+For j = 0 To 16
+For i = 0 To 11
+MODforSave(i, j) = "0000"
+Next i
+Next j
 Form12.Visible = True
 Form10.Enabled = False
 End Sub

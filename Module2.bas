@@ -33,6 +33,7 @@ Public Layer0Height As Integer
 Public Layer0Width As Integer
 
 Public DotSize As Integer
+Public MODforSave() As String
 
 Public Function RGB555ToRGB888(ByVal RGB555 As String) As Long
 If Len(RGB555) <> 4 Then

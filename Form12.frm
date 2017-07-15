@@ -13,7 +13,7 @@ Begin VB.Form Form12
    Begin VB.CommandButton Command4 
       Caption         =   "Next"
       Height          =   375
-      Left            =   2520
+      Left            =   2160
       TabIndex        =   9
       Top             =   8160
       Width           =   1695
@@ -21,20 +21,20 @@ Begin VB.Form Form12
    Begin VB.CommandButton Command3 
       Caption         =   "Last"
       Height          =   375
-      Left            =   360
+      Left            =   120
       TabIndex        =   8
       Top             =   8160
       Width           =   1695
    End
    Begin VB.PictureBox Picture2 
       BackColor       =   &H00000000&
-      Height          =   4095
-      Left            =   4920
-      ScaleHeight     =   4035
-      ScaleWidth      =   5595
+      Height          =   4575
+      Left            =   4200
+      ScaleHeight     =   4515
+      ScaleWidth      =   6315
       TabIndex        =   7
       Top             =   1680
-      Width           =   5655
+      Width           =   6375
    End
    Begin VB.CommandButton Command2 
       Caption         =   "Cancel"
@@ -70,10 +70,10 @@ Begin VB.Form Form12
    End
    Begin VB.TextBox Text1 
       Height          =   375
-      Left            =   4920
+      Left            =   4200
       TabIndex        =   2
       Top             =   960
-      Width           =   5655
+      Width           =   6375
    End
    Begin VB.PictureBox Picture1 
       AutoRedraw      =   -1  'True
@@ -81,16 +81,25 @@ Begin VB.Form Form12
       Height          =   7095
       Left            =   120
       ScaleHeight     =   7035
-      ScaleWidth      =   4395
+      ScaleWidth      =   3675
       TabIndex        =   0
       ToolTipText     =   "Click and choose"
       Top             =   720
-      Width           =   4455
+      Width           =   3735
+      Begin VB.Shape Shape1 
+         BorderColor     =   &H000000FF&
+         BorderWidth     =   2
+         Height          =   384
+         Left            =   960
+         Top             =   2400
+         Visible         =   0   'False
+         Width           =   384
+      End
    End
    Begin VB.Label Label3 
       Caption         =   "Page: 0"
       Height          =   375
-      Left            =   4440
+      Left            =   4080
       TabIndex        =   11
       Top             =   8160
       Width           =   1695
@@ -106,7 +115,7 @@ Begin VB.Form Form12
    Begin VB.Label Label1 
       Caption         =   "Nmae It !"
       Height          =   375
-      Left            =   5280
+      Left            =   4200
       TabIndex        =   1
       Top             =   360
       Width           =   1215
@@ -120,9 +129,17 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Public TilePage As Integer
+Public IX As Integer
+Public JY As Integer
+Public NowTile As String
+
+Public IX2 As Integer
+Public JY2 As Integer
 
 Private Sub Command3_Click()
 Form12.Picture1.Cls
+NowTile = ""
+Form12.Shape1.Visible = False
 TilePage = TilePage - 1
 Dim a As Boolean, i As Integer, j As Integer
 For j = 0 To 15
@@ -141,6 +158,8 @@ End Sub
 
 Private Sub Command4_Click()
 Form12.Picture1.Cls
+NowTile = ""
+Form12.Shape1.Visible = False
 TilePage = TilePage + 1
 Dim a As Boolean, i As Integer, j As Integer
 For j = 0 To 15
@@ -180,4 +199,30 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
 Form12.Visible = False
 Form10.Enabled = True
+End Sub
+
+Private Sub Picture1_Click()
+If IX < 8 And JY < 16 Then
+NowTile = Right("000" & Hex(CLng(128 * TilePage + IX + 8 * JY)), 4)
+Form12.Shape1.Visible = True
+Form12.Shape1.Left = IX * 384
+Form12.Shape1.Top = JY * 384
+End If
+End Sub
+
+Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+IX = X \ 384
+JY = Y \ 384
+End Sub
+
+Private Sub Picture2_Click()
+If IX2 < 11 And JY2 < 16 Then
+MODforSave(IX2, JY2) = NowTile
+DrawTile16 IX2, JY2, NowTile, Form12.Picture2, True, 24
+End If
+End Sub
+
+Private Sub Picture2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+IX2 = X \ 384
+JY2 = Y \ 384
 End Sub
