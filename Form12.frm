@@ -14,7 +14,7 @@ Begin VB.Form Form12
       Caption         =   "Next"
       Height          =   375
       Left            =   2160
-      TabIndex        =   9
+      TabIndex        =   7
       Top             =   8160
       Width           =   1695
    End
@@ -22,7 +22,7 @@ Begin VB.Form Form12
       Caption         =   "Last"
       Height          =   375
       Left            =   120
-      TabIndex        =   8
+      TabIndex        =   6
       Top             =   8160
       Width           =   1695
    End
@@ -32,7 +32,7 @@ Begin VB.Form Form12
       Left            =   4200
       ScaleHeight     =   4515
       ScaleWidth      =   6315
-      TabIndex        =   7
+      TabIndex        =   5
       Top             =   1680
       Width           =   6375
    End
@@ -40,7 +40,7 @@ Begin VB.Form Form12
       Caption         =   "Cancel"
       Height          =   615
       Left            =   9120
-      TabIndex        =   6
+      TabIndex        =   4
       Top             =   7800
       Width           =   1215
    End
@@ -48,25 +48,9 @@ Begin VB.Form Form12
       Caption         =   "Done"
       Height          =   615
       Left            =   7200
-      TabIndex        =   5
+      TabIndex        =   3
       Top             =   7800
       Width           =   1335
-   End
-   Begin VB.OptionButton Option2 
-      Caption         =   "Save in Block Model file"
-      Height          =   375
-      Left            =   5280
-      TabIndex        =   4
-      Top             =   6960
-      Width           =   3375
-   End
-   Begin VB.OptionButton Option1 
-      Caption         =   "Save in BG Model file"
-      Height          =   255
-      Left            =   5280
-      TabIndex        =   3
-      Top             =   6480
-      Width           =   3255
    End
    Begin VB.TextBox Text1 
       Height          =   375
@@ -100,7 +84,7 @@ Begin VB.Form Form12
       Caption         =   "Page: 0"
       Height          =   375
       Left            =   4080
-      TabIndex        =   11
+      TabIndex        =   9
       Top             =   8160
       Width           =   1695
    End
@@ -108,7 +92,7 @@ Begin VB.Form Form12
       Caption         =   "Tiles"
       Height          =   375
       Left            =   240
-      TabIndex        =   10
+      TabIndex        =   8
       Top             =   240
       Width           =   2895
    End
@@ -177,11 +161,7 @@ Next i
 TileMOD(0, i) = Right("000" & str(i), 3) & " " & Form12.Text1.Text
 TileMOD(1, i) = tmpstr
 
-If Form12.Option1.Value = True Then
-Open App.Path & "\MOD\" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) & " BG.txt" For Append As #3
-Else
 Open App.Path & "\MOD\" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) & " Block.txt" For Append As #3
-End If
 Print #3, TileMOD(0, i)
 Print #3, TileMOD(1, i)
 Close #3
