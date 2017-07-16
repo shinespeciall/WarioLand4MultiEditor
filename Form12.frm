@@ -136,6 +136,66 @@ Public NowTile As String
 Public IX2 As Integer
 Public JY2 As Integer
 
+Private Sub Command1_Click()
+Dim xmax As Integer, ymax As Integer, xmin As Integer, ymin As Integer
+Dim tmpstr As String
+Dim i As Integer, j As Integer
+
+For j = 0 To 15
+For i = 0 To 10
+If MODforSave(i, j) <> "0000" Then
+If i > xmax Then xmax = i
+If j > ymax Then ymax = j
+End If
+Next i
+Next j
+
+xmin = xmax
+ymin = ymax
+
+For j = 0 To 15
+For i = 0 To 10
+If MODforSave(i, j) <> "0000" Then
+If i < xmin Then xmin = i
+If j < ymin Then ymin = j
+Exit For
+End If
+Next i
+Next j
+
+tmpstr = Right("00" & Hex(xmax - xmin + 1), 2) & Right("00" & Hex(ymax - ymin + 1), 2)
+For j = ymin To ymax
+For i = xmin To xmax
+tmpstr = tmpstr & MODforSave(i, j)
+Next i
+Next j
+
+For i = 0 To 500
+If TileMOD(0, i) = "" Then Exit For
+Next i
+
+TileMOD(0, i) = Right("000" & str(i), 3) & " " & Form12.Text1.Text
+TileMOD(1, i) = tmpstr
+
+If Form12.Option1.Value = True Then
+Open App.Path & "\MOD\" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) & " BG.txt" For Append As #3
+Else
+Open App.Path & "\MOD\" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) & " Block.txt" For Append As #3
+End If
+Print #3, TileMOD(0, i)
+Print #3, TileMOD(1, i)
+Close #3
+
+Form12.Visible = False
+Form10.Combo1.AddItem TileMOD(0, i)
+Form10.Enabled = True
+End Sub
+
+Private Sub Command2_Click()
+Form12.Visible = False
+Form10.Enabled = True
+End Sub
+
 Private Sub Command3_Click()
 Form12.Picture1.Cls
 NowTile = ""
@@ -153,6 +213,7 @@ Form12.Command3.Enabled = False
 Else
 Form12.Command3.Enabled = True
 End If
+Form12.Command4.Enabled = True
 Form12.Label3.Caption = "Page: " & TilePage
 End Sub
 
@@ -168,6 +229,11 @@ a = DrawTile16(i, j, Hex(128 * TilePage + i + 8 * j), Form12.Picture1, , 24)
 DoEvents
 Next i
 Next j
+If TilePage = 6 Then
+Form12.Command4.Enabled = False
+Else
+Form12.Command4.Enabled = True
+End If
 Form12.Command3.Enabled = True
 Form12.Label3.Caption = "Page: " & TilePage
 End Sub
@@ -197,8 +263,7 @@ Next j
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-Form12.Visible = False
-Form10.Enabled = True
+Command2_Click
 End Sub
 
 Private Sub Picture1_Click()

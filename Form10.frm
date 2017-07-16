@@ -420,8 +420,8 @@ Public IsLayer2Change As Boolean
 Private Sub Combo1_Click()
 Form10.Picture2.Cls
 Dim width As Integer, height As Integer, i As Integer, j As Integer, result As Boolean
-width = Val(Mid(TileMOD(1, Form10.Combo1.ListIndex), 1, 2))
-height = Val(Mid(TileMOD(1, Form10.Combo1.ListIndex), 3, 2))
+width = Val("&" & Mid(TileMOD(1, Form10.Combo1.ListIndex), 1, 2))
+height = Val("&" & Mid(TileMOD(1, Form10.Combo1.ListIndex), 3, 2))
 ReDim NowTileMOD(width, height)
 For j = 0 To height - 1
 For i = 0 To width - 1
@@ -747,6 +747,17 @@ For i = 0 To 11
 MODforSave(i, j) = "0000"
 Next i
 Next j
+If (Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0) Or _
+   (Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0) Or _
+   (Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1) Then
+i = MsgBox("Get MOD from MAP ?", vbYesNo, "Info")
+If i <> vbYes Then GoTo StartNewMODDialog
+'--------------------------------------Use A Timer to do the rest thing
+
+'--------------------------------------
+End If
+
+StartNewMODDialog:
 Form12.Visible = True
 Form10.Enabled = False
 End Sub
@@ -1117,7 +1128,7 @@ End Sub
 Private Sub Command7_Click()
 Xshift = Val("&H" & Form10.Text6.Text)
 Yshift = Val("&H" & Form10.Text7.Text)
-Command11.Click
+Command11_Click
 End Sub
 
 Private Sub Command8_Click()
@@ -1228,7 +1239,7 @@ Exit Sub
 End If
 
 Dim i As Integer, j As Integer
-ReDim TileMOD(2, 500)
+ReDim TileMOD(1, 500)
 i = 0
 Open MODfilepath For Input As #2
 Do While Not EOF(2)
