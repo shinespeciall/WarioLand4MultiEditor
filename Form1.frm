@@ -143,11 +143,11 @@ Dim totlesize As Long
 return1:
 
 DoEvents
-a1 = Mid(ROMallHex, Val(nowoffset) + 1, 2)
+a1 = Mid$(ROMallHex, Val(nowoffset) + 1, 2)
 DoEvents
-a2 = Mid(ROMallHex, Val(nowoffset) + 3, 2)
+a2 = Mid$(ROMallHex, Val(nowoffset) + 3, 2)
 DoEvents
-a3 = Mid(ROMallHex, Val(nowoffset) + 5, 2)
+a3 = Mid$(ROMallHex, Val(nowoffset) + 5, 2)
 totlesize = Val("&H" & a1) * Val("&H" & a2)
 Form1.Picture1.Print "start offset of compressed data:" & startoffset & "                 room 初始参数：" & a1 & a2 & a3
 Form1.Picture1.Print "room width Hex:" & a1 & "    room height Hex:" & a2 & "      Decompress Type:   " & a3
@@ -175,7 +175,7 @@ End If
       '第一个字节是标志位，我不知道是干什么用的，但是不能直接跳过，否则后面会少一个字节
 Again:
 
-str1 = Mid(ROMallHex, j + 1, 4)
+str1 = Mid$(ROMallHex, j + 1, 4)
     If Val("&H" & str1) = 0 Then
     nowoffset = j + 2
     GoTo PrintLayer01
@@ -188,7 +188,7 @@ str1 = Mid(ROMallHex, j + 1, 4)
         If decompressHex(i) = "" Then Exit For
         Next i
         For ii = i To i + nn - 1
-        decompressHex(ii) = Mid(ROMallHex, j + 1, 2)
+        decompressHex(ii) = Mid$(ROMallHex, j + 1, 2)
         Next ii
         j = j + 2
     ElseIf (Val("&H" & str1) And Val("&H" & "8000")) = 0 Then
@@ -200,7 +200,7 @@ str1 = Mid(ROMallHex, j + 1, 4)
         j = j + 2
         For ii = i To i + nn - 1
         j = j + 2
-        decompressHex(ii) = Mid(ROMallHex, j + 1, 2)
+        decompressHex(ii) = Mid$(ROMallHex, j + 1, 2)
         Next ii
         j = j + 2
     End If
@@ -216,11 +216,11 @@ Do             '解压 layer1 主循环
 
 DoEvents
 '*******************************************************这一块是解压并写入的一次循环
-str1 = Mid(ROMallHex, Val(nowoffset) + 1, 2)
+str1 = Mid$(ROMallHex, Val(nowoffset) + 1, 2)
 
 If Val("&H" & str1) > 128 Then               '对于大于80h的情况
 tilenum = Val("&H" & str1) - 128
-str2 = Mid(ROMallHex, Val(nowoffset) + 3, 2)
+str2 = Mid$(ROMallHex, Val(nowoffset) + 3, 2)
   For i = 1 To tilenum
   decompressHex(i + j - 1) = str2
   Next i
@@ -228,9 +228,9 @@ j = j + tilenum
 nowoffset = nowoffset + 4
 Else                                        '小于等于80h
 tilenum = Val("&H" & str1)
-str2 = Mid(ROMallHex, Val(nowoffset) + 3, 2 * tilenum)
+str2 = Mid$(ROMallHex, Val(nowoffset) + 3, 2 * tilenum)
   For i = 1 To tilenum
-  decompressHex(i + j - 1) = Mid(str2, i * 2 - 1, 2)
+  decompressHex(i + j - 1) = Mid$(str2, i * 2 - 1, 2)
   Next i
 j = j + tilenum
 nowoffset = nowoffset + tilenum * 2 + 2
@@ -299,15 +299,15 @@ End If
 '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 IfisNewRoom = False
 
-If Mid(ROMallHex, nowoffset + 1, 4) = "0002" Then
+If Mid$(ROMallHex, nowoffset + 1, 4) = "0002" Then
 j = 0
 nowoffset = nowoffset + 4
 Do
 '*******************************************************这一块是解压并写入的一次循环
-str1 = Mid(ROMallHex, nowoffset + 1, 4)
+str1 = Mid$(ROMallHex, nowoffset + 1, 4)
 If CLng("&H" & str1) > 32768 Then               '对于大于8000h的情况
 tilenum = CLng("&H" & str1) - 32768
-str2 = Mid(ROMallHex, nowoffset + 5, 2)
+str2 = Mid$(ROMallHex, nowoffset + 5, 2)
   For i = 1 To tilenum
   decompressHex(i + j - 1) = str2
   Next i
@@ -317,9 +317,9 @@ ElseIf str1 = "0000" Then
 Exit Do
 Else                                        '小于等于8000h
 tilenum = CLng("&H" & str1)
-str2 = Mid(ROMallHex, nowoffset + 5, 2 * tilenum)
+str2 = Mid$(ROMallHex, nowoffset + 5, 2 * tilenum)
   For i = 1 To tilenum
-  decompressHex(i + j - 1) = Mid(str2, i * 2 - 1, 2)
+  decompressHex(i + j - 1) = Mid$(str2, i * 2 - 1, 2)
   Next i
 j = j + tilenum
 nowoffset = nowoffset + tilenum * 2 + 4
@@ -336,7 +336,7 @@ nowoffset = nowoffset + 4
 layer2compressdatalength = nowoffset - 6 - layer1compressdatalength
   For i = 0 To Len(ROMallHex)
     j = i * 2
-    If Mid(ROMallHex, Val(nowoffset) + 1 + 2 * i, 2) <> "00" Then
+    If Mid$(ROMallHex, Val(nowoffset) + 1 + 2 * i, 2) <> "00" Then
     Exit For
     End If
   Next i
@@ -372,17 +372,17 @@ Next ii
 ii = 0
 rectangleNext:
 
-checkStream = Mid(MessageStream, ii * 24 + 1, 24)
+checkStream = Mid$(MessageStream, ii * 24 + 1, 24)
 If checkStream = "000000000000000000000000" Then
     MDIForm1.mnuroomchange.Enabled = True
     Form1.Text1.Enabled = True
     GoTo EndRectangle
 End If
-If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
-    H1 = Mid(checkStream, 5, 2)
-    V1 = Mid(checkStream, 9, 2)
-    H2 = Mid(checkStream, 7, 2)
-    V2 = Mid(checkStream, 11, 2)
+If Mid$(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+    H1 = Mid$(checkStream, 5, 2)
+    V1 = Mid$(checkStream, 9, 2)
+    H2 = Mid$(checkStream, 7, 2)
+    V2 = Mid$(checkStream, 11, 2)
 
     n1 = Val("&H" + V1) * TextHeight("FF ")
     n2 = Val("&H" + H1) * TextWidth("FF ")
@@ -411,7 +411,7 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
     V2 = TempHV
     End If
     
-    If Mid(checkStream, 1, 2) = "01" Then            'portal
+    If Mid$(checkStream, 1, 2) = "01" Then            'portal
         Form1.Picture1.Line (n2, n1 + (BeforeLine + 7) * TextHeight("FF"))-(n4 + TextWidth("FF"), n3 + (BeforeLine + 8) * TextHeight("FF")), vbBlue, B
         If UsedLineTop(6 + Val("&H" & V1)) = 0 Then
         UsedLineTop(6 + Val("&H" & V1)) = 6 + Val("&H" & V1)
@@ -420,9 +420,9 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = n1 + 5 + (BeforeLine + 7) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbBlue
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
@@ -438,15 +438,15 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = (BeforeLine + jj) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbBlue
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
         '))))))))))))))))))))))))))))))))
         End If
-    ElseIf Mid(checkStream, 1, 2) = "02" Then        'vertical block
+    ElseIf Mid$(checkStream, 1, 2) = "02" Then        'vertical block
         Form1.Picture1.Line (n2, n1 + (BeforeLine + 7) * TextHeight("FF"))-(n4 + TextWidth("FF"), n3 + (BeforeLine + 8) * TextHeight("FF")), vbRed, B
         If UsedLineTop(6 + Val("&H" & V1)) = 0 Then
         UsedLineTop(6 + Val("&H" & V1)) = 6 + Val("&H" & V1)
@@ -455,9 +455,9 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = n1 + 5 + (BeforeLine + 7) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbRed
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
@@ -473,15 +473,15 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = (BeforeLine + jj) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbRed
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
         '))))))))))))))))))))))))))))))))
         End If
-    ElseIf Mid(checkStream, 1, 2) = "03" Then        'horizontal block
+    ElseIf Mid$(checkStream, 1, 2) = "03" Then        'horizontal block
         Form1.Picture1.Line (n2, n1 + (BeforeLine + 7) * TextHeight("FF"))-(n4 + TextWidth("FF"), n3 + (BeforeLine + 8) * TextHeight("FF")), vbGreen, B
         If UsedLineTop(6 + Val("&H" & V1)) = 0 Then
         UsedLineTop(6 + Val("&H" & V1)) = 6 + Val("&H" & V1)
@@ -490,9 +490,9 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = n1 + 5 + (BeforeLine + 7) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbGreen
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
@@ -508,9 +508,9 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = (BeforeLine + jj) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbGreen
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
@@ -553,15 +553,15 @@ Next ii
 ii = 0
 rectangleNext2:
 
-checkStream = Mid(MessageStream, ii * 24 + 1, 24)
+checkStream = Mid$(MessageStream, ii * 24 + 1, 24)
 If checkStream = "000000000000000000000000" Then
     GoTo EndRectangle2
 End If
-If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
-    H1 = Mid(checkStream, 5, 2)
-    V1 = Mid(checkStream, 9, 2)
-    H2 = Mid(checkStream, 7, 2)
-    V2 = Mid(checkStream, 11, 2)
+If Mid$(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+    H1 = Mid$(checkStream, 5, 2)
+    V1 = Mid$(checkStream, 9, 2)
+    H2 = Mid$(checkStream, 7, 2)
+    V2 = Mid$(checkStream, 11, 2)
 
     n1 = Val("&H" + V1) * TextHeight("FF ")
     n2 = Val("&H" + H1) * TextWidth("FF ")
@@ -590,7 +590,7 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
     V2 = TempHV
     End If
     
-    If Mid(checkStream, 1, 2) = "01" Then            'portal
+    If Mid$(checkStream, 1, 2) = "01" Then            'portal
         Form1.Picture1.Line (n2, n1 + (BeforeLine + 7) * TextHeight("FF"))-(n4 + TextWidth("FF"), n3 + (BeforeLine + 8) * TextHeight("FF")), vbBlue, B
         If UsedLineTop(6 + Val("&H" & V1)) = 0 Then
         UsedLineTop(6 + Val("&H" & V1)) = 6 + Val("&H" & V1)
@@ -599,9 +599,9 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = n1 + 5 + (BeforeLine + 7) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbBlue
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
@@ -617,15 +617,15 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = (BeforeLine + jj) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbBlue
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
         '))))))))))))))))))))))))))))))))
         End If
-    ElseIf Mid(checkStream, 1, 2) = "02" Then        'vertical block
+    ElseIf Mid$(checkStream, 1, 2) = "02" Then        'vertical block
         Form1.Picture1.Line (n2, n1 + (BeforeLine + 7) * TextHeight("FF"))-(n4 + TextWidth("FF"), n3 + (BeforeLine + 8) * TextHeight("FF")), vbRed, B
         If UsedLineTop(6 + Val("&H" & V1)) = 0 Then
         UsedLineTop(6 + Val("&H" & V1)) = 6 + Val("&H" & V1)
@@ -634,9 +634,9 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = n1 + 5 + (BeforeLine + 7) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbRed
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
@@ -652,15 +652,15 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = (BeforeLine + jj) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbRed
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
         '))))))))))))))))))))))))))))))))
         End If
-    ElseIf Mid(checkStream, 1, 2) = "03" Then        'horizontal block
+    ElseIf Mid$(checkStream, 1, 2) = "03" Then        'horizontal block
         Form1.Picture1.Line (n2, n1 + (BeforeLine + 7) * TextHeight("FF"))-(n4 + TextWidth("FF"), n3 + (BeforeLine + 8) * TextHeight("FF")), vbGreen, B
         If UsedLineTop(6 + Val("&H" & V1)) = 0 Then
         UsedLineTop(6 + Val("&H" & V1)) = 6 + Val("&H" & V1)
@@ -669,9 +669,9 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = n1 + 5 + (BeforeLine + 7) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbGreen
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
@@ -687,9 +687,9 @@ If Mid(checkStream, 3, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2)
         Form1.Picture1.CurrentY = (BeforeLine + jj) * TextHeight("FF")
         Form1.Picture1.CurrentX = n4 + (Val("&H" & widtha1) - Val("&H" & H1) + 4) * TextWidth("FF ")
         Form1.Picture1.ForeColor = vbGreen
-        GotoRoomID = Mid(checkStream, 13, 2)
-        GotoRoomID2 = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
-        GotoRoomPosition = Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
+        GotoRoomID = Mid$(checkStream, 13, 2)
+        GotoRoomID2 = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 3, 2)
+        GotoRoomPosition = Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 5, 2) & Mid$(MessageStream, Val("&H" & GotoRoomID) * 24 + 9, 2)
         GotoRoomID2 = Hex(Val("&H" & GotoRoomID2) + 1)
         Form1.Picture1.Print "Go to Room: "; GotoRoomID2 & "  Show Position:" & GotoRoomPosition
         Form1.Picture1.ForeColor = vbBlack
@@ -730,11 +730,11 @@ Do             '解压 layer2 主循环
 
 DoEvents
 '*******************************************************这一块是解压并写入的二次循环
-str1 = Mid(ROMallHex, Val(nowoffset) + 1, 2)
+str1 = Mid$(ROMallHex, Val(nowoffset) + 1, 2)
 
 If Val("&H" & str1) > 128 Then               '对于大于80h的情况
 tilenum = Val("&H" & str1) - 128
-str2 = Mid(ROMallHex, Val(nowoffset) + 3, 2)
+str2 = Mid$(ROMallHex, Val(nowoffset) + 3, 2)
   For i = 1 To tilenum
   decompressHex(i + j - 1) = str2
   Next i
@@ -742,9 +742,9 @@ j = j + tilenum
 nowoffset = nowoffset + 4
 Else                                        '小于等于80h
 tilenum = Val("&H" & str1)
-str2 = Mid(ROMallHex, Val(nowoffset) + 3, 2 * tilenum)
+str2 = Mid$(ROMallHex, Val(nowoffset) + 3, 2 * tilenum)
   For i = 1 To tilenum
-  decompressHex(i + j - 1) = Mid(str2, i * 2 - 1, 2)
+  decompressHex(i + j - 1) = Mid$(str2, i * 2 - 1, 2)
   Next i
 j = j + tilenum
 nowoffset = nowoffset + tilenum * 2 + 2
@@ -786,7 +786,7 @@ Next j
 
   For i = 0 To Len(ROMallHex)      'a not accurate value, just to say the stored data cannot be less than "00" data in general
     j = i * 2
-    If Mid(ROMallHex, Val(nowoffset) + 1 + 2 * i, 2) <> "00" Then
+    If Mid$(ROMallHex, Val(nowoffset) + 1 + 2 * i, 2) <> "00" Then
     Exit For
     End If
   Next i

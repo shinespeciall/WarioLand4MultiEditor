@@ -42,17 +42,17 @@ Exit Function
 End If
 
 Dim str As String
-str = Mid(RGB555, 1, 2)
-Mid(RGB555, 1, 2) = Mid(RGB555, 3, 2)
-Mid(RGB555, 3, 2) = str
+str = Mid$(RGB555, 1, 2)
+Mid$(RGB555, 1, 2) = Mid$(RGB555, 3, 2)
+Mid$(RGB555, 3, 2) = str
 
 Dim R8 As Long, G8 As Long, B8 As Long
-B8 = BIN_to_DEC(Mid(hextoBin(RGB555), 2, 5) & Mid(hextoBin(RGB555), 2, 3))
-G8 = BIN_to_DEC(Mid(hextoBin(RGB555), 7, 5) & Mid(hextoBin(RGB555), 7, 3))
-R8 = BIN_to_DEC(Mid(hextoBin(RGB555), 12, 5) & Mid(hextoBin(RGB555), 12, 3))
+B8 = BIN_to_DEC(Mid$(hextoBin(RGB555), 2, 5) & Mid$(hextoBin(RGB555), 2, 3))
+G8 = BIN_to_DEC(Mid$(hextoBin(RGB555), 7, 5) & Mid$(hextoBin(RGB555), 7, 3))
+R8 = BIN_to_DEC(Mid$(hextoBin(RGB555), 12, 5) & Mid$(hextoBin(RGB555), 12, 3))
 
 RGB555ToRGB888 = B8 * 256 * 256 + G8 * 256 + R8
-If Mid(hextoBin(RGB555), 1, 1) = "1" Then
+If Mid$(hextoBin(RGB555), 1, 1) = "1" Then
 RGB555ToRGB888 = R8 * 256 * 256 + G8 * 256 + B8
 Debug.Print "Existing Color Problem !"
 End If
@@ -62,7 +62,7 @@ Public Function hextoBin(ByVal X As String) As String
 Dim Bina As String, i As Integer
 Bina = ""
 For i = 1 To Len(X)
-Select Case Mid(X, i, 1)
+Select Case Mid$(X, i, 1)
     Case "0"
         Bina = Bina & "0000"
     Case "1"
@@ -103,7 +103,7 @@ End Function
 Public Function BIN_to_DEC(ByVal Bin As String) As Long
     Dim i As Long, result As Long
     For i = 1 To Len(Bin)
-        result = result * 2 + Val(Mid(Bin, i, 1))
+        result = result * 2 + Val(Mid$(Bin, i, 1))
     Next i
     BIN_to_DEC = result
 End Function
@@ -116,7 +116,7 @@ Public Function RSH(ByVal X As Long, ByVal b As Integer) As Long
 If Len(D2B(X)) <= b Then
 RSH = 0
 Else
-RSH = BIN_to_DEC(Mid(D2B(X), 1, Len(D2B(X)) - b))
+RSH = BIN_to_DEC(Mid$(D2B(X), 1, Len(D2B(X)) - b))
 End If
 End Function
 
@@ -141,16 +141,16 @@ Dim i As Integer, j As Integer, strtmp As String
 Dim k As Long             '调色板专用
 
 '-------------------------------------first Tile------------------------------
-Wrd = Mid(Tile16(Val("&H" & TileWord)), 1, 4)
+Wrd = Mid$(Tile16(Val("&H" & TileWord)), 1, 4)
 Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
 ReDim Tile8(8, 8)
-strtmp = Tile88(BIN_to_DEC(Mid(Wrd, 7, 10)))
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
 For i = 0 To 7
 For j = 0 To 7
-Tile8(j, i) = Mid(strtmp, 1 + j + 8 * i, 1)
+Tile8(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
 Next j
 Next i
-If Mid(Wrd, 6, 1) = 1 Then      '水平翻转
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
 For i = 0 To 7
 For j = 0 To 3
 strtmp = Tile8(j, i)
@@ -159,7 +159,7 @@ Tile8(7 - j, i) = strtmp
 Next j
 Next i
 End If
-If Mid(Wrd, 5, 1) = 1 Then      '垂直翻转
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
 For i = 0 To 3
 For j = 0 To 7
 strtmp = Tile8(j, i)
@@ -170,25 +170,25 @@ Next i
 End If
 lenpos = lenpos * SizeOfDot * 16          '作为基址
 heipos = heipos * SizeOfDot * 16
-k = BIN_to_DEC(Mid(Wrd, 1, 4))
+k = BIN_to_DEC(Mid$(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
 If Cover = True Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + (SizeOfDot - 1), heipos + i * SizeOfDot + (SizeOfDot - 1)), vbBlack, BF
-If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002") And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
 '-------------------------------------Second Tile------------------------------
-Wrd = Mid(Tile16(Val("&H" & TileWord)), 5, 4)
+Wrd = Mid$(Tile16(Val("&H" & TileWord)), 5, 4)
 Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
 ReDim Tile8(8, 8)
-strtmp = Tile88(BIN_to_DEC(Mid(Wrd, 7, 10)))
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
 For i = 0 To 7
 For j = 0 To 7
-Tile8(j, i) = Mid(strtmp, 1 + j + 8 * i, 1)
+Tile8(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
 Next j
 Next i
-If Mid(Wrd, 6, 1) = 1 Then      '水平翻转
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
 For i = 0 To 7
 For j = 0 To 3
 strtmp = Tile8(j, i)
@@ -197,7 +197,7 @@ Tile8(7 - j, i) = strtmp
 Next j
 Next i
 End If
-If Mid(Wrd, 5, 1) = 1 Then      '垂直翻转
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
 For i = 0 To 3
 For j = 0 To 7
 strtmp = Tile8(j, i)
@@ -208,25 +208,25 @@ Next i
 End If
 lenpos = lenpos + SizeOfDot * 8          '作为基址
 heipos = heipos
-k = BIN_to_DEC(Mid(Wrd, 1, 4))
+k = BIN_to_DEC(Mid$(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
 If Cover = True Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + (SizeOfDot - 1), heipos + i * SizeOfDot + (SizeOfDot - 1)), vbBlack, BF
-If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002") And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
 '-------------------------------------Third Tile------------------------------
-Wrd = Mid(Tile16(Val("&H" & TileWord)), 9, 4)
+Wrd = Mid$(Tile16(Val("&H" & TileWord)), 9, 4)
 Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
 ReDim Tile8(8, 8)
-strtmp = Tile88(BIN_to_DEC(Mid(Wrd, 7, 10)))
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
 For i = 0 To 7
 For j = 0 To 7
-Tile8(j, i) = Mid(strtmp, 1 + j + 8 * i, 1)
+Tile8(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
 Next j
 Next i
-If Mid(Wrd, 6, 1) = 1 Then      '水平翻转
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
 For i = 0 To 7
 For j = 0 To 3
 strtmp = Tile8(j, i)
@@ -235,7 +235,7 @@ Tile8(7 - j, i) = strtmp
 Next j
 Next i
 End If
-If Mid(Wrd, 5, 1) = 1 Then      '垂直翻转
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
 For i = 0 To 3
 For j = 0 To 7
 strtmp = Tile8(j, i)
@@ -246,25 +246,25 @@ Next i
 End If
 lenpos = lenpos - SizeOfDot * 8          '作为基址
 heipos = heipos + SizeOfDot * 8
-k = BIN_to_DEC(Mid(Wrd, 1, 4))
+k = BIN_to_DEC(Mid$(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
 If Cover = True Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + (SizeOfDot - 1), heipos + i * SizeOfDot + (SizeOfDot - 1)), vbBlack, BF
-If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002") And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
 '-------------------------------------Fourth Tile------------------------------
-Wrd = Mid(Tile16(Val("&H" & TileWord)), 13, 4)
+Wrd = Mid$(Tile16(Val("&H" & TileWord)), 13, 4)
 Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
 ReDim Tile8(8, 8)
-strtmp = Tile88(BIN_to_DEC(Mid(Wrd, 7, 10)))
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
 For i = 0 To 7
 For j = 0 To 7
-Tile8(j, i) = Mid(strtmp, 1 + j + 8 * i, 1)
+Tile8(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
 Next j
 Next i
-If Mid(Wrd, 6, 1) = 1 Then      '水平翻转
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
 For i = 0 To 7
 For j = 0 To 3
 strtmp = Tile8(j, i)
@@ -273,7 +273,7 @@ Tile8(7 - j, i) = strtmp
 Next j
 Next i
 End If
-If Mid(Wrd, 5, 1) = 1 Then      '垂直翻转
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
 For i = 0 To 3
 For j = 0 To 7
 strtmp = Tile8(j, i)
@@ -284,11 +284,11 @@ Next i
 End If
 lenpos = lenpos + SizeOfDot * 8          '作为基址
 heipos = heipos
-k = BIN_to_DEC(Mid(Wrd, 1, 4))
+k = BIN_to_DEC(Mid$(Wrd, 1, 4))
 For i = 0 To 7                       '作图
 For j = 0 To 7
 If Cover = True Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + (SizeOfDot - 1), heipos + i * SizeOfDot + (SizeOfDot - 1)), vbBlack, BF
-If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or TileWord = "0002") And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 

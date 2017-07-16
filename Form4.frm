@@ -183,13 +183,13 @@ Public RoomNumber As String       'µÚÒ»¸öRoom¼ÇÎª1
 
 Private Sub Combo1_Change()
 Form4.Combo1.Text = "00"
-LevelNumber = Mid(Form4.Combo1.Text, 1, 2)
+LevelNumber = Mid$(Form4.Combo1.Text, 1, 2)
 End Sub
 
 Private Sub Combo1_Click()
 If gbafilepath = "" Then Exit Sub
 Form4.Combo1.Enabled = False
-LevelNumber = Mid(Form4.Combo1.Text, 1, 2)
+LevelNumber = Mid$(Form4.Combo1.Text, 1, 2)
 Form4.List1.Clear
 Form4.List2.Clear
 Form4.List3.Clear
@@ -226,14 +226,14 @@ Next i
 '***********************************************************************************************************************¸ÄÎªÊ¹ÓÃËÑË÷·¨ËÑË÷00 -10, 17
 Dim LevelIndex As String
 For i = 0 To 30
-    LevelIndex = Mid(ROMallHex, i * 24 + 1, 2)
-    If LevelIndex = Mid(Form4.Combo1.Text, 1, 2) Then
-        RoomNumber = Mid(ROMallHex, i * 24 + 3, 2)
+    LevelIndex = Mid$(ROMallHex, i * 24 + 1, 2)
+    If LevelIndex = Mid$(Form4.Combo1.Text, 1, 2) Then
+        RoomNumber = Mid$(ROMallHex, i * 24 + 3, 2)
         'If Val("&H" & RoomNumber) < 16 Then Form4.Command2.Enabled = True
         'If Val("&H" & RoomNumber) = 16 Then Form4.Command2.Enabled = False
         Form4.Text2.Text = "Level " & Form4.Combo1.Text & "and its room number and time data:" & vbCrLf
-        Form4.Text2.Text = Form4.Text2.Text & Mid(ROMallHex, i * 24 + 1, 24) & vbCrLf
-        LevelStartStream = Mid(ROMallHex, i * 24 + 1, 24)
+        Form4.Text2.Text = Form4.Text2.Text & Mid$(ROMallHex, i * 24 + 1, 24) & vbCrLf
+        LevelStartStream = Mid$(ROMallHex, i * 24 + 1, 24)
         Form4.Text2.Text = Form4.Text2.Text & "Offset of this data: " & Hex(Val("&H" & offset_639068) + i * 12) & vbCrLf
         LevelStartStreamOffset = Hex(Val("&H" & offset_639068) + i * 12)
         Exit For
@@ -252,7 +252,7 @@ Form4.Label2.Caption = "process: Load pointers table for the Level......" & i - 
 Next i
 
 Dim BaseOffset As String
-BaseOffset = Mid(ROMallHex, Val("&H" & LevelIndex) * 8 + 1 + 6, 2) & Mid(ROMallHex, Val("&H" & LevelIndex) * 8 + 1 + 4, 2) & Mid(ROMallHex, Val("&H" & LevelIndex) * 8 + 1 + 2, 2) & Mid(ROMallHex, Val("&H" & LevelIndex) * 8 + 1, 2)
+BaseOffset = Mid$(ROMallHex, Val("&H" & LevelIndex) * 8 + 1 + 6, 2) & Mid$(ROMallHex, Val("&H" & LevelIndex) * 8 + 1 + 4, 2) & Mid$(ROMallHex, Val("&H" & LevelIndex) * 8 + 1 + 2, 2) & Mid$(ROMallHex, Val("&H" & LevelIndex) * 8 + 1, 2)
 BaseOffset = Hex(Val("&H" & BaseOffset) - Val("&H" & "8000000"))
 LevelAllRoomPointerandDataBaseOffset = BaseOffset
 Form4.Text2.Text = Form4.Text2.Text & "Base Offset for all the pointers and properties of layers for rooms£º" & BaseOffset & vbCrLf
@@ -269,15 +269,15 @@ LevelAllRoomPointerandDataallHex = ROMallHex
 
 Dim tempoffset As String
 For i = 0 To (Val("&H" & RoomNumber) - 1)
-tempoffset = Mid(ROMallHex, 25 + 6 + i * 44 * 2, 2) & Mid(ROMallHex, 25 + 4 + i * 44 * 2, 2) & Mid(ROMallHex, 25 + 2 + i * 44 * 2, 2) & Mid(ROMallHex, 25 + i * 44 * 2, 2)
+tempoffset = Mid$(ROMallHex, 25 + 6 + i * 44 * 2, 2) & Mid$(ROMallHex, 25 + 4 + i * 44 * 2, 2) & Mid$(ROMallHex, 25 + 2 + i * 44 * 2, 2) & Mid$(ROMallHex, 25 + i * 44 * 2, 2)
 tempoffset = Val("&H" & tempoffset) - Val("&H" & "8000000")
 Form4.List1.AddItem Hex(tempoffset)
 Form4.List2.AddItem Hex(Val("&H" & BaseOffset) + 12 + i * 44)
-tempoffset = Mid(ROMallHex, 8 + 25 + 6 + i * 44 * 2, 2) & Mid(ROMallHex, 8 + 25 + 4 + i * 44 * 2, 2) & Mid(ROMallHex, 8 + 25 + 2 + i * 44 * 2, 2) & Mid(ROMallHex, 8 + 25 + i * 44 * 2, 2)
+tempoffset = Mid$(ROMallHex, 8 + 25 + 6 + i * 44 * 2, 2) & Mid$(ROMallHex, 8 + 25 + 4 + i * 44 * 2, 2) & Mid$(ROMallHex, 8 + 25 + 2 + i * 44 * 2, 2) & Mid$(ROMallHex, 8 + 25 + i * 44 * 2, 2)
 tempoffset = Val("&H" & tempoffset) - Val("&H" & "8000000")
 Form4.List3.AddItem Hex(tempoffset)
 Form4.List4.AddItem Hex(Val("&H" & BaseOffset) + 12 + i * 44 + 4)
-tempoffset = Mid(ROMallHex, 25 + 6 + i * 44 * 2 - 8, 2) & Mid(ROMallHex, 25 + 4 + i * 44 * 2 - 8, 2) & Mid(ROMallHex, 25 + 2 + i * 44 * 2 - 8, 2) & Mid(ROMallHex, 25 + i * 44 * 2 - 8, 2)
+tempoffset = Mid$(ROMallHex, 25 + 6 + i * 44 * 2 - 8, 2) & Mid$(ROMallHex, 25 + 4 + i * 44 * 2 - 8, 2) & Mid$(ROMallHex, 25 + 2 + i * 44 * 2 - 8, 2) & Mid$(ROMallHex, 25 + i * 44 * 2 - 8, 2)
 tempoffset = Val("&H" & tempoffset) - Val("&H" & "8000000")
 Form4.List5.AddItem Hex(tempoffset)
 Form4.List6.AddItem Hex(Val("&H" & BaseOffset) + 12 + i * 44 - 4)
@@ -295,12 +295,12 @@ Form4.Label2.Caption = "process: Load data from pointer for room change info" & 
 Next i
 
 Dim RoomChangeMassageOffset As String
-LevelChangeRoomStreamPointerOffset = Hex(Val("&H" & offset_78F21C) + Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 4)
-tempoffset = Mid(ROMallHex, Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 8 + 1 + 6, 2) & Mid(ROMallHex, Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 8 + 1 + 4, 2) & Mid(ROMallHex, Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 8 + 1 + 2, 2) & Mid(ROMallHex, Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 8 + 1, 2)
+LevelChangeRoomStreamPointerOffset = Hex(Val("&H" & offset_78F21C) + Val("&H" & Mid$(Form4.Combo1.Text, 1, 2)) * 4)
+tempoffset = Mid$(ROMallHex, Val("&H" & Mid$(Form4.Combo1.Text, 1, 2)) * 8 + 1 + 6, 2) & Mid$(ROMallHex, Val("&H" & Mid$(Form4.Combo1.Text, 1, 2)) * 8 + 1 + 4, 2) & Mid$(ROMallHex, Val("&H" & Mid$(Form4.Combo1.Text, 1, 2)) * 8 + 1 + 2, 2) & Mid$(ROMallHex, Val("&H" & Mid$(Form4.Combo1.Text, 1, 2)) * 8 + 1, 2)
 RoomChangeMassageOffset = Hex(Val("&H" & tempoffset) - Val("&H" & "8000000"))
 Form4.Text2.Text = Form4.Text2.Text & "Base offset for room change info:" & RoomChangeMassageOffset & vbCrLf
 LevelChangeRoomStreamOffset = RoomChangeMassageOffset
-Form4.Text2.Text = Form4.Text2.Text & "the offset of the pointer:" & Hex(Val("&H" & offset_78F21C) + Val("&H" & Mid(Form4.Combo1.Text, 1, 2)) * 4) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "the offset of the pointer:" & Hex(Val("&H" & offset_78F21C) + Val("&H" & Mid$(Form4.Combo1.Text, 1, 2)) * 4) & vbCrLf
 Form4TextBox2Temp = Form4.Text2.Text
 ROMallHex = ""
 
@@ -341,10 +341,11 @@ Form11.Visible = True
 End Sub
 
 Private Sub Command3_Click()   ' UNFINISHED
-If MODfilepath = "" Then
-MsgBox "No MOD file Loaded", vbInformation, "Info"
-Exit Sub
-End If
+'If MODfilepath = "" Then
+'MsgBox "No MOD file Loaded", vbInformation, "Info"
+'Exit Sub
+'End If
+
 'get last LevelRoomIndex if exist
 If LevelRoomIndex = "" Then
 MsgBox "You haven't chose a Room yet !", vbExclamation + vbOKOnly, "Info"
@@ -451,16 +452,16 @@ offset_3F2298 = "3F2298"
 
 Dim FirstByte As String            '°´Ë³Ðò×Ü¹²¿ÉÒÔÕÒµ½16¸öÊýÖµ£¬Ò»¶¨ÓÃÓÚ¸÷¸öÓÎÏ·¼Ä´æÆ÷
 
-FirstByte = Mid(LevelAllRoomPointerandDataallHex, 1 + Form4.List1.ListIndex * 44 * 2, 2)
+FirstByte = Mid$(LevelAllRoomPointerandDataallHex, 1 + Form4.List1.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "Tileset:" & FirstByte & vbCrLf
 ReadFileOffset = Hex(Val("&H" & FirstByte) * 9 * 4 + Val("&H" & "3F2298"))
 
 Dim TenthByte_scrollBG As String
 
-TenthByte_scrollBG = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List1.ListIndex * 44 * 2, 2)
+TenthByte_scrollBG = Mid$(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List1.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
 '********************************************¶ÁÎÄ¼þ¹ý³Ì
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
@@ -477,16 +478,16 @@ ROMallHex = ROMallHex & Right("00" & Hex(ROMallbyte(i)), 2)    'ÓÃRight()·ÀÖ¹³öÏ
 Next i
 Erase ROMallbyte()
 
-ROMallHex = Mid(ROMallHex, 1, 72)
-Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿éËùÔÚROMµØÖ·£º" & Mid(ROMallHex, 5, 2) & Mid(ROMallHex, 3, 2) & Mid(ROMallHex, 1, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid(ROMallHex, 11, 2) & Mid(ROMallHex, 9, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Tileµ÷É«°åµØÖ·£º" & Mid(ROMallHex, 21, 2) & Mid(ROMallHex, 19, 2) & Mid(ROMallHex, 17, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿éµØÖ·£º" & Mid(ROMallHex, 29, 2) & Mid(ROMallHex, 27, 2) & Mid(ROMallHex, 25, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid(ROMallHex, 35, 2) & Mid(ROMallHex, 33, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "´óTileÃ¿¸öÍ¼¿éµÄÊôÐÔºÍ±àºÅÊý¾Ý£º" & Mid(ROMallHex, 45, 2) & Mid(ROMallHex, 43, 2) & Mid(ROMallHex, 41, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë1£¨ºÃÏñÊÇÊ²Ã´µÄRAW£©£º" & Mid(ROMallHex, 55, 2) & Mid(ROMallHex, 53, 2) & Mid(ROMallHex, 51, 2) & Mid(ROMallHex, 49, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë2£º" & Mid(ROMallHex, 55 + 8, 2) & Mid(ROMallHex, 53 + 8, 2) & Mid(ROMallHex, 51 + 8, 2) & Mid(ROMallHex, 49 + 8, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "¾«Áéµ÷É«°å£º" & Mid(ROMallHex, 53 + 16, 2) & Mid(ROMallHex, 51 + 16, 2) & Mid(ROMallHex, 49 + 16, 2) & vbCrLf
+ROMallHex = Mid$(ROMallHex, 1, 72)
+Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿éËùÔÚROMµØÖ·£º" & Mid$(ROMallHex, 5, 2) & Mid$(ROMallHex, 3, 2) & Mid$(ROMallHex, 1, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid$(ROMallHex, 11, 2) & Mid$(ROMallHex, 9, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Tileµ÷É«°åµØÖ·£º" & Mid$(ROMallHex, 21, 2) & Mid$(ROMallHex, 19, 2) & Mid$(ROMallHex, 17, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿éµØÖ·£º" & Mid$(ROMallHex, 29, 2) & Mid$(ROMallHex, 27, 2) & Mid$(ROMallHex, 25, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid$(ROMallHex, 35, 2) & Mid$(ROMallHex, 33, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "´óTileÃ¿¸öÍ¼¿éµÄÊôÐÔºÍ±àºÅÊý¾Ý£º" & Mid$(ROMallHex, 45, 2) & Mid$(ROMallHex, 43, 2) & Mid$(ROMallHex, 41, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë1£¨ºÃÏñÊÇÊ²Ã´µÄRAW£©£º" & Mid$(ROMallHex, 55, 2) & Mid$(ROMallHex, 53, 2) & Mid$(ROMallHex, 51, 2) & Mid$(ROMallHex, 49, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë2£º" & Mid$(ROMallHex, 55 + 8, 2) & Mid$(ROMallHex, 53 + 8, 2) & Mid$(ROMallHex, 51 + 8, 2) & Mid$(ROMallHex, 49 + 8, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "¾«Áéµ÷É«°å£º" & Mid$(ROMallHex, 53 + 16, 2) & Mid$(ROMallHex, 51 + 16, 2) & Mid$(ROMallHex, 49 + 16, 2) & vbCrLf
 
 RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 16)
 
@@ -497,32 +498,32 @@ LengthOfAllPointer = 0
     Dim OutputString As String, CheckPointer As String, j As Integer, kk As Integer, FirstPointer As String
     FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
-    FirstPointer = Mid(FirstPointer, 7, 2) & Mid(FirstPointer, 5, 2) & Mid(FirstPointer, 3, 2) & Mid(FirstPointer, 1, 2)
+    FirstPointer = Mid$(FirstPointer, 7, 2) & Mid$(FirstPointer, 5, 2) & Mid$(FirstPointer, 3, 2) & Mid$(FirstPointer, 1, 2)
     FirstPointer = Hex(Val("&H" & FirstPointer) - Val("&H" & "8000000"))
     CameraCotrolPointerOffset = FirstPointer
     '*********************                  pointer table pointer head is Offset_78F540
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
     For i = 0 To 16
     LengthOfAllPointer = LengthOfAllPointer + 4
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    If Mid$(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
     Next i
-If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
+If Mid$(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     '*********************                  start search
     For i = 0 To 16
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
-    CheckPointer = Mid(FirstPointer, 7 + 8 * i, 2) & Mid(FirstPointer, 5 + 8 * i, 2) & Mid(FirstPointer, 3 + 8 * i, 2) & Mid(FirstPointer, 1 + 8 * i, 2)
+    If Mid$(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
+    CheckPointer = Mid$(FirstPointer, 7 + 8 * i, 2) & Mid$(FirstPointer, 5 + 8 * i, 2) & Mid$(FirstPointer, 3 + 8 * i, 2) & Mid$(FirstPointer, 1 + 8 * i, 2)
     CheckPointer = Hex(Val("&H" & CheckPointer) - Val("&H" & "8000000"))
 
     OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 1))
-        If Mid(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+        If Mid$(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
             RoomCameraStringPointerOffset = CheckPointer
             OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 10 * 9 + 1))
             'then go on to enumerate the camera control flag
-            CameraCotrolString = Mid(OutputString, 1, 4)
-            kk = Val("&H" & Mid(OutputString, 3, 2))
+            CameraCotrolString = Mid$(OutputString, 1, 4)
+            kk = Val("&H" & Mid$(OutputString, 3, 2))
             If kk <> 0 Then Form4.Text2.Text = Form4.Text2.Text & "Exist Camera Control !" & vbCrLf
             For j = 0 To (kk - 1)
-            CameraCotrolString = CameraCotrolString & Mid(OutputString, 18 * j + 5, 18)
+            CameraCotrolString = CameraCotrolString & Mid$(OutputString, 18 * j + 5, 18)
             Next j
             Exit For
         End If
@@ -545,7 +546,7 @@ str = Replace(str1, Chr(32), "")
 str = Replace(str, Chr(13), "")
 str = Replace(str, Chr(10), "")
 str = Right("00" & Hex(Val("&H" & "8000000") + Val("&H" & str)), 8)
-str = Mid(str, 7, 2) & Mid(str, 5, 2) & Mid(str, 3, 2) & Mid(str, 1, 2)
+str = Mid$(str, 7, 2) & Mid$(str, 5, 2) & Mid$(str, 3, 2) & Mid$(str, 1, 2)
 If SaveDataOffset(97) <> "" Then
     MsgBox "buffer memory used up, save all and retry"
     Exit Sub
@@ -593,16 +594,16 @@ offset_3F2298 = "3F2298"
 
 Dim FirstByte As String
 
-FirstByte = Mid(LevelAllRoomPointerandDataallHex, 1 + Form4.List3.ListIndex * 44 * 2, 2)
+FirstByte = Mid$(LevelAllRoomPointerandDataallHex, 1 + Form4.List3.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "Tileset:" & FirstByte & vbCrLf
 ReadFileOffset = Hex(Val("&H" & FirstByte) * 9 * 4 + Val("&H" & "3F2298"))
 
 Dim TenthByte_scrollBG As String
 
-TenthByte_scrollBG = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List3.ListIndex * 44 * 2, 2)
+TenthByte_scrollBG = Mid$(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List3.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List3.ListIndex * 44 * 2, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List3.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List3.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List3.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List3.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List3.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List3.ListIndex * 44 * 2, 2) & vbCrLf
 '********************************************¶ÁÎÄ¼þ¹ý³Ì
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
@@ -619,16 +620,16 @@ ROMallHex = ROMallHex & Right("00" & Hex(ROMallbyte(i)), 2)    'ÓÃRight()·ÀÖ¹³öÏ
 Next i
 Erase ROMallbyte()
 
-ROMallHex = Mid(ROMallHex, 1, 72)
-Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿éËùÔÚROMµØÖ·£º" & Mid(ROMallHex, 5, 2) & Mid(ROMallHex, 3, 2) & Mid(ROMallHex, 1, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid(ROMallHex, 11, 2) & Mid(ROMallHex, 9, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Tileµ÷É«°åµØÖ·£º" & Mid(ROMallHex, 21, 2) & Mid(ROMallHex, 19, 2) & Mid(ROMallHex, 17, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿éµØÖ·£º" & Mid(ROMallHex, 29, 2) & Mid(ROMallHex, 27, 2) & Mid(ROMallHex, 25, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid(ROMallHex, 35, 2) & Mid(ROMallHex, 33, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "´óTileÃ¿¸öÍ¼¿éµÄÊôÐÔºÍ±àºÅÊý¾Ý£º" & Mid(ROMallHex, 45, 2) & Mid(ROMallHex, 43, 2) & Mid(ROMallHex, 41, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë1£¨ºÃÏñÊÇÊ²Ã´µÄRAW£©£º" & Mid(ROMallHex, 55, 2) & Mid(ROMallHex, 53, 2) & Mid(ROMallHex, 51, 2) & Mid(ROMallHex, 49, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë2£º" & Mid(ROMallHex, 55 + 8, 2) & Mid(ROMallHex, 53 + 8, 2) & Mid(ROMallHex, 51 + 8, 2) & Mid(ROMallHex, 49 + 8, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "¾«Áéµ÷É«°å£º" & Mid(ROMallHex, 53 + 16, 2) & Mid(ROMallHex, 51 + 16, 2) & Mid(ROMallHex, 49 + 16, 2) & vbCrLf
+ROMallHex = Mid$(ROMallHex, 1, 72)
+Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿éËùÔÚROMµØÖ·£º" & Mid$(ROMallHex, 5, 2) & Mid$(ROMallHex, 3, 2) & Mid$(ROMallHex, 1, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid$(ROMallHex, 11, 2) & Mid$(ROMallHex, 9, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Tileµ÷É«°åµØÖ·£º" & Mid$(ROMallHex, 21, 2) & Mid$(ROMallHex, 19, 2) & Mid$(ROMallHex, 17, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿éµØÖ·£º" & Mid$(ROMallHex, 29, 2) & Mid$(ROMallHex, 27, 2) & Mid$(ROMallHex, 25, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid$(ROMallHex, 35, 2) & Mid$(ROMallHex, 33, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "´óTileÃ¿¸öÍ¼¿éµÄÊôÐÔºÍ±àºÅÊý¾Ý£º" & Mid$(ROMallHex, 45, 2) & Mid$(ROMallHex, 43, 2) & Mid$(ROMallHex, 41, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë1£¨ºÃÏñÊÇÊ²Ã´µÄRAW£©£º" & Mid$(ROMallHex, 55, 2) & Mid$(ROMallHex, 53, 2) & Mid$(ROMallHex, 51, 2) & Mid$(ROMallHex, 49, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë2£º" & Mid$(ROMallHex, 55 + 8, 2) & Mid$(ROMallHex, 53 + 8, 2) & Mid$(ROMallHex, 51 + 8, 2) & Mid$(ROMallHex, 49 + 8, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "¾«Áéµ÷É«°å£º" & Mid$(ROMallHex, 53 + 16, 2) & Mid$(ROMallHex, 51 + 16, 2) & Mid$(ROMallHex, 49 + 16, 2) & vbCrLf
 
 RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 12)
 
@@ -639,32 +640,32 @@ LengthOfAllPointer = 0
     Dim OutputString As String, CheckPointer As String, j As Integer, kk As Integer, FirstPointer As String
     FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
-    FirstPointer = Mid(FirstPointer, 7, 2) & Mid(FirstPointer, 5, 2) & Mid(FirstPointer, 3, 2) & Mid(FirstPointer, 1, 2)
+    FirstPointer = Mid$(FirstPointer, 7, 2) & Mid$(FirstPointer, 5, 2) & Mid$(FirstPointer, 3, 2) & Mid$(FirstPointer, 1, 2)
     FirstPointer = Hex(Val("&H" & FirstPointer) - Val("&H" & "8000000"))
     CameraCotrolPointerOffset = FirstPointer
     '*********************                  pointer table pointer head is Offset_78F540
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
     For i = 0 To 16
     LengthOfAllPointer = LengthOfAllPointer + 4
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    If Mid$(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
     Next i
-If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
+If Mid$(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     '*********************                  start search
     For i = 0 To 16
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
-    CheckPointer = Mid(FirstPointer, 7 + 8 * i, 2) & Mid(FirstPointer, 5 + 8 * i, 2) & Mid(FirstPointer, 3 + 8 * i, 2) & Mid(FirstPointer, 1 + 8 * i, 2)
+    If Mid$(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
+    CheckPointer = Mid$(FirstPointer, 7 + 8 * i, 2) & Mid$(FirstPointer, 5 + 8 * i, 2) & Mid$(FirstPointer, 3 + 8 * i, 2) & Mid$(FirstPointer, 1 + 8 * i, 2)
     CheckPointer = Hex(Val("&H" & CheckPointer) - Val("&H" & "8000000"))
 
     OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 1))
-        If Mid(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+        If Mid$(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
             RoomCameraStringPointerOffset = CheckPointer
             OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 10 * 9 + 1))
             'then go on to enumerate the camera control flag
-            CameraCotrolString = Mid(OutputString, 1, 4)
-            kk = Val("&H" & Mid(OutputString, 3, 2))
+            CameraCotrolString = Mid$(OutputString, 1, 4)
+            kk = Val("&H" & Mid$(OutputString, 3, 2))
             If kk <> 0 Then Form4.Text2.Text = Form4.Text2.Text & "Exist Camera Control !" & vbCrLf
             For j = 0 To (kk - 1)
-            CameraCotrolString = CameraCotrolString & Mid(OutputString, 18 * j + 5, 18)
+            CameraCotrolString = CameraCotrolString & Mid$(OutputString, 18 * j + 5, 18)
             Next j
             Exit For
         End If
@@ -687,7 +688,7 @@ str = Replace(str1, Chr(32), "")
 str = Replace(str, Chr(13), "")
 str = Replace(str, Chr(10), "")
 str = Right("00" & Hex(Val("&H" & "8000000") + Val("&H" & str)), 8)
-str = Mid(str, 7, 2) & Mid(str, 5, 2) & Mid(str, 3, 2) & Mid(str, 1, 2)
+str = Mid$(str, 7, 2) & Mid$(str, 5, 2) & Mid$(str, 3, 2) & Mid$(str, 1, 2)
 If SaveDataOffset(97) <> "" Then
     MsgBox "buffer memory used up, save all and retry"
     Exit Sub
@@ -735,16 +736,16 @@ offset_3F2298 = "3F2298"
 
 Dim FirstByte As String
 
-FirstByte = Mid(LevelAllRoomPointerandDataallHex, 1 + Form4.List5.ListIndex * 44 * 2, 2)
+FirstByte = Mid$(LevelAllRoomPointerandDataallHex, 1 + Form4.List5.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "Tileset:" & FirstByte & vbCrLf
 ReadFileOffset = Hex(Val("&H" & FirstByte) * 9 * 4 + Val("&H" & "3F2298"))
 
 Dim TenthByte_scrollBG As String
 
-TenthByte_scrollBG = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List5.ListIndex * 44 * 2, 2)
+TenthByte_scrollBG = Mid$(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List5.ListIndex * 44 * 2, 2)
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid(LevelAllRoomPointerandDataallHex, 9 + Form4.List5.ListIndex * 44 * 2, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List5.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List5.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List5.ListIndex * 44 * 2, 2) & Mid(LevelAllRoomPointerandDataallHex, 41 + Form4.List5.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List5.ListIndex * 44 * 2, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List5.ListIndex * 44 * 2, 2) & vbCrLf
 '********************************************¶ÁÎÄ¼þ¹ý³Ì
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
@@ -761,16 +762,16 @@ ROMallHex = ROMallHex & Right("00" & Hex(ROMallbyte(i)), 2)    'ÓÃRight()·ÀÖ¹³öÏ
 Next i
 Erase ROMallbyte()
 
-ROMallHex = Mid(ROMallHex, 1, 72)
-Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿éËùÔÚROMµØÖ·£º" & Mid(ROMallHex, 5, 2) & Mid(ROMallHex, 3, 2) & Mid(ROMallHex, 1, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid(ROMallHex, 11, 2) & Mid(ROMallHex, 9, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Tileµ÷É«°åµØÖ·£º" & Mid(ROMallHex, 21, 2) & Mid(ROMallHex, 19, 2) & Mid(ROMallHex, 17, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿éµØÖ·£º" & Mid(ROMallHex, 29, 2) & Mid(ROMallHex, 27, 2) & Mid(ROMallHex, 25, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid(ROMallHex, 35, 2) & Mid(ROMallHex, 33, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "´óTileÃ¿¸öÍ¼¿éµÄÊôÐÔºÍ±àºÅÊý¾Ý£º" & Mid(ROMallHex, 45, 2) & Mid(ROMallHex, 43, 2) & Mid(ROMallHex, 41, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë1£¨ºÃÏñÊÇÊ²Ã´µÄRAW£©£º" & Mid(ROMallHex, 55, 2) & Mid(ROMallHex, 53, 2) & Mid(ROMallHex, 51, 2) & Mid(ROMallHex, 49, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë2£º" & Mid(ROMallHex, 55 + 8, 2) & Mid(ROMallHex, 53 + 8, 2) & Mid(ROMallHex, 51 + 8, 2) & Mid(ROMallHex, 49 + 8, 2) & vbCrLf
-Form4.Text2.Text = Form4.Text2.Text & "¾«Áéµ÷É«°å£º" & Mid(ROMallHex, 53 + 16, 2) & Mid(ROMallHex, 51 + 16, 2) & Mid(ROMallHex, 49 + 16, 2) & vbCrLf
+ROMallHex = Mid$(ROMallHex, 1, 72)
+Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿éËùÔÚROMµØÖ·£º" & Mid$(ROMallHex, 5, 2) & Mid$(ROMallHex, 3, 2) & Mid$(ROMallHex, 1, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid$(ROMallHex, 11, 2) & Mid$(ROMallHex, 9, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Tileµ÷É«°åµØÖ·£º" & Mid$(ROMallHex, 21, 2) & Mid$(ROMallHex, 19, 2) & Mid$(ROMallHex, 17, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿éµØÖ·£º" & Mid$(ROMallHex, 29, 2) & Mid$(ROMallHex, 27, 2) & Mid$(ROMallHex, 25, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "±³¾°TileÍ¼¿é¼ÓÔØ³¤¶È£¨µ¥Î»ÊÇHex byte£©£º" & Mid$(ROMallHex, 35, 2) & Mid$(ROMallHex, 33, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "´óTileÃ¿¸öÍ¼¿éµÄÊôÐÔºÍ±àºÅÊý¾Ý£º" & Mid$(ROMallHex, 45, 2) & Mid$(ROMallHex, 43, 2) & Mid$(ROMallHex, 41, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë1£¨ºÃÏñÊÇÊ²Ã´µÄRAW£©£º" & Mid$(ROMallHex, 55, 2) & Mid$(ROMallHex, 53, 2) & Mid$(ROMallHex, 51, 2) & Mid$(ROMallHex, 49, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "Î´ÖªÖ¸Õë2£º" & Mid$(ROMallHex, 55 + 8, 2) & Mid$(ROMallHex, 53 + 8, 2) & Mid$(ROMallHex, 51 + 8, 2) & Mid$(ROMallHex, 49 + 8, 2) & vbCrLf
+Form4.Text2.Text = Form4.Text2.Text & "¾«Áéµ÷É«°å£º" & Mid$(ROMallHex, 53 + 16, 2) & Mid$(ROMallHex, 51 + 16, 2) & Mid$(ROMallHex, 49 + 16, 2) & vbCrLf
 
 RoomElementFirstOffset = Hex(Val("&H" & PointerOffset1) + 20)
 
@@ -781,32 +782,32 @@ LengthOfAllPointer = 0
     Dim OutputString As String, CheckPointer As String, j As Integer, kk As Integer, FirstPointer As String
     FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
-    FirstPointer = Mid(FirstPointer, 7, 2) & Mid(FirstPointer, 5, 2) & Mid(FirstPointer, 3, 2) & Mid(FirstPointer, 1, 2)
+    FirstPointer = Mid$(FirstPointer, 7, 2) & Mid$(FirstPointer, 5, 2) & Mid$(FirstPointer, 3, 2) & Mid$(FirstPointer, 1, 2)
     FirstPointer = Hex(Val("&H" & FirstPointer) - Val("&H" & "8000000"))
     CameraCotrolPointerOffset = FirstPointer
     '*********************                  pointer table pointer head is Offset_78F540
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
     For i = 0 To 16
     LengthOfAllPointer = LengthOfAllPointer + 4
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    If Mid$(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
     Next i
-If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
+If Mid$(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     '*********************                  start search
     For i = 0 To 16
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
-    CheckPointer = Mid(FirstPointer, 7 + 8 * i, 2) & Mid(FirstPointer, 5 + 8 * i, 2) & Mid(FirstPointer, 3 + 8 * i, 2) & Mid(FirstPointer, 1 + 8 * i, 2)
+    If Mid$(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
+    CheckPointer = Mid$(FirstPointer, 7 + 8 * i, 2) & Mid$(FirstPointer, 5 + 8 * i, 2) & Mid$(FirstPointer, 3 + 8 * i, 2) & Mid$(FirstPointer, 1 + 8 * i, 2)
     CheckPointer = Hex(Val("&H" & CheckPointer) - Val("&H" & "8000000"))
 
     OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 1))
-        If Mid(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+        If Mid$(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
             RoomCameraStringPointerOffset = CheckPointer
             OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 10 * 9 + 1))
             'then go on to enumerate the camera control flag
-            CameraCotrolString = Mid(OutputString, 1, 4)
-            kk = Val("&H" & Mid(OutputString, 3, 2))
+            CameraCotrolString = Mid$(OutputString, 1, 4)
+            kk = Val("&H" & Mid$(OutputString, 3, 2))
             If kk <> 0 Then Form4.Text2.Text = Form4.Text2.Text & "Exist Camera Control !" & vbCrLf
             For j = 0 To (kk - 1)
-            CameraCotrolString = CameraCotrolString & Mid(OutputString, 18 * j + 5, 18)
+            CameraCotrolString = CameraCotrolString & Mid$(OutputString, 18 * j + 5, 18)
             Next j
             Exit For
         End If
@@ -829,7 +830,7 @@ str = Replace(str1, Chr(32), "")
 str = Replace(str, Chr(13), "")
 str = Replace(str, Chr(10), "")
 str = Right("00" & Hex(Val("&H" & "8000000") + Val("&H" & str)), 8)
-str = Mid(str, 7, 2) & Mid(str, 5, 2) & Mid(str, 3, 2) & Mid(str, 1, 2)
+str = Mid$(str, 7, 2) & Mid$(str, 5, 2) & Mid$(str, 3, 2) & Mid$(str, 1, 2)
 If SaveDataOffset(97) <> "" Then
     MsgBox "buffer memory used up, save all and retry"
     Exit Sub

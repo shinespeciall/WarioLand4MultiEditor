@@ -409,7 +409,7 @@ Public Yshift As Long
 
 Public WasCameraControlChange As Boolean
 
-Public IsMakingCameraRec As Boolean
+Public IsMakingCameraRec As Boolean            ' Used in Timer1
 Public IsClick As Boolean
 Public WillBeResize As Integer
 
@@ -420,13 +420,13 @@ Public IsLayer2Change As Boolean
 Private Sub Combo1_Click()
 Form10.Picture2.Cls
 Dim width As Integer, height As Integer, i As Integer, j As Integer, result As Boolean
-width = Val("&" & Mid(TileMOD(1, Form10.Combo1.ListIndex), 1, 2))
-height = Val("&" & Mid(TileMOD(1, Form10.Combo1.ListIndex), 3, 2))
+width = Val("&" & Mid$(TileMOD(1, Form10.Combo1.ListIndex), 1, 2))
+height = Val("&" & Mid$(TileMOD(1, Form10.Combo1.ListIndex), 3, 2))
 ReDim NowTileMOD(width, height)
 For j = 0 To height - 1
 For i = 0 To width - 1
-result = DrawTile16(i, j, Mid(TileMOD(1, Form10.Combo1.ListIndex), (j * width + i) * 4 + 1 + 4, 4), Form10.Picture2, , DotSize)
-NowTileMOD(i, j) = Mid(TileMOD(1, Form10.Combo1.ListIndex), (j * width + i) * 4 + 1 + 4, 4)
+result = DrawTile16(i, j, Mid$(TileMOD(1, Form10.Combo1.ListIndex), (j * width + i) * 4 + 1 + 4, 4), Form10.Picture2, , DotSize)
+NowTileMOD(i, j) = Mid$(TileMOD(1, Form10.Combo1.ListIndex), (j * width + i) * 4 + 1 + 4, 4)
 Next i
 Next j
 For i = 0 To width
@@ -442,26 +442,26 @@ Dim str1 As String, i As Integer, j As Integer
 If IsDeliver = True Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-str1 = str1 & Mid(L0_LB_000(i, j), 3, 2)
+str1 = str1 & Mid$(L0_LB_000(i, j), 3, 2)
 Next i
 Next j
 ElseIf WholeRoomChange = True Then
 If Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0 Then
 For j = 0 To Layer0Height - 1
 For i = 0 To Layer0Width - 1
-str1 = str1 & Mid(L0_LB_000(i, j), 3, 2)
+str1 = str1 & Mid$(L0_LB_000(i, j), 3, 2)
 Next i
 Next j
 ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0 Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-str1 = str1 & Mid(L1_LB_000(i, j), 3, 2)
+str1 = str1 & Mid$(L1_LB_000(i, j), 3, 2)
 Next i
 Next j
 ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1 Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-str1 = str1 & Mid(L2_LB_000(i, j), 3, 2)
+str1 = str1 & Mid$(L2_LB_000(i, j), 3, 2)
 Next i
 Next j
 Else
@@ -605,19 +605,19 @@ Hexstream2 = ""
 For j = 0 To Val("&H" & heighta2) - 1
 For i = 0 To Val("&H" & widtha1) - 1
 Hexstream1 = Hexstream1 & "00"
-If Mid(L0_LB_000(i, j), 1, 2) <> "00" Then IsHexstream2NeedWrite = True
+If Mid$(L0_LB_000(i, j), 1, 2) <> "00" Then IsHexstream2NeedWrite = True
 Next i
 Next j
 For j = 0 To Val("&H" & heighta2) - 1
 For i = 0 To Val("&H" & widtha1) - 1
-Mid(Hexstream1, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid(L0_LB_000(i, j), 3, 2)
+Mid$(Hexstream1, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid$(L0_LB_000(i, j), 3, 2)
 If IsHexstream2NeedWrite = True Then Hexstream2 = Hexstream2 & "00"
 Next i
 Next j
 If IsHexstream2NeedWrite = True Then
 For j = 0 To Val("&H" & heighta2) - 1
 For i = 0 To Val("&H" & widtha1) - 1
-Mid(Hexstream2, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid(L0_LB_000(i, j), 1, 2)
+Mid$(Hexstream2, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2) = Mid$(L0_LB_000(i, j), 1, 2)
 Next i
 Next j
 End If
@@ -639,10 +639,10 @@ End Sub
 Private Sub Command14_Click()
 WasCameraControlChange = False
 If Len(CameraCotrolString) <> 0 Then
-Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
+Form10.Text2.Text = Mid$(CameraCotrolString, 1, 4) & vbCrLf
 For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
-Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
-Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
+Form10.Text2.Text = Form10.Text2.Text & Mid$(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
+Form10.Text2.Text = Form10.Text2.Text & Mid$(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
 Next i
 Else
 Form10.Text2.Text = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) & "00" & vbCrLf
@@ -676,7 +676,7 @@ If WholeRoomChange = True Then
     compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
-    strtmp1 = strtmp1 & Mid(L0_LB_000(i, j), 3, 2)
+    strtmp1 = strtmp1 & Mid$(L0_LB_000(i, j), 3, 2)
     Next i
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
@@ -684,7 +684,7 @@ If WholeRoomChange = True Then
     strtmp1 = ""
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
-    strtmp1 = strtmp1 & Mid(L0_LB_000(i, j), 1, 2)
+    strtmp1 = strtmp1 & Mid$(L0_LB_000(i, j), 1, 2)
     Next i
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
@@ -697,7 +697,7 @@ If WholeRoomChange = True Then
     compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
-    strtmp1 = strtmp1 & Mid(L1_LB_000(i, j), 3, 2)
+    strtmp1 = strtmp1 & Mid$(L1_LB_000(i, j), 3, 2)
     Next i
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
@@ -705,7 +705,7 @@ If WholeRoomChange = True Then
     strtmp1 = ""
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
-    strtmp1 = strtmp1 & Mid(L1_LB_000(i, j), 1, 2)
+    strtmp1 = strtmp1 & Mid$(L1_LB_000(i, j), 1, 2)
     Next i
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
@@ -718,7 +718,7 @@ If WholeRoomChange = True Then
     compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
-    strtmp1 = strtmp1 & Mid(L2_LB_000(i, j), 3, 2)
+    strtmp1 = strtmp1 & Mid$(L2_LB_000(i, j), 3, 2)
     Next i
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
@@ -726,7 +726,7 @@ If WholeRoomChange = True Then
     strtmp1 = ""
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
-    strtmp1 = strtmp1 & Mid(L2_LB_000(i, j), 1, 2)
+    strtmp1 = strtmp1 & Mid$(L2_LB_000(i, j), 1, 2)
     Next i
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
@@ -786,26 +786,26 @@ Dim str1 As String, i As Integer, j As Integer
 If IsDeliver = True Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-str1 = str1 & Mid(L0_LB_000(i, j), 1, 2)
+str1 = str1 & Mid$(L0_LB_000(i, j), 1, 2)
 Next i
 Next j
 ElseIf WholeRoomChange = True Then
 If Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0 Then
 For j = 0 To Layer0Height - 1
 For i = 0 To Layer0Width - 1
-str1 = str1 & Mid(L0_LB_000(i, j), 1, 2)
+str1 = str1 & Mid$(L0_LB_000(i, j), 1, 2)
 Next i
 Next j
 ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0 Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-str1 = str1 & Mid(L1_LB_000(i, j), 1, 2)
+str1 = str1 & Mid$(L1_LB_000(i, j), 1, 2)
 Next i
 Next j
 ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1 Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-str1 = str1 & Mid(L2_LB_000(i, j), 1, 2)
+str1 = str1 & Mid$(L2_LB_000(i, j), 1, 2)
 Next i
 Next j
 Else
@@ -824,26 +824,26 @@ str1 = Replace(str1, Chr(10), "")
 If IsDeliver = True Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-Mid(L0_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Mid$(L0_LB_000(i, j), 3, 2) = Mid$(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
 ElseIf WholeRoomChange = True Then
 If Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0 Then
 For j = 0 To Layer0Height - 1
 For i = 0 To Layer0Width - 1
-Mid(L0_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Layer0Width * 2 + 1, 2)
+Mid$(L0_LB_000(i, j), 3, 2) = Mid$(str1, i * 2 + j * Layer0Width * 2 + 1, 2)
 Next i
 Next j
 ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0 Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-Mid(L1_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Mid$(L1_LB_000(i, j), 3, 2) = Mid$(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
 ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1 Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-Mid(L2_LB_000(i, j), 3, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Mid$(L2_LB_000(i, j), 3, 2) = Mid$(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
 Else
@@ -861,26 +861,26 @@ str1 = Replace(str1, Chr(10), "")
 If IsDeliver = True Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-Mid(L0_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Mid$(L0_LB_000(i, j), 1, 2) = Mid$(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
 ElseIf WholeRoomChange = True Then
 If Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0 Then
 For j = 0 To Layer0Height - 1
 For i = 0 To Layer0Width - 1
-Mid(L0_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Layer0Width * 2 + 1, 2)
+Mid$(L0_LB_000(i, j), 1, 2) = Mid$(str1, i * 2 + j * Layer0Width * 2 + 1, 2)
 Next i
 Next j
 ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0 Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-Mid(L1_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Mid$(L1_LB_000(i, j), 1, 2) = Mid$(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
 ElseIf Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1 Then
 For j = 0 To Val("&H" & MapHeight) - 1
 For i = 0 To Val("&H" & MapLength) - 1
-Mid(L2_LB_000(i, j), 1, 2) = Mid(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
+Mid$(L2_LB_000(i, j), 1, 2) = Mid$(str1, i * 2 + j * Val("&H" & MapLength) * 2 + 1, 2)
 Next i
 Next j
 Else
@@ -929,14 +929,14 @@ Dim Tilesets As String
 Dim StrTemp As String, str1 As String, str2 As String, str3 As String, str4 As String
 
 Form9.Text1.Text = Form9.Text1.Text & "impoting pointers......" & vbCrLf
-Tilesets = Mid(Form10.Combo2.Text, 1, 2)
+Tilesets = Mid$(Form10.Combo2.Text, 1, 2)
 StrTemp = ReadFileHex(gbafilepath, Hex(Val("&H" & Tilesets) * 9 * 4 + Val("&H" & "3F2298")), Hex(Val("&H" & Tilesets) * 9 * 4 + 35 + Val("&H" & "3F2298")))
 
-TileOffset = Mid(StrTemp, 5, 2) & Mid(StrTemp, 3, 2) & Mid(StrTemp, 1, 2)
-TileLength2 = Val("&H" & Mid(StrTemp, 11, 2) & Mid(StrTemp, 9, 2))
+TileOffset = Mid$(StrTemp, 5, 2) & Mid$(StrTemp, 3, 2) & Mid$(StrTemp, 1, 2)
+TileLength2 = Val("&H" & Mid$(StrTemp, 11, 2) & Mid$(StrTemp, 9, 2))
 Form9.Text1.Text = Form9.Text1.Text & "The amount of Tiles is " & str(TileLength2 / 32) & vbCrLf
-TextMAPDataOffset = Mid(StrTemp, 45, 2) & Mid(StrTemp, 43, 2) & Mid(StrTemp, 41, 2)
-paletteOffset = Mid(StrTemp, 21, 2) & Mid(StrTemp, 19, 2) & Mid(StrTemp, 17, 2)
+TextMAPDataOffset = Mid$(StrTemp, 45, 2) & Mid$(StrTemp, 43, 2) & Mid$(StrTemp, 41, 2)
+paletteOffset = Mid$(StrTemp, 21, 2) & Mid$(StrTemp, 19, 2) & Mid$(StrTemp, 17, 2)
 ReDim Palette256(16, 16)
 ReDim Tile88(TileLength2 / 16 + 64)
 Form9.Text1.Text = Form9.Text1.Text & "impoting 8 * 8 Tiles Data......" & vbCrLf
@@ -946,33 +946,33 @@ StrTemp = ReadFileHexWithByteInterchange(gbafilepath, TileOffset, Hex(Val("&H" &
 str1 = ReadFileHex(gbafilepath, Hex(Val("&H" & Tilesets) * 2 ^ 5 + Val("&H" & "3F8098")), Hex(Val("&H" & Tilesets) * 2 ^ 5 + 31 + Val("&H" & "3F8098")))
 'str1 = ReadFileHex(gbafilepath, Hex(Val("&H" & Tilesets) * 2 ^ 5 + Val("&H" & "3F91D8")), Hex(Val("&H" & Tilesets) * 2 ^ 5 + 31 + Val("&H" & "3F91D8")))             '???
 For i = 0 To 15
-str2 = Mid(str1, 4 * i + 1, 2)
-Mid(str1, 4 * i + 1, 2) = Mid(str1, 4 * i + 3, 2)
-Mid(str1, 4 * i + 3, 2) = str2
+str2 = Mid$(str1, 4 * i + 1, 2)
+Mid$(str1, 4 * i + 1, 2) = Mid$(str1, 4 * i + 3, 2)
+Mid$(str1, 4 * i + 3, 2) = str2
 Next i
 For i = 0 To 15
-str2 = Mid(str1, 4 * i + 1, 4)
+str2 = Mid$(str1, 4 * i + 1, 4)
 str3 = ReadFileHex(gbafilepath, Hex(Val("&H" & str2) * 8 + Val("&H" & "3F7828")), Hex(Val("&H" & str2) * 8 + Val("&H" & "3F782F")))
-str2 = Mid(str3, 9, 8)
-str4 = Mid(str3, 1, 2)
-str3 = Mid(str3, 5, 2)
+str2 = Mid$(str3, 9, 8)
+str4 = Mid$(str3, 1, 2)
+str3 = Mid$(str3, 5, 2)
 If str4 = "03" Or str4 = "06" Then
 str3 = Hex(Val("&H" & str3) - 1)
 Else
 str3 = "00"
 End If
-str2 = Mid(str2, 7, 2) & Mid(str2, 5, 2) & Mid(str2, 3, 2) & Mid(str2, 1, 2)
+str2 = Mid$(str2, 7, 2) & Mid$(str2, 5, 2) & Mid$(str2, 3, 2) & Mid$(str2, 1, 2)
 str2 = Hex(Val("&H" & str2) - Val("&H8000000") + Val("&H" & str3) * 128)
 str2 = ReadFileHexWithByteInterchange(gbafilepath, str2, Hex(Val("&H" & str2) + 127))
 DoEvents
 For j = 0 To 3
-Tile88(i * 4 + j) = Mid(str2, j * 64 + 1, 64)
+Tile88(i * 4 + j) = Mid$(str2, j * 64 + 1, 64)
 Next j
 Next i
 Tile88(64) = Replace(Space(64), Chr(32), "0")
 '-------------------------------------------------------------End  »®“À÷Æ≤ﬂ
 For i = 0 To (TileLength2 / 16) - 1
-Tile88(i + 65) = Mid(StrTemp, 64 * i + 1, 64)
+Tile88(i + 65) = Mid$(StrTemp, 64 * i + 1, 64)
 DoEvents
 Next i
 
@@ -980,9 +980,9 @@ Next i
 Form9.Text1.Text = Form9.Text1.Text & "impoting and making 16 * 16 Tiles Data......" & vbCrLf
 TextMapData = ReadFileHex(gbafilepath, TextMAPDataOffset, Hex(Val("&H" & TextMAPDataOffset) + 8192))
 For i = 0 To 4095
-StrTemp = Mid(TextMapData, 4 * i + 1, 2)
-Mid(TextMapData, 4 * i + 1, 2) = Mid(TextMapData, 4 * i + 3, 2)
-Mid(TextMapData, 4 * i + 3, 2) = StrTemp
+StrTemp = Mid$(TextMapData, 4 * i + 1, 2)
+Mid$(TextMapData, 4 * i + 1, 2) = Mid$(TextMapData, 4 * i + 3, 2)
+Mid$(TextMapData, 4 * i + 3, 2) = StrTemp
 DoEvents
 Next i
 
@@ -991,15 +991,15 @@ Dim r0 As Long, r1 As Long, r2 As Long
 For i = 0 To 1023
 r0 = i * 4
 r2 = r0 Or 1
-Tile16(i) = Mid(TextMapData, r0 * 2 * 2 + 1, 4)
+Tile16(i) = Mid$(TextMapData, r0 * 2 * 2 + 1, 4)
 r1 = (r2 + 1) * 2 ^ 16
-Tile16(i) = Tile16(i) & Mid(TextMapData, r2 * 2 * 2 + 1, 4)
+Tile16(i) = Tile16(i) & Mid$(TextMapData, r2 * 2 * 2 + 1, 4)
 r0 = 128 * 2 ^ 9
 r2 = r1 + r0
 r1 = RSH(r1, 15)
-Tile16(i) = Tile16(i) & Mid(TextMapData, r1 * 2 + 1, 4)
+Tile16(i) = Tile16(i) & Mid$(TextMapData, r1 * 2 + 1, 4)
 r2 = RSH(r2, 15)
-Tile16(i) = Tile16(i) & Mid(TextMapData, r2 * 2 + 1, 4)
+Tile16(i) = Tile16(i) & Mid$(TextMapData, r2 * 2 + 1, 4)
 DoEvents
 Next i
 
@@ -1007,7 +1007,7 @@ Form9.Text1.Text = Form9.Text1.Text & "impoting palette 256 ......" & vbCrLf
 StrTemp = ReadFileHex(gbafilepath, paletteOffset, Hex(Val("&H" & paletteOffset) + 256 * 2 - 1))
 For j = 0 To 15
 For i = 0 To 15
-Palette256(i, j) = RGB555ToRGB888(Mid(StrTemp, 64 * j + 4 * i + 1, 4))
+Palette256(i, j) = RGB555ToRGB888(Mid$(StrTemp, 64 * j + 4 * i + 1, 4))
 DoEvents
 Next i
 Next j
@@ -1035,7 +1035,7 @@ End If
 
 If WholeRoomChange = True Then
 Dim Flag01 As Integer
-Flag01 = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + 52 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))     'eleventh byte flag
+Flag01 = Val("&H" & Mid$(LevelAllRoomPointerandDataallHex, 1 + 52 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))     'eleventh byte flag
 If (Flag01 Mod 4) = 0 Then
 layerPriority(1) = 1: layerPriority(2) = 2
 ElseIf (Flag01 Mod 4) = 1 Then
@@ -1185,12 +1185,12 @@ OutputString = Replace(OutputString, Chr(13), "")
 OutputString = Replace(OutputString, Chr(10), "")
 If Len(OutputString) <> 0 Then
     Dim b0 As Integer, b1 As Integer, b2 As Integer, b3 As Integer, b4 As Integer, b5 As Integer
-            kk = Val("&H" & Mid(OutputString, 3, 2))
+            kk = Val("&H" & Mid$(OutputString, 3, 2))
             For j = 0 To (kk - 1)
-            b0 = Val("&H" & Mid(OutputString, 18 * j + 7, 2))
-            b1 = Val("&H" & Mid(OutputString, 18 * j + 9, 2))
-            b2 = Val("&H" & Mid(OutputString, 18 * j + 11, 2))
-            b3 = Val("&H" & Mid(OutputString, 18 * j + 13, 2))
+            b0 = Val("&H" & Mid$(OutputString, 18 * j + 7, 2))
+            b1 = Val("&H" & Mid$(OutputString, 18 * j + 9, 2))
+            b2 = Val("&H" & Mid$(OutputString, 18 * j + 11, 2))
+            b3 = Val("&H" & Mid$(OutputString, 18 * j + 13, 2))
             If b0 > b1 Then
             b4 = b0
             b0 = b1
@@ -1204,14 +1204,14 @@ If Len(OutputString) <> 0 Then
             Form10.Picture1.Line ((b0 - Xshift) * DotSize * 16, (b2 - Yshift) * DotSize * 16)-((b1 + 1 - Xshift) * DotSize * 16, (b3 + 1 - Yshift) * DotSize * 16), vbRed, B                  'posibly overflow
             Form10.Picture1.Line ((b0 - Xshift) * DotSize * 16, (b2 - Yshift) * DotSize * 16)-((b0 - Xshift + 0.5) * DotSize * 16, (b2 - Yshift + 0.5) * DotSize * 16), vbGreen, BF
             Form10.Picture1.Line ((b1 - Xshift + 0.5) * DotSize * 16, (b3 - Yshift + 0.5) * DotSize * 16)-((b1 - Xshift + 1) * DotSize * 16, (b3 - Yshift + 1) * DotSize * 16), vbGreen, BF
-            If Mid(OutputString, 18 * j + 15, 2) <> "FF" Then
-            b4 = Val("&H" & Mid(OutputString, 18 * j + 15, 2))
-            b5 = Val("&H" & Mid(OutputString, 18 * j + 17, 2))
+            If Mid$(OutputString, 18 * j + 15, 2) <> "FF" Then
+            b4 = Val("&H" & Mid$(OutputString, 18 * j + 15, 2))
+            b5 = Val("&H" & Mid$(OutputString, 18 * j + 17, 2))
             Form10.Picture1.Line ((b4 - Xshift) * DotSize * 16, (b5 - Yshift) * DotSize * 16)-((b4 + 1 - Xshift) * DotSize * 16, (b5 + 1 - Yshift) * DotSize * 16), vbRed, B
-            If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "00" Then b0 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
-            If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "01" Then b1 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
-            If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "02" Then b2 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
-            If Val("&H" & Mid(OutputString, 18 * j + 19, 2)) = "03" Then b3 = Val("&H" & Mid(OutputString, 18 * j + 21, 2))
+            If Val("&H" & Mid$(OutputString, 18 * j + 19, 2)) = "00" Then b0 = Val("&H" & Mid$(OutputString, 18 * j + 21, 2))
+            If Val("&H" & Mid$(OutputString, 18 * j + 19, 2)) = "01" Then b1 = Val("&H" & Mid$(OutputString, 18 * j + 21, 2))
+            If Val("&H" & Mid$(OutputString, 18 * j + 19, 2)) = "02" Then b2 = Val("&H" & Mid$(OutputString, 18 * j + 21, 2))
+            If Val("&H" & Mid$(OutputString, 18 * j + 19, 2)) = "03" Then b3 = Val("&H" & Mid$(OutputString, 18 * j + 21, 2))
             Form10.Picture1.Line ((b0 - Xshift) * DotSize * 16, (b2 - Yshift) * DotSize * 16)-((b1 + 1 - Xshift) * DotSize * 16, (b3 + 1 - Yshift) * DotSize * 16), vbYellow, B
             Form10.Picture1.Line ((b0 - Xshift) * DotSize * 16, (b2 - Yshift) * DotSize * 16)-((b0 - Xshift + 0.5) * DotSize * 16, (b2 - Yshift + 0.5) * DotSize * 16), vbWhite, BF
             Form10.Picture1.Line ((b1 - Xshift + 0.5) * DotSize * 16, (b3 - Yshift + 0.5) * DotSize * 16)-((b1 - Xshift + 1) * DotSize * 16, (b3 - Yshift + 1) * DotSize * 16), vbWhite, BF
@@ -1233,9 +1233,17 @@ Form10.Icon = LoadResPicture(101, vbResIcon)
 IsMakingCameraRec = False
 IsClick = False
 If MODfilepath = "" Then
-MsgBox "No MOD file Loaded", vbInformation, "Info"
-Form10.Visible = False
-Exit Sub
+MODfilepath = App.Path & "\MOD\" & Mid$(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) & " Block.txt"
+    If Dir(MODfilepath) = "" Then
+    Open MODfilepath For Append As #3
+    Print #3, "000 0000 For Clean"
+    Print #3, "01010000"
+    Print #3, "000 0040 Fill Block"
+    Print #3, "01010040"
+    Print #3, "000 0002 RoomChangeMark"
+    Print #3, "01010002";
+    Close #3
+    End If
 End If
 
 Dim i As Integer, j As Integer
@@ -1367,19 +1375,19 @@ If IsDeliver = True Then
 
     For j = 0 To Val("&H" & heighta2) - 1
     For i = 0 To Val("&H" & widtha1) - 1
-    Mid(L0_LB_000(i, j), 3, 2) = Mid(Hexstream1, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2)
+    Mid$(L0_LB_000(i, j), 3, 2) = Mid$(Hexstream1, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2)
     Next i
     Next j
 
     If Hexstream2 <> "" Then
     For j = 0 To Val("&H" & heighta2) - 1
     For i = 0 To Val("&H" & widtha1) - 1
-     Mid(L0_LB_000(i, j), 1, 2) = Mid(Hexstream2, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2)
+     Mid$(L0_LB_000(i, j), 1, 2) = Mid$(Hexstream2, i * 2 + j * Val("&H" & widtha1) * 2 + 1, 2)
     Next i
     Next j
     End If
 
-    Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
+    Form10.Combo2.ListIndex = Val("&H" & Mid$(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
     Form10.Command13.Enabled = True
     Form10.Check1.Enabled = False
     Form10.Check2.Enabled = False
@@ -1387,10 +1395,10 @@ If IsDeliver = True Then
     Command5_Click
 
     If Len(CameraCotrolString) <> 0 Then
-    Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
+    Form10.Text2.Text = Mid$(CameraCotrolString, 1, 4) & vbCrLf
     For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
-    Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
-    Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
+    Form10.Text2.Text = Form10.Text2.Text & Mid$(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
+    Form10.Text2.Text = Form10.Text2.Text & Mid$(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
     Next i
     Else
     Form10.Text2.Text = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) & "00" & vbCrLf
@@ -1400,7 +1408,7 @@ If IsDeliver = True Then
     Form10.Command14.Enabled = False
     End If
 ElseIf WholeRoomChange = True Then
-    Form10.Combo2.ListIndex = Val("&H" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
+    Form10.Combo2.ListIndex = Val("&H" & Mid$(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2))
     Form10.Command13.Enabled = False
     Form10.Command13.Visible = False
     Form10.Text8.Text = Hex(layerWidth)
@@ -1416,10 +1424,10 @@ ElseIf WholeRoomChange = True Then
     Command5_Click
     
     If Len(CameraCotrolString) <> 0 Then
-    Form10.Text2.Text = Mid(CameraCotrolString, 1, 4) & vbCrLf
+    Form10.Text2.Text = Mid$(CameraCotrolString, 1, 4) & vbCrLf
     For i = 0 To (Len(CameraCotrolString) - 4) / 18 - 1
-    Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
-    Form10.Text2.Text = Form10.Text2.Text & Mid(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
+    Form10.Text2.Text = Form10.Text2.Text & Mid$(CameraCotrolString, 18 * i + 5, 10) & vbCrLf
+    Form10.Text2.Text = Form10.Text2.Text & Mid$(CameraCotrolString, 18 * i + 15, 8) & vbCrLf
     Next i
     Else
     Form10.Text2.Text = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) & "00" & vbCrLf
@@ -1455,6 +1463,7 @@ Erase layerPriority()
 Erase PostlayerCompDataLength()
 
 MDIForm1.Enabled = True
+MDIForm1.SetFocus
 End Sub
 
 Private Sub Frame1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -1780,11 +1789,11 @@ str = Replace(Form10.Text2.Text, Chr(32), "")
 str = Replace(str, Chr(13), "")
 str = Replace(str, Chr(10), "")
 If Len(str) <> 0 Then
-Mid(str, 3, 4) = Right("0" & Hex((Len(str) - 4) / 18), 2)
-Form10.Text2.Text = Mid(str, 1, 4) & vbCrLf
+Mid$(str, 3, 4) = Right("0" & Hex((Len(str) - 4) / 18), 2)
+Form10.Text2.Text = Mid$(str, 1, 4) & vbCrLf
 For i = 0 To (Len(str) - 4) / 18 - 1
-Form10.Text2.Text = Form10.Text2.Text & Mid(str, 18 * i + 5, 10) & vbCrLf
-Form10.Text2.Text = Form10.Text2.Text & Mid(str, 18 * i + 15, 8) & vbCrLf
+Form10.Text2.Text = Form10.Text2.Text & Mid$(str, 18 * i + 5, 10) & vbCrLf
+Form10.Text2.Text = Form10.Text2.Text & Mid$(str, 18 * i + 15, 8) & vbCrLf
 Next i
 End If
 End Sub

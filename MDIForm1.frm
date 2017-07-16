@@ -122,12 +122,12 @@ Dim LoadPropertyTableID As String    'pointer table after 78EF78
 Dim strtxt As String, j As Integer
 LoadPropertyTableID = InputBox("input Sprites Table ID", "searching", 0)
 LoadPropertyTableID = ReadFileHex(gbafilepath, Hex(Val("&H" & LoadPropertyTableID) * 4 + Val("&H" & "78EF78")), Hex(Val("&H" & LoadPropertyTableID) * 4 + Val("&H" & "78EF78") + 3))
-LoadPropertyTableID = Mid(LoadPropertyTableID, 7, 2) & Mid(LoadPropertyTableID, 5, 2) & Mid(LoadPropertyTableID, 3, 2) & Mid(LoadPropertyTableID, 1, 2)
+LoadPropertyTableID = Mid$(LoadPropertyTableID, 7, 2) & Mid$(LoadPropertyTableID, 5, 2) & Mid$(LoadPropertyTableID, 3, 2) & Mid$(LoadPropertyTableID, 1, 2)
 LoadPropertyTableID = Hex(Val("&H" & LoadPropertyTableID) - Val("&H" & "8000000"))
 strtxt = ReadFileHex(gbafilepath, LoadPropertyTableID, Hex(Val("&H" & LoadPropertyTableID) + 128))
 For j = 0 To 30
-If Mid(strtxt, 4 * j + 1, 4) = "0000" Then Exit For
-Form9.Text1.Text = Form9.Text1.Text & Mid(strtxt, 4 * j + 1, 4) & " "
+If Mid$(strtxt, 4 * j + 1, 4) = "0000" Then Exit For
+Form9.Text1.Text = Form9.Text1.Text & Mid$(strtxt, 4 * j + 1, 4) & " "
 Next j
 Form9.Text1.Text = Form9.Text1.Text & vbCrLf
 Form9.Text1.Text = Form9.Text1.Text & "Finish !   PS: the first byte is the Sprites ID"
@@ -169,8 +169,8 @@ Close #1
 Dim PointerFirstByte As String
 For k = 0 To j
 inputBaseOffset = Right("0" & Hex(Val("&H" & inputBaseOffset2) + k * stepoffset), 8)
-inputBaseOffset = Mid(inputBaseOffset, 7, 2) & Mid(inputBaseOffset, 5, 2) & Mid(inputBaseOffset, 3, 2) & Mid(inputBaseOffset, 1, 2)
-PointerFirstByte = Mid(inputBaseOffset, 1, 2)
+inputBaseOffset = Mid$(inputBaseOffset, 7, 2) & Mid$(inputBaseOffset, 5, 2) & Mid$(inputBaseOffset, 3, 2) & Mid$(inputBaseOffset, 1, 2)
+PointerFirstByte = Mid$(inputBaseOffset, 1, 2)
 For i = 0 To Val("&H" & "78F970") - 1
 DoEvents
 If Right("0" & Hex(ROMallbyte(i)), 2) = PointerFirstByte Then
@@ -192,14 +192,14 @@ Dim strtxt As String, i As Integer, j As Integer, FindStr As String
 FindStr = InputBox("input Sprite's ID (more than 10 in Hex)", "search", 11)
 For j = 0 To 89
 LoadPropertyTableID = ReadFileHex(gbafilepath, Hex(j * 4 + Val("&H" & "78EF78")), Hex(j * 4 + Val("&H" & "78EF78") + 3))
-LoadPropertyTableID = Mid(LoadPropertyTableID, 7, 2) & Mid(LoadPropertyTableID, 5, 2) & Mid(LoadPropertyTableID, 3, 2) & Mid(LoadPropertyTableID, 1, 2)
+LoadPropertyTableID = Mid$(LoadPropertyTableID, 7, 2) & Mid$(LoadPropertyTableID, 5, 2) & Mid$(LoadPropertyTableID, 3, 2) & Mid$(LoadPropertyTableID, 1, 2)
 LoadPropertyTableID = Hex(Val("&H" & LoadPropertyTableID) - Val("&H" & "8000000"))
 strtxt = ReadFileHex(gbafilepath, LoadPropertyTableID, Hex(Val("&H" & LoadPropertyTableID) + 128))
 For i = 0 To 30
-If Mid(strtxt, 4 * i + 1, 4) = "0000" Then Exit For
+If Mid$(strtxt, 4 * i + 1, 4) = "0000" Then Exit For
 Next i
 Do
-If Mid(strtxt, 4 * i + 1, 2) = FindStr Then
+If Mid$(strtxt, 4 * i + 1, 2) = FindStr Then
 Form9.Text1.Text = Form9.Text1.Text & "Table ID (Hex):" & Hex(j) & vbCrLf
 Exit Do
 End If
@@ -300,11 +300,11 @@ Dim k As Long, str5 As String                  ' Initialize form4 combo1
 For k = 0 To 23
 str0 = ""
 str5 = GetLevelNamePointer(k)
-str5 = Mid(str5, 7, 2) & Mid(str5, 5, 2) & Mid(str5, 3, 2) & Mid(str5, 1, 2)
+str5 = Mid$(str5, 7, 2) & Mid$(str5, 5, 2) & Mid$(str5, 3, 2) & Mid$(str5, 1, 2)
 str5 = Hex(Val("&H" & str5) - Val("&H8000000"))
 str5 = ReadFileHex(gbafilepath, str5, Hex(Val("&H" & str5) + 25))
 For i = 0 To 25
-str0 = str0 & DEX_to_letter(CLng(Val("&H" & Mid(str5, 2 * i + 1, 2))))
+str0 = str0 & DEX_to_letter(CLng(Val("&H" & Mid$(str5, 2 * i + 1, 2))))
 Next i
 Form4.Combo1.AddItem Right("00" & Hex(k), 2) & str0
 Next k

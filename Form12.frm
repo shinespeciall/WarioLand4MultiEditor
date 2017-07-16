@@ -158,22 +158,29 @@ For i = 0 To 500
 If TileMOD(0, i) = "" Then Exit For
 Next i
 
-TileMOD(0, i) = Right("000" & str(i), 3) & " " & Form12.Text1.Text
+TileMOD(0, i) = Right("000" & CStr(i - 3), 3) & " " & Form12.Text1.Text
 TileMOD(1, i) = tmpstr
 
-Open App.Path & "\MOD\" & Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) & " Block.txt" For Append As #3
+Open MODfilepath For Append As #3
+Print #3, ""
 Print #3, TileMOD(0, i)
-Print #3, TileMOD(1, i)
+Print #3, TileMOD(1, i);
 Close #3
 
+Form12.Picture2.Cls
+Erase MODforSave()
 Form12.Visible = False
 Form10.Combo1.AddItem TileMOD(0, i)
 Form10.Enabled = True
+Form10.SetFocus
 End Sub
 
 Private Sub Command2_Click()
+Form12.Picture2.Cls
+Erase MODforSave()
 Form12.Visible = False
 Form10.Enabled = True
+Form10.SetFocus
 End Sub
 
 Private Sub Command3_Click()
@@ -218,8 +225,9 @@ Form12.Command3.Enabled = True
 Form12.Label3.Caption = "Page: " & TilePage
 End Sub
 
-Private Sub Form_Load()
-If TilePage > 0 Then TilePage = TilePage - 1
+Private Sub Form_Activate()                   ' start when activate
+If TilePage > 0 Then TilePage = 0
+Form12.Label3.Caption = "Page: " & TilePage
 Form12.Label1.FontSize = 12
 Form12.Label2.FontSize = 12
 Form12.Label3.FontSize = 12

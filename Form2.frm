@@ -95,6 +95,7 @@ Begin VB.Form Form2
    End
    Begin VB.CommandButton Command8 
       Caption         =   "Save Compressed Data to File"
+      Enabled         =   0   'False
       Height          =   495
       Left            =   10920
       TabIndex        =   19
@@ -311,7 +312,7 @@ Dim i As Long, j As Long
 For j = 0 To Val("&H" & heighta2) - 1 '写列
     For i = 0 To Val("&H" & widtha1) - 1 '写行
     DoEvents
-    Form2.Text1.Text = Form2.Text1.Text & Mid(Hexstream1, 1 + 2 * i + 2 * j * Val("&H" & widtha1), 2) & " "
+    Form2.Text1.Text = Form2.Text1.Text & Mid$(Hexstream1, 1 + 2 * i + 2 * j * Val("&H" & widtha1), 2) & " "
     Next i
 Form2.Text1.Text = Form2.Text1.Text & vbCrLf
 Next j
@@ -345,7 +346,7 @@ Dim i As Integer, j As Integer, addstr As String
 If Hexstream2 = "" Then GoTo DoOne1
 For j = 1 To Num1
 For i = 1 To Val("&H" & widtha1)
-addstr = addstr & Mid(Hex1, 1, 2)
+addstr = addstr & Mid$(Hex1, 1, 2)
 Next i
 Next j
 Hexstream2 = addstr & Hexstream2
@@ -354,7 +355,7 @@ addstr = ""
 DoOne1:
 For j = 1 To Num1
 For i = 1 To Val("&H" & widtha1)
-addstr = addstr & Mid(Hex1, 3, 2)
+addstr = addstr & Mid$(Hex1, 3, 2)
 Next i
 Next j
 Hexstream1 = addstr & Hexstream1
@@ -385,7 +386,7 @@ Dim i As Integer, j As Integer, addstr As String
 If Hexstream2 = "" Then GoTo DoOne2
 For j = 1 To Num1
 For i = 1 To Val("&H" & widtha1)
-addstr = addstr & Mid(Hex1, 1, 2)
+addstr = addstr & Mid$(Hex1, 1, 2)
 Next i
 Next j
 Hexstream2 = Hexstream2 & addstr
@@ -394,7 +395,7 @@ addstr = ""
 DoOne2:
 For j = 1 To Num1
 For i = 1 To Val("&H" & widtha1)
-addstr = addstr & Mid(Hex1, 3, 2)
+addstr = addstr & Mid$(Hex1, 3, 2)
 Next i
 Next j
 Hexstream1 = Hexstream1 & addstr
@@ -423,9 +424,9 @@ Dim i As Integer, j As Integer, addstr As String
 If Hexstream2 = "" Then GoTo DoOne3
 For i = 0 To Val("&H" & heighta2) - 1
 For j = 1 To Num1
-addstr = addstr & Mid(Hex1, 1, 2)
+addstr = addstr & Mid$(Hex1, 1, 2)
 Next j
-addstr = addstr & Mid(Hexstream2, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
+addstr = addstr & Mid$(Hexstream2, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
 Next i
 Hexstream2 = addstr
 
@@ -433,9 +434,9 @@ addstr = ""
 DoOne3:
 For i = 0 To Val("&H" & heighta2) - 1
 For j = 1 To Num1
-addstr = addstr & Mid(Hex1, 1, 2)
+addstr = addstr & Mid$(Hex1, 1, 2)
 Next j
-addstr = addstr & Mid(Hexstream1, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
+addstr = addstr & Mid$(Hexstream1, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
 Next i
 Hexstream1 = addstr
 
@@ -462,9 +463,9 @@ Hex1 = Right("0000" & InputBox("input filling Word", "info", 40), 4)
 Dim i As Integer, j As Integer, addstr As String
 If Hexstream2 = "" Then GoTo DoOne3
 For i = 0 To Val("&H" & heighta2) - 1
-addstr = addstr & Mid(Hexstream2, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
+addstr = addstr & Mid$(Hexstream2, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
 For j = 1 To Num1
-addstr = addstr & Mid(Hex1, 1, 2)
+addstr = addstr & Mid$(Hex1, 1, 2)
 Next j
 Next i
 Hexstream2 = addstr
@@ -472,9 +473,9 @@ Hexstream2 = addstr
 addstr = ""
 DoOne3:
 For i = 0 To Val("&H" & heighta2) - 1
-addstr = addstr & Mid(Hexstream1, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
+addstr = addstr & Mid$(Hexstream1, 1 + 2 * Val("&H" & widtha1) * i, 2 * Val("&H" & widtha1))
 For j = 1 To Num1
-addstr = addstr & Mid(Hex1, 1, 2)
+addstr = addstr & Mid$(Hex1, 1, 2)
 Next j
 Next i
 Hexstream1 = addstr
@@ -486,10 +487,10 @@ MsgBox "Finish !"
 End Sub
 
 Private Sub Command16_Click()
-If MODfilepath = "" Then
-MsgBox "No MOD file Loaded", vbInformation, "Info"
-Exit Sub
-End If
+'If MODfilepath = "" Then
+'MsgBox "No MOD file Loaded", vbInformation, "Info"
+'Exit Sub
+'End If
 IsDeliver = True
 Form10.Visible = True
 End Sub
@@ -517,7 +518,7 @@ Dim i As Long, j As Long
 For j = 0 To Val("&H" & heighta2) - 1 '写列
     For i = 0 To Val("&H" & widtha1) - 1 '写行
     DoEvents
-    Form2.Text1.Text = Form2.Text1.Text & Mid(Hexstream2, 1 + 2 * i + 2 * j * Val("&H" & widtha1), 2) & " "
+    Form2.Text1.Text = Form2.Text1.Text & Mid$(Hexstream2, 1 + 2 * i + 2 * j * Val("&H" & widtha1), 2) & " "
     Next i
 Form2.Text1.Text = Form2.Text1.Text & vbCrLf
 Next j
@@ -559,7 +560,7 @@ Dim i As Long, j As Long, no1 As Boolean
 no1 = True
 For j = 0 To CLng("&H" & heighta2) - 1
 For i = 0 To CLng("&H" & widtha1) - 1
-If Mid(Hexstream2, 2 * i + 2 * j * Val("&H" & widtha1) + 1, 2) <> "00" Then
+If Mid$(Hexstream2, 2 * i + 2 * j * Val("&H" & widtha1) + 1, 2) <> "00" Then
 no1 = False
 End If
 Next i
@@ -600,6 +601,7 @@ Loop
 
 Form2.Text2.Text = ALLCOMPRESSDATA
 Form2.Label8.Caption = "bytes：" & Len(Form2.Text2.Text) / 2
+Form2.Command8.Enabled = True
 Exit Sub
 End If
 
@@ -624,6 +626,7 @@ ALLCOMPRESSDATA = ALLCOMPRESSDATA & "000000"
 
 Form2.Text2.Text = ALLCOMPRESSDATA
 Form2.Label8.Caption = "Bytes：" & Len(Form2.Text2.Text) / 2
+Form2.Command8.Enabled = True
 End Sub
 
 Private Sub Command6_Click()
@@ -643,7 +646,7 @@ Dim ChangeByte As String, i As Long, ChangeToHundredsDigit As String
 ChangeByte = Right("00" & InputBox("输入要修改百位的layer 1 字节", "提示", 0), 2)
 ChangeToHundredsDigit = Right("00" & InputBox("要把百位替换成多少？", "提示", 0), 2)
 For i = 1 To (Len(Hexstream1) - 1) Step 2
-If Mid(Hexstream1, i, 2) = ChangeByte Then Mid(Hexstream2, i, 2) = ChangeToHundredsDigit
+If Mid$(Hexstream1, i, 2) = ChangeByte Then Mid$(Hexstream2, i, 2) = ChangeToHundredsDigit
 Next i
 
 MsgBox "finish change！"
@@ -682,7 +685,7 @@ Form2.Label8.Caption = "Automatically make the offset"
 Form2.Text6.Text = SaveDatabuffer(0)
 SaveDataOffset(i + 1) = PointerOffset1
 TempAddress = Val("&H" & "8000000") + Val("&H" & SaveDatabuffer(0))
-SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+SaveDatabuffer(i + 1) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
 TempAddress = Val("&H" & SaveDatabuffer(0)) + Len(Form2.Text2.Text) / 2 + 1
 SaveDatabuffer(0) = Right("00" & Hex(TempAddress), 8)
 
@@ -728,7 +731,7 @@ If Form2.Text6.Text = "" Then         '检查Textbox，就是说可以自己输入地址，但是
         Form2.Text6.Text = Hex(Val("&H" + returnstr))
         SaveDataOffset(i + 1) = PointerOffset1
         TempAddress = Val("&H" & "8000000") + Val("&H" & SaveDataOffset(i)) + 3
-        SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+        SaveDatabuffer(i + 1) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
         SaveDataOffset(i + 2) = startoffset
 
         If Hexstream2 = "" Then
@@ -751,7 +754,7 @@ ReCreatNewOffset:
     SaveDatabuffer(0) = Right("00" & Hex(TempAddress + 3), 8)
     SaveDataOffset(i + 1) = PointerOffset1
     TempAddress = Val("&H" & "8000000") + Val("&H" & SaveDataOffset(i)) + 3
-    SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    SaveDatabuffer(i + 1) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
     SaveDataOffset(i + 2) = startoffset
     If Hexstream2 = "" Then
     maxnum = layer1compressdatalength / 2 + 7        'layer1compressdatalength / 2 + 3 + 2 + 2
@@ -818,14 +821,14 @@ Dim MessageStream As String
 Dim checkStream As String
 MessageStream = ReadFileHex(gbafilepath, LevelChangeRoomStreamOffset, Right("0000" & Hex(Val("&H" & LevelChangeRoomStreamOffset) + 1024), 8))
 For i = 0 To 50
-checkStream = checkStream & Mid(MessageStream, i * 24 + 1, 24)
-If Mid(MessageStream, i * 24 + 1, 24) = "000000000000000000000000" Then Exit For
+checkStream = checkStream & Mid$(MessageStream, i * 24 + 1, 24)
+If Mid$(MessageStream, i * 24 + 1, 24) = "000000000000000000000000" Then Exit For
 Next i
 RoomConnectionDataBuffer = checkStream
 End If
 For j = 0 To i
-If Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) = Mid(checkStream, j * 24 + 3, 2) Then
-Form9.Text1.Text = Form9.Text1.Text & Right("00" & Hex(j), 2) & "   " & Mid(checkStream, j * 24 + 1, 24) & vbCrLf
+If Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) = Mid$(checkStream, j * 24 + 3, 2) Then
+Form9.Text1.Text = Form9.Text1.Text & Right("00" & Hex(j), 2) & "   " & Mid$(checkStream, j * 24 + 1, 24) & vbCrLf
 End If
 Next j
 End Sub
@@ -861,7 +864,7 @@ j = j + 2 * IndexinOneLine    '取到列位置
 
 For i = LBound(TextPerLength()) To UBound(TextPerLength())
 If TextPerLength(i) = "" And i <> 0 Then Exit For
-Mid(strtext, j + 1, Len(TextPerLength(i))) = TextPerLength(i)
+Mid$(strtext, j + 1, Len(TextPerLength(i))) = TextPerLength(i)
 If i = UBound(TextPerLength()) Then Exit For
 j = j + Val("&H" & widtha1) * 2
 Next i
@@ -872,7 +875,7 @@ Erase TextPerLength()
 For j = 0 To Val("&H" & heighta2) - 1 '写列
     For i = 0 To Val("&H" & widtha1) - 1 '写行
     DoEvents
-    Form2.Text1.Text = Form2.Text1.Text & Mid(strtext, 1 + 2 * i + 2 * j * Val("&H" & widtha1), 2) & " "
+    Form2.Text1.Text = Form2.Text1.Text & Mid$(strtext, 1 + 2 * i + 2 * j * Val("&H" & widtha1), 2) & " "
     Next i
 Form2.Text1.Text = Form2.Text1.Text & vbCrLf
 Next j

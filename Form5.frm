@@ -62,7 +62,7 @@ For i = 0 To UBound(SaveDataOffset()) - LBound(SaveDataOffset())
 If Len(SaveDatabuffer(i)) = 0 Then Exit For                 '还有一点是 Redim 数组(0) 实际上就指定了一条数据
     ReDim MassageByte(Len(SaveDatabuffer(i)) / 2 - 1)       '方便的是，ARM指令的最小操作单位为字节，所以不用担心输入的字符数是奇数，这也需要编程时的保证
     For j = 1 To Len(SaveDatabuffer(i)) / 2
-    MassageByte(j - 1) = Val("&H" & Mid(SaveDatabuffer(i), 2 * j - 1, 2))
+    MassageByte(j - 1) = Val("&H" & Mid$(SaveDatabuffer(i), 2 * j - 1, 2))
     Next j
 Put #1, Val("&H" & SaveDataOffset(i)) + 1, MassageByte()
 Next i

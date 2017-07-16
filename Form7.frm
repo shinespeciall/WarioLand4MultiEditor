@@ -109,10 +109,10 @@ Public SpritesID As String
 Private Sub Combo1_Click()
 Dim paletteStr As String, i As Integer
 paletteStr = ReadFileHex(gbafilepath, Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID)), Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID) + 2))
-paletteStr = Hex(Val("&H" & Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)) + 32 * Val(Form7.Combo1.Text))
+paletteStr = Hex(Val("&H" & Mid$(paletteStr, 5, 2) & Mid$(paletteStr, 3, 2) & Mid$(paletteStr, 1, 2)) + 32 * Val(Form7.Combo1.Text))
 paletteStr = ReadFileHex(gbafilepath, paletteStr, Hex(Val("&H" & paletteStr) + 31))
 For i = 0 To 15
-Palette16Color(i) = RGB555ToRGB888(Mid(paletteStr, 4 * i + 1, 4))
+Palette16Color(i) = RGB555ToRGB888(Mid$(paletteStr, 4 * i + 1, 4))
 Next i
 Command3_Click
 End Sub
@@ -137,24 +137,24 @@ ReDim Palette16Color(16)
 '----------------------------------------------Make palette Beta Mode
 Dim paletteStr As String
 paletteStr = ReadFileHex(gbafilepath, Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID)), Hex(Val("&H78EDB4") + 4 * Val("&H" & SpritesID) + 2))
-'paletteStr = Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)    'get offset
-paletteStr = Hex(Val("&H" & Mid(paletteStr, 5, 2) & Mid(paletteStr, 3, 2) & Mid(paletteStr, 1, 2)) + 32 * Val(Form7.Combo1.Text))
+'paletteStr = Mid$(paletteStr, 5, 2) & Mid$(paletteStr, 3, 2) & Mid$(paletteStr, 1, 2)    'get offset
+paletteStr = Hex(Val("&H" & Mid$(paletteStr, 5, 2) & Mid$(paletteStr, 3, 2) & Mid$(paletteStr, 1, 2)) + 32 * Val(Form7.Combo1.Text))
 
 paletteStr = ReadFileHex(gbafilepath, paletteStr, Hex(Val("&H" & paletteStr) + 31))
 
 For i = 0 To 15
-Palette16Color(i) = RGB555ToRGB888(Mid(paletteStr, 4 * i + 1, 4))
+Palette16Color(i) = RGB555ToRGB888(Mid$(paletteStr, 4 * i + 1, 4))
 Next i
 
 '----------------------------------------------End Make palette
 
 TempPointer = Hex(Val("&H" & TempPointer) + 4 * Val("&H" & SpritesID))
 TempPointer = ReadFileHex(gbafilepath, TempPointer, Hex(Val("&H" & TempPointer) + 4))
-TempPointer = Mid(TempPointer, 7, 2) & Mid(TempPointer, 5, 2) & Mid(TempPointer, 3, 2) & Mid(TempPointer, 1, 2)
+TempPointer = Mid$(TempPointer, 7, 2) & Mid$(TempPointer, 5, 2) & Mid$(TempPointer, 3, 2) & Mid$(TempPointer, 1, 2)
 TempPointer = Hex(Val("&H" & TempPointer) - Val("&H" & "8000000"))
 LenthMessage = Hex(Val("&H" & LenthMessage) + 4 * Val("&H" & SpritesID))
 LenthMessage = ReadFileHex(gbafilepath, LenthMessage, Hex(Val("&H" & LenthMessage) + 4))
-LenthMessage = Mid(LenthMessage, 7, 2) & Mid(LenthMessage, 5, 2) & Mid(LenthMessage, 3, 2) & Mid(LenthMessage, 1, 2)
+LenthMessage = Mid$(LenthMessage, 7, 2) & Mid$(LenthMessage, 5, 2) & Mid$(LenthMessage, 3, 2) & Mid$(LenthMessage, 1, 2)
 TilesOffset = TempPointer
 TilesLength = LenthMessage
 TileData = ReadFileHexWithByteInterchange(gbafilepath, TempPointer, Hex(Val("&H " & TempPointer) + 2 * Val("&H" & LenthMessage)))
@@ -163,9 +163,9 @@ For LineNum = 0 To Val("&H" & LenthMessage) / Val("&H" & "400") - 1
 For k = 0 To 31                'horizontal tile number
 For j = 0 To 7                 'vertical
 For i = 0 To 7                 'count by byte, horizontal
-'Form7.Picture1.Line (80 * i + 640 * k, 80 * j + 640 * LineNum)-(80 * i + 640 * k + 80, 80 * j + 80 + 640 * LineNum), QBColor(Val("&H" & Mid(TileData, i + 8 * j + 64 * k + 1, 1))), BF
-Form7.Picture1.Line (80 * i + 640 * k, 80 * j + 640 * LineNum)-(80 * i + 640 * k + 80, 80 * j + 80 + 640 * LineNum), Palette16Color(Val("&H" & Mid(TileData, i + 8 * j + 64 * k + 1, 1))), BF
-TempPointerValue(i + 8 * j + 64 * k + 64 * 32 * LineNum) = Mid(TileData, i + 8 * j + 64 * k + 1, 1)
+'Form7.Picture1.Line (80 * i + 640 * k, 80 * j + 640 * LineNum)-(80 * i + 640 * k + 80, 80 * j + 80 + 640 * LineNum), QBColor(Val("&H" & Mid$(TileData, i + 8 * j + 64 * k + 1, 1))), BF
+Form7.Picture1.Line (80 * i + 640 * k, 80 * j + 640 * LineNum)-(80 * i + 640 * k + 80, 80 * j + 80 + 640 * LineNum), Palette16Color(Val("&H" & Mid$(TileData, i + 8 * j + 64 * k + 1, 1))), BF
+TempPointerValue(i + 8 * j + 64 * k + 64 * 32 * LineNum) = Mid$(TileData, i + 8 * j + 64 * k + 1, 1)
 DoEvents
 Next i
 Next j
@@ -192,8 +192,8 @@ For LineNum = 0 To Val("&H" & LenthMessage) / Val("&H" & "400") - 1
 For k = 0 To 31                'horizontal tile number
 For j = 0 To 7                 'vertical
 For i = 0 To 7                 'count by byte, horizontal
-Form7.Picture1.Line (80 * i + 640 * k, 80 * j + 640 * LineNum)-(80 * i + 640 * k + 80, 80 * j + 80 + 640 * LineNum), QBColor(Val("&H" & Mid(TileData, i + 8 * j + 64 * k + 1, 1))), BF
-TempPointerValue(i + 8 * j + 64 * k + 64 * 32 * LineNum) = Mid(TileData, i + 8 * j + 64 * k + 1, 1)
+Form7.Picture1.Line (80 * i + 640 * k, 80 * j + 640 * LineNum)-(80 * i + 640 * k + 80, 80 * j + 80 + 640 * LineNum), QBColor(Val("&H" & Mid$(TileData, i + 8 * j + 64 * k + 1, 1))), BF
+TempPointerValue(i + 8 * j + 64 * k + 64 * 32 * LineNum) = Mid$(TileData, i + 8 * j + 64 * k + 1, 1)
 DoEvents
 Next i
 Next j

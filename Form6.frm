@@ -249,15 +249,15 @@ Form6.Text1.Text = ""
 If gbafilepath = "" Then Exit Sub
 Dim TempString As String
 TempString = ReadFileHex(gbafilepath, Hex(Val("&H" & RoomElementFirstOffset) + 4 * Combo1.ListIndex), Hex(Val("&H" & RoomElementFirstOffset) + 4 * Combo1.ListIndex + 3))  '我假设可以加载32个元素
-TempString = Mid(TempString, 7, 2) & Mid(TempString, 5, 2) & Mid(TempString, 3, 2) & Mid(TempString, 1, 2)
+TempString = Mid$(TempString, 7, 2) & Mid$(TempString, 5, 2) & Mid$(TempString, 3, 2) & Mid$(TempString, 1, 2)
 TempString = Hex(Val("&H" & TempString) - Val("&H" & "8000000"))
 RoomElementOffset = TempString
 TempString = ReadFileHex(gbafilepath, TempString, Hex(Val("&H" & TempString) + Val("&H" & "20") * 4))
 Dim i As Integer
 i = 0
 Do
-Form6.Text1.Text = Form6.Text1.Text & Mid(TempString, 6 * i + 1, 6) & vbCrLf
-If Mid(TempString, 6 * i + 1, 6) = "FFFFFF" Then Exit Do
+Form6.Text1.Text = Form6.Text1.Text & Mid$(TempString, 6 * i + 1, 6) & vbCrLf
+If Mid$(TempString, 6 * i + 1, 6) = "FFFFFF" Then Exit Do
 i = i + 1
 Loop
 
@@ -315,7 +315,7 @@ End If
         SaveDatabuffer(i) = "000000" & strtext
         SaveDataOffset(i + 1) = Hex(Val("&H" & RoomElementFirstOffset) + 4 * Combo1.ListIndex)
         TempAddress = Val("&H" & "8000000") + Val("&H" & SaveDataOffset(i)) + 3
-        SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+        SaveDatabuffer(i + 1) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
         SaveDataOffset(i + 2) = RoomElementOffset
         str1 = ""
         For j = 1 To Len(Form6TextBox1Temp) / 6    '生成指定长度填充字节00
@@ -331,7 +331,7 @@ ReCreatNewOffset:
     SaveDatabuffer(0) = Right("00" & Hex(TempAddress + 3), 8)
     SaveDataOffset(i + 1) = Hex(Val("&H" & RoomElementFirstOffset) + 4 * Combo1.ListIndex)
     TempAddress = Val("&H" & "8000000") + Val("&H" & SaveDataOffset(i)) + 3
-    SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    SaveDatabuffer(i + 1) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
     SaveDataOffset(i + 2) = RoomElementOffset
     
     str1 = ""
@@ -380,7 +380,7 @@ Next i
         SaveDatabuffer(i) = "000000" & strtext
         SaveDataOffset(i + 1) = Hex(Val("&H" & RoomElementFirstOffset) + 4 * Combo1.ListIndex)
         TempAddress = Val("&H" & "8000000") + Val("&H" & SaveDataOffset(i)) + 3
-        SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+        SaveDatabuffer(i + 1) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
         Exit Sub
     End If
 ReCreatNewOffset001:
@@ -389,7 +389,7 @@ ReCreatNewOffset001:
     SaveDatabuffer(0) = Right("00" & Hex(TempAddress + 3), 8)
     SaveDataOffset(i + 1) = Hex(Val("&H" & RoomElementFirstOffset) + 4 * Combo1.ListIndex)
     TempAddress = Val("&H" & "8000000") + Val("&H" & SaveDataOffset(i)) + 3
-    SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    SaveDatabuffer(i + 1) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
 End Sub
 
 Private Sub Command2_Click()
@@ -449,13 +449,13 @@ StrTemp = Replace(StrTemp, Chr(10), "")
 If RoomCameraStringPointerOffset = "" Then               '以前不存在Camera控制
         SaveDataOffset(i) = SaveDatabuffer(0)        '先写新的Camera控制流数据
         TempPointer = Right("00" & Hex(Val("&H" & SaveDataOffset(i)) + Val("&H8000000")), 8)
-        TempPointer = Mid(TempPointer, 7, 2) & Mid(TempPointer, 5, 2) & Mid(TempPointer, 3, 2) & Mid(TempPointer, 1, 2)
+        TempPointer = Mid$(TempPointer, 7, 2) & Mid$(TempPointer, 5, 2) & Mid$(TempPointer, 3, 2) & Mid$(TempPointer, 1, 2)
         SaveDatabuffer(i) = StrTemp
         SaveDatabuffer(0) = Hex(Val("&H" & SaveDatabuffer(0)) + Len(StrTemp))   '基址重整
         SaveDatabuffer(0) = (SaveDatabuffer(0) \ 4) * 4 + 4
         SaveDataOffset(i + 1) = CameraCotrolPointerOffset      '修改指针表表头指针，接下来计算指针表新位置和长度
         SaveDatabuffer(i + 1) = Right("0000" & Hex(Val("&H" & SaveDatabuffer(0)) + Val("&H8000000")), 8)
-        SaveDatabuffer(i + 1) = Mid(SaveDatabuffer(i + 1), 7, 2) & Mid(SaveDatabuffer(i + 1), 5, 2) & Mid(SaveDatabuffer(i + 1), 3, 2) & Mid(SaveDatabuffer(i + 1), 1, 2)    '重置指针，定位了新的指针表地址
+        SaveDatabuffer(i + 1) = Mid$(SaveDatabuffer(i + 1), 7, 2) & Mid$(SaveDatabuffer(i + 1), 5, 2) & Mid$(SaveDatabuffer(i + 1), 3, 2) & Mid$(SaveDatabuffer(i + 1), 1, 2)    '重置指针，定位了新的指针表地址
         SaveDataOffset(i + 2) = SaveDatabuffer(0)      '写新的指针表
         
         SaveDatabuffer(i + 2) = TempPointer & ReadFileHex(gbafilepath, CameraCotrolPointerOffset, Hex(Val("&H" & CameraCotrolPointerOffset) + LengthOfAllPointer - 1))
@@ -464,7 +464,7 @@ Else
         If Len(StrTemp) > Len(CameraCotrolString) Then         '以前存在只是现在的比较长
         SaveDataOffset(i) = RoomCameraStringPointerOffset
         TempPointer = Right("0000" & Hex(Val("&H" & SaveDatabuffer(0)) + Val("&H8000000")), 8)
-        TempPointer = Mid(TempPointer, 7, 2) & Mid(TempPointer, 5, 2) & Mid(TempPointer, 3, 2) & Mid(TempPointer, 1, 2)
+        TempPointer = Mid$(TempPointer, 7, 2) & Mid$(TempPointer, 5, 2) & Mid$(TempPointer, 3, 2) & Mid$(TempPointer, 1, 2)
         SaveDatabuffer(i) = TempPointer
         SaveDataOffset(i + 1) = SaveDatabuffer(0)
         SaveDatabuffer(i + 1) = StrTemp
@@ -608,43 +608,43 @@ Form6.Visible = False
 Exit Sub
 End If
 Form6.Label1.Caption = "Level Room Index:" & LevelRoomIndex
-Form6.Text9.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)        'First byte flag
-Form6.Text8.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 2 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Second byte flag    Layer 3 Visible Flag
-Form6.Text6.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 4 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Third byte flag    Layer 1 Visible Flag
-Form6.Text7.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 6 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Fourth byte flag    Layer 2 Visible Flag
-Form6.Text2.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 50 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'tenth byte flag
-Form6.Text5.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 52 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)     'eleventh byte flag
-Form6.Text3.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)
+Form6.Text9.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)        'First byte flag
+Form6.Text8.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 2 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Second byte flag    Layer 3 Visible Flag
+Form6.Text6.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 4 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Third byte flag    Layer 1 Visible Flag
+Form6.Text7.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 6 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Fourth byte flag    Layer 2 Visible Flag
+Form6.Text2.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 50 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'tenth byte flag
+Form6.Text5.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 52 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)     'eleventh byte flag
+Form6.Text3.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)
 
     Dim FirstPointer As String
     FirstPointer = Hex(Val("&H" & "78F540") + 4 * Val("&H" & LevelNumber))
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 3))
-    FirstPointer = Mid(FirstPointer, 7, 2) & Mid(FirstPointer, 5, 2) & Mid(FirstPointer, 3, 2) & Mid(FirstPointer, 1, 2)
+    FirstPointer = Mid$(FirstPointer, 7, 2) & Mid$(FirstPointer, 5, 2) & Mid$(FirstPointer, 3, 2) & Mid$(FirstPointer, 1, 2)
     FirstPointer = Hex(Val("&H" & FirstPointer) - Val("&H" & "8000000"))
     CameraCotrolPointerOffset = FirstPointer
     
-'If Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
+'If Mid$(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2) = "03" Then
     '*********************                  pointer table pointer head is Offset_78F540
     FirstPointer = ReadFileHex(gbafilepath, FirstPointer, Hex(Val("&H" & FirstPointer) + 17 * 4 - 1))    'pretend there is 17 pointers, get all the pointers
     '*********************                  开始搜索
     Dim i As Integer, OutputString As String, CheckPointer As String, j As Integer, kk As Integer
     For i = 0 To 16
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
-    CheckPointer = Mid(FirstPointer, 7 + 8 * i, 2) & Mid(FirstPointer, 5 + 8 * i, 2) & Mid(FirstPointer, 3 + 8 * i, 2) & Mid(FirstPointer, 1 + 8 * i, 2)
+    If Mid$(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For             'there is so many FF after 3F9D58 as a end flag
+    CheckPointer = Mid$(FirstPointer, 7 + 8 * i, 2) & Mid$(FirstPointer, 5 + 8 * i, 2) & Mid$(FirstPointer, 3 + 8 * i, 2) & Mid$(FirstPointer, 1 + 8 * i, 2)
     CheckPointer = Hex(Val("&H" & CheckPointer) - Val("&H" & "8000000"))
     
     OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 1))
-        If Mid(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
+        If Mid$(OutputString, 1, 2) = Right("00" & Hex(Val("&H" & LevelRoomIndex) - 1), 2) Then
             RoomCameraStringPointerOffset = CheckPointer
             OutputString = ReadFileHex(gbafilepath, CheckPointer, Hex(Val("&H" & CheckPointer) + 10 * 9 + 1))
             'then go on to enumerate the camera control flag
-            Form6.Text4.Text = Mid(OutputString, 1, 4) & vbCrLf
-            CameraCotrolString = Mid(OutputString, 1, 4)
-            kk = Val("&H" & Mid(OutputString, 3, 2))
+            Form6.Text4.Text = Mid$(OutputString, 1, 4) & vbCrLf
+            CameraCotrolString = Mid$(OutputString, 1, 4)
+            kk = Val("&H" & Mid$(OutputString, 3, 2))
             For j = 0 To (kk - 1)
-            Form6.Text4.Text = Form6.Text4.Text & Mid(OutputString, 18 * j + 5, 10) & vbCrLf
-            Form6.Text4.Text = Form6.Text4.Text & Mid(OutputString, 18 * j + 15, 8) & vbCrLf
-            CameraCotrolString = CameraCotrolString & Mid(OutputString, 18 * j + 5, 18)
+            Form6.Text4.Text = Form6.Text4.Text & Mid$(OutputString, 18 * j + 5, 10) & vbCrLf
+            Form6.Text4.Text = Form6.Text4.Text & Mid$(OutputString, 18 * j + 15, 8) & vbCrLf
+            CameraCotrolString = CameraCotrolString & Mid$(OutputString, 18 * j + 5, 18)
             Next j
             Exit For
         End If
@@ -653,7 +653,7 @@ Form6.Text3.Text = Mid(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & Le
     LengthOfAllPointer = 0
     For i = 0 To 16
     LengthOfAllPointer = LengthOfAllPointer + 4
-    If Mid(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
+    If Mid$(FirstPointer, 8 * i + 1, 8) = "589D3F08" Then Exit For
     Next i
 'End If
 End Sub

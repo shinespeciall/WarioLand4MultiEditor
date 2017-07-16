@@ -68,8 +68,8 @@ shiftoffset = -1
 Do
 DoEvents
 shiftoffset = shiftoffset + 2
-str1 = Mid(Hexstream, shiftoffset, 2)
-str2 = Mid(Hexstream, shiftoffset + 2, 2)
+str1 = Mid$(Hexstream, shiftoffset, 2)
+str2 = Mid$(Hexstream, shiftoffset + 2, 2)
 
 If str2 <> str1 Then
 Num1 = Num1 + 1
@@ -156,8 +156,8 @@ Next i
 Erase ROMallbyte()
 For i = 0 To Val("&H" & EndOffset1) - Val("&H" & StartOffset1)
 'Form2.Label8.Caption = "搜索可能的源地址中的Free Space，进度：" & CStr(i) & CStr(Val("&H" & EndOffset1) - Val("&H" & StartOffset1))
-If Mid(ROMallHex, 2 * i + 1, 2) = SpaceStr Then j = j + 1
-If Mid(ROMallHex, 2 * i + 1, 2) <> SpaceStr Then j = 0
+If Mid$(ROMallHex, 2 * i + 1, 2) = SpaceStr Then j = j + 1
+If Mid$(ROMallHex, 2 * i + 1, 2) <> SpaceStr Then j = 0
 If Val("&H" & StartOffset1) + i > Val("&H" & EndOffset1) - SpaceLen Then
 FindSpace = "FFFFFFFF"                                                   '返回错误代码
 Exit Function
@@ -202,7 +202,7 @@ Dim i As Long         '转换Hex
 Dim j As Long         '计数器
 Dim n1 As String, n2 As String
 For i = LBound(ROMallbyte) To LBound(ROMallbyte) + (Val("&H" & EndOffset2) - Val("&H" & StartOffset2))
-ROMallHex = ROMallHex & Hex(ROMallbyte(i) And 15) & Mid(Hex(ROMallbyte(i) And 240), 1, 1)
+ROMallHex = ROMallHex & Hex(ROMallbyte(i) And 15) & Mid$(Hex(ROMallbyte(i) And 240), 1, 1)
 DoEvents
 Next i
 Erase ROMallbyte()
@@ -216,7 +216,7 @@ Exit Function
 End If
 Dim i As Long
 For i = 1 To Len(str1)
-If Mid(str1, i, 1) <> Mid(str2, i, 1) Then
+If Mid$(str1, i, 1) <> Mid$(str2, i, 1) Then
 strcmp = i
 Exit Function
 End If
@@ -247,13 +247,13 @@ StrTemp = Replace(StrTemp, Chr(10), "")
 If RoomCameraStringPointerOffset = "" Then               '以前不存在Camera控制
         SaveDataOffset(i) = SaveDatabuffer(0)        '先写新的Camera控制流数据
         TempPointer = Right("00" & Hex(Val("&H" & SaveDataOffset(i)) + Val("&H8000000")), 8)
-        TempPointer = Mid(TempPointer, 7, 2) & Mid(TempPointer, 5, 2) & Mid(TempPointer, 3, 2) & Mid(TempPointer, 1, 2)
+        TempPointer = Mid$(TempPointer, 7, 2) & Mid$(TempPointer, 5, 2) & Mid$(TempPointer, 3, 2) & Mid$(TempPointer, 1, 2)
         SaveDatabuffer(i) = StrTemp
         SaveDatabuffer(0) = Hex(Val("&H" & SaveDatabuffer(0)) + Len(StrTemp))   '基址重整
         SaveDatabuffer(0) = (SaveDatabuffer(0) \ 4) * 4 + 4
         SaveDataOffset(i + 1) = CameraCotrolPointerOffset      '修改指针表表头指针，接下来计算指针表新位置和长度
         SaveDatabuffer(i + 1) = Right("0000" & Hex(Val("&H" & SaveDatabuffer(0)) + Val("&H8000000")), 8)
-        SaveDatabuffer(i + 1) = Mid(SaveDatabuffer(i + 1), 7, 2) & Mid(SaveDatabuffer(i + 1), 5, 2) & Mid(SaveDatabuffer(i + 1), 3, 2) & Mid(SaveDatabuffer(i + 1), 1, 2)    '重置指针，定位了新的指针表地址
+        SaveDatabuffer(i + 1) = Mid$(SaveDatabuffer(i + 1), 7, 2) & Mid$(SaveDatabuffer(i + 1), 5, 2) & Mid$(SaveDatabuffer(i + 1), 3, 2) & Mid$(SaveDatabuffer(i + 1), 1, 2)    '重置指针，定位了新的指针表地址
         SaveDataOffset(i + 2) = SaveDatabuffer(0)      '写新的指针表
         
         SaveDatabuffer(i + 2) = TempPointer & ReadFileHex(gbafilepath, CameraCotrolPointerOffset, Hex(Val("&H" & CameraCotrolPointerOffset) + LengthOfAllPointer - 1))
@@ -262,7 +262,7 @@ Else
         If Len(StrTemp) > Len(CameraCotrolString) Then         '以前存在只是现在的比较长
         SaveDataOffset(i) = RoomCameraStringPointerOffset
         TempPointer = Right("0000" & Hex(Val("&H" & SaveDatabuffer(0)) + Val("&H8000000")), 8)
-        TempPointer = Mid(TempPointer, 7, 2) & Mid(TempPointer, 5, 2) & Mid(TempPointer, 3, 2) & Mid(TempPointer, 1, 2)
+        TempPointer = Mid$(TempPointer, 7, 2) & Mid$(TempPointer, 5, 2) & Mid$(TempPointer, 3, 2) & Mid$(TempPointer, 1, 2)
         SaveDatabuffer(i) = TempPointer
         SaveDataOffset(i + 1) = SaveDatabuffer(0)
         SaveDatabuffer(i + 1) = StrTemp
@@ -494,7 +494,7 @@ r3 = Hex(Val("&H" & r3) + 4 * X)
 GetLevelNamePointer = ReadFileHex(gbafilepath, r3, Hex(Val("&H" & r3) + 3))
 End Function
 
-Public Function SaveRoomCompData(Offset_ofPostDataPointer As String, compData As String, PostDataLength As Long) As Boolean
+Public Function SaveRoomCompData(Offset_ofPostDataPointer As String, compData As String, PostDataLength As Long, Optional CanSaveInOldDataArea As Boolean) As Boolean
 Dim i As Integer, j As Long
 Dim TempAddress As Long
 Dim returnstr As String
@@ -510,6 +510,7 @@ End If
 
 TempAddress = CLng("&H" & SaveDatabuffer(0))
 
+If CanSaveInOldDataArea = True Then
     returnstr = FindSpace(gbafilepath, "598EEC", "59F291", "00", Len(compData) / 2 + 8)
     If returnstr = "FFFFFFFF" Then
     returnstr = FindSpace(gbafilepath, "78F97F", SaveDatabuffer(0), "00", 6 + Len(compData) / 2 + 8)
@@ -522,16 +523,20 @@ TempAddress = CLng("&H" & SaveDatabuffer(0))
     'End If
     'End If
     '-------------------------------------------------
+Else
+returnstr = "FFFFFFFF"
+End If
+
 If returnstr = "FFFFFFFF" Then
     SaveDataOffset(i) = SaveDatabuffer(0)
     SaveDatabuffer(i) = compData
     SaveDataOffset(i + 1) = Offset_ofPostDataPointer
     TempAddress = CLng("&H" & "8000000") + CLng("&H" & SaveDataOffset(i))
-    SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    SaveDatabuffer(i + 1) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
     TempAddress = CLng("&H" & ReadFileHex(gbafilepath, Offset_ofPostDataPointer, Hex(CLng("&H" & Offset_ofPostDataPointer) + 3)))
     TempAddress = TempAddress - 8
     If PostDataLength > 0 Then
-    SaveDataOffset(i + 2) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    SaveDataOffset(i + 2) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
     For j = 1 To PostDataLength
     str1 = str1 + "00"
     Next j
@@ -543,11 +548,11 @@ Else
     SaveDatabuffer(i) = compData
     SaveDataOffset(i + 1) = Offset_ofPostDataPointer
     TempAddress = CLng("&H" & "8000000") + CLng("&H" & SaveDataOffset(i))
-    SaveDatabuffer(i + 1) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    SaveDatabuffer(i + 1) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
     TempAddress = CLng("&H" & ReadFileHex(gbafilepath, Offset_ofPostDataPointer, Hex(CLng("&H" & Offset_ofPostDataPointer) + 3)))
     TempAddress = TempAddress - 8
     If PostDataLength > 0 Then
-    SaveDataOffset(i + 2) = Mid(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid(Right("00" & Hex(TempAddress), 8), 1, 2)
+    SaveDataOffset(i + 2) = Mid$(Right("00" & Hex(TempAddress), 8), 7, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 5, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 3, 2) & Mid$(Right("00" & Hex(TempAddress), 8), 1, 2)
     For j = 1 To PostDataLength
     str1 = str1 + "00"
     Next j

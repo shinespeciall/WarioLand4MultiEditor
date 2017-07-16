@@ -112,8 +112,8 @@ SaveDatabuffer(i) = strtext
 
 For i = 0 To (Len(strtext) / 24 - 1)
 For j = 0 To (Len(Form3Text1TextTemp) / 24 - 1)
-If strcmp(Mid(strtext, 8 * i + 1, 24), Mid(Form3Text1TextTemp, 8 * j + 1, 24)) > 0 Then
-Form9.Text1.Text = Form9.Text1.Text & "推荐测试使用的金手指：03000025:" & Mid(strtext, 8 * i + 1, 2) & vbCrLf & "测试重置的或新生成的转换点" & vbCrLf
+If strcmp(Mid$(strtext, 8 * i + 1, 24), Mid$(Form3Text1TextTemp, 8 * j + 1, 24)) > 0 Then
+Form9.Text1.Text = Form9.Text1.Text & "推荐测试使用的金手指：03000025:" & Mid$(strtext, 8 * i + 1, 2) & vbCrLf & "测试重置的或新生成的转换点" & vbCrLf
 End If
 Next j
 Next i
@@ -130,13 +130,13 @@ Dim MessageStream As String, i As Long, j As Long
 Dim checkStream As String
 MessageStream = ReadFileHex(gbafilepath, LevelChangeRoomStreamOffset, Right("0000" & Hex(Val("&H" & LevelChangeRoomStreamOffset) + 1024), 8))
 For i = 0 To 50     'i dont think there is more than 50 change position can be made
-checkStream = Mid(MessageStream, i * 24 + 1, 24)
+checkStream = Mid$(MessageStream, i * 24 + 1, 24)
     If checkStream = "000000000000000000000000" Then
     Form3.Text1.Text = Form3.Text1.Text & "00 00 00 00 00 00 00 00 00 00 00 00"
     GoTo Button1Enable
     End If
 For j = 1 To 12
-Form3.Text1.Text = Form3.Text1.Text & Mid(checkStream, 2 * j - 1, 2) & " "
+Form3.Text1.Text = Form3.Text1.Text & Mid$(checkStream, 2 * j - 1, 2) & " "
 Next j
 Form3.Text1.Text = Form3.Text1.Text & vbCrLf
 Next i
@@ -185,14 +185,14 @@ SaveDatabuffer(i + 1) = strtext & "FFFF"          'add two Byte FF in case after
 SaveDataOffset(i + 2) = LevelChangeRoomStreamPointerOffset
 str1 = SaveDataOffset(i + 1)
 str1 = Right("0" & Hex(Val("&H" & str1) + Val("&H" & "8000000")), 8)
-str1 = Mid(str1, 7, 2) & Mid(str1, 5, 2) & Mid(str1, 3, 2) & Mid(str1, 1, 2)
+str1 = Mid$(str1, 7, 2) & Mid$(str1, 5, 2) & Mid$(str1, 3, 2) & Mid$(str1, 1, 2)
 SaveDatabuffer(i + 2) = str1
 SaveDatabuffer(0) = Right("0000" & Hex(Val("&H" & SaveDatabuffer(0)) + Len(strtext) / 2 + 2 + ModValue), 8)   ' add 2 and add ModValue
 
 For i = 0 To (Len(strtext) / 24 - 1)
 For j = 0 To (Len(Form3Text1TextTemp) / 24 - 1)
-If strcmp(Mid(strtext, 8 * i + 1, 24), Mid(Form3Text1TextTemp, 8 * j + 1, 24)) > 0 Then
-Form9.Text1.Text = Form9.Text1.Text & "推荐测试使用的金手指：03000025:" & Mid(strtext, 8 * i + 1, 2) & vbCrLf & "测试重置的或新生成的转换点" & vbCrLf
+If strcmp(Mid$(strtext, 8 * i + 1, 24), Mid$(Form3Text1TextTemp, 8 * j + 1, 24)) > 0 Then
+Form9.Text1.Text = Form9.Text1.Text & "推荐测试使用的金手指：03000025:" & Mid$(strtext, 8 * i + 1, 2) & vbCrLf & "测试重置的或新生成的转换点" & vbCrLf
 End If
 Next j
 Next i
