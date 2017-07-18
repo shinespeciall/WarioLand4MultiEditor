@@ -97,12 +97,12 @@ Begin VB.Form Form12
       Width           =   2895
    End
    Begin VB.Label Label1 
-      Caption         =   "Nmae It !"
+      Caption         =   "Nmae It ! (The App will number the MOD Automatically)"
       Height          =   375
       Left            =   4200
       TabIndex        =   1
       Top             =   360
-      Width           =   1215
+      Width           =   6375
    End
 End
 Attribute VB_Name = "Form12"
@@ -241,10 +241,17 @@ Form12.Icon = LoadResPicture(101, vbResIcon)
 Form12.Top = MDIForm1.height / 2 - Form12.height / 2 - 500
 Form12.Left = MDIForm1.width / 2 - Form12.width / 2 - 1000
 
-Dim a As Boolean, i As Integer, j As Integer
+Dim i As Integer, j As Integer
 For j = 0 To 15
 For i = 0 To 7
-a = DrawTile16(i, j, Hex(i + 8 * j), Form12.Picture1, , 24)
+DrawTile16 i, j, Hex(i + 8 * j), Form12.Picture1, , 24
+DoEvents
+Next i
+Next j
+
+For j = 0 To 16
+For i = 0 To 11
+DrawTile16 i, j, MODforSave(i, j), Form12.Picture2, , 24
 DoEvents
 Next i
 Next j

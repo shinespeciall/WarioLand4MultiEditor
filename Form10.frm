@@ -10,6 +10,10 @@ Begin VB.Form Form10
    ScaleHeight     =   12450
    ScaleWidth      =   19305
    Visible         =   0   'False
+   Begin VB.Timer Timer2 
+      Left            =   18600
+      Top             =   3600
+   End
    Begin VB.CommandButton Command16 
       Caption         =   "Make a model"
       Height          =   615
@@ -409,7 +413,7 @@ Public Yshift As Long
 
 Public WasCameraControlChange As Boolean
 
-Public IsMakingCameraRec As Boolean            ' Used in Timer1
+Public IsMakingCameraRec As Boolean            ' Used in Timer
 Public IsClick As Boolean
 Public WillBeResize As Integer
 
@@ -754,6 +758,12 @@ i = MsgBox("Get MOD from MAP ?", vbYesNo, "Info")
 If i <> vbYes Then GoTo StartNewMODDialog
 '--------------------------------------Use A Timer to do the rest thing
 
+IsMakingCameraRec = True   'reuse
+Form10.Shape2.width = 780: Form10.Shape2.height = 780
+Form10.Shape2.Visible = True
+Form10.Timer2.Interval = 5
+Form10.Command16.Enabled = False
+Exit Sub
 '--------------------------------------
 End If
 
@@ -1798,3 +1808,55 @@ Next i
 End If
 End Sub
 
+Private Sub Timer2_Timer()
+Static a As Boolean                'start by False
+Static X1 As Long, X2 As Long, Y1 As Long, Y2 As Long
+
+If a = False And X1 = 0 Then          'drawing part
+    Form10.Shape2.Left = MouseX * (DotSize * 16)
+    Form10.Shape2.Top = MouseY * (DotSize * 16)
+ElseIf a = True And X1 > 0 Then
+    Form10.Shape2.width = (MouseX + 1) * (DotSize * 16) - Form10.Shape2.Left
+    Form10.Shape2.height = (MouseY + 1) * (DotSize * 16) - Form10.Shape2.Top
+End If
+
+If IsClick = True And Y2 = 0 Then
+    a = Not a
+    If a = True Then
+        X1 = MouseX + Xshift
+        Y1 = MouseY + Yshift
+        IsClick = False
+    Else
+        X2 = MouseX + Xshift
+        Y2 = MouseY + Yshift
+        
+        Dim i As Integer, j As Integer
+        If X2 - X1 < 12 And Y2 - Y1 < 17 Then
+        If Form10.Check1.Value = 1 Then
+        For j = 0 To Y2 - Y1
+        For i = 0 To X2 - X1
+        MODforSave(i, j) = L0_LB_000(i + X1, j + Y1)
+        Next i
+        Next j
+        ElseIf Form10.Check2.Value = 1 Then
+        For j = 0 To Y2 - Y1
+        For i = 0 To X2 - X1
+        MODforSave(i, j) = L1_LB_000(i + X1, j + Y1)
+        Next i
+        Next j
+        Else
+        For j = 0 To Y2 - Y1
+        For i = 0 To X2 - X1
+        MODforSave(i, j) = L2_LB_000(i + X1, j + Y1)
+        Next i
+        Next j
+        End If
+        End If
+        
+        a = False: X1 = 0: Y1 = 0: X2 = 0: Y2 = 0
+        Form10.Timer2.Interval = 0: Form10.Shape2.Visible = False: Form10.Command16.Enabled = True
+        IsClick = False: IsMakingCameraRec = False: Form12.Visible = True: Form10.Enabled = False
+    End If
+End If
+
+End Sub

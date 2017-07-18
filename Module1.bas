@@ -508,8 +508,6 @@ SaveRoomCompData = False
 Exit Function
 End If
 
-TempAddress = CLng("&H" & SaveDatabuffer(0))
-
 If CanSaveInOldDataArea = True Then
     returnstr = FindSpace(gbafilepath, "598EEC", "59F291", "00", Len(compData) / 2 + 8)
     If returnstr = "FFFFFFFF" Then
