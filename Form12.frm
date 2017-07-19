@@ -5,6 +5,7 @@ Begin VB.Form Form12
    ClientLeft      =   5760
    ClientTop       =   3660
    ClientWidth     =   10740
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form12"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -33,6 +34,7 @@ Begin VB.Form Form12
       ScaleHeight     =   4515
       ScaleWidth      =   6315
       TabIndex        =   5
+      ToolTipText     =   "Use Arrow Keys to move MOD to change position"
       Top             =   1680
       Width           =   6375
    End
@@ -255,6 +257,54 @@ DrawTile16 i, j, MODforSave(i, j), Form12.Picture2, , 24
 DoEvents
 Next i
 Next j
+End Sub
+
+Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+Dim i As Integer, j As Integer
+
+If KeyCode = 37 Then 'Left
+For j = 0 To 16
+For i = 0 To 10
+MODforSave(i, j) = MODforSave(i + 1, j)
+Next i
+MODforSave(11, j) = "0000"
+Next j
+
+ElseIf KeyCode = 39 Then 'Right
+For j = 0 To 16
+For i = 10 To 0 Step -1
+MODforSave(i + 1, j) = MODforSave(i, j)
+Next i
+MODforSave(0, j) = "0000"
+Next j
+
+ElseIf KeyCode = 38 Then 'Up
+For i = 0 To 11
+For j = 0 To 15
+MODforSave(i, j) = MODforSave(i, j + 1)
+Next j
+MODforSave(i, 16) = "0000"
+Next i
+
+ElseIf KeyCode = 40 Then 'Down
+For i = 0 To 11
+For j = 15 To 0 Step -1  'Down
+MODforSave(i, j + 1) = MODforSave(i, j)
+Next j
+MODforSave(i, 0) = "0000"
+Next i
+End If
+
+If KeyCode = 37 Or KeyCode = 38 Or KeyCode = 39 Or KeyCode = 40 Then
+Form12.Picture2.Cls
+For j = 0 To 16
+For i = 0 To 11
+DrawTile16 i, j, MODforSave(i, j), Form12.Picture2, , 24
+DoEvents
+Next i
+Next j
+End If
+
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
