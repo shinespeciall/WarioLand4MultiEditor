@@ -11,6 +11,7 @@ Begin VB.Form Form12
    MinButton       =   0   'False
    ScaleHeight     =   8760
    ScaleWidth      =   10740
+   ShowInTaskbar   =   0   'False
    Begin VB.CommandButton Command4 
       Caption         =   "Next"
       Height          =   375
@@ -28,6 +29,7 @@ Begin VB.Form Form12
       Width           =   1695
    End
    Begin VB.PictureBox Picture2 
+      AutoRedraw      =   -1  'True
       BackColor       =   &H00000000&
       Height          =   4575
       Left            =   4200
@@ -288,7 +290,7 @@ Next i
 
 ElseIf KeyCode = 40 Then 'Down
 For i = 0 To 11
-For j = 15 To 0 Step -1  'Down
+For j = 15 To 0 Step -1
 MODforSave(i, j + 1) = MODforSave(i, j)
 Next j
 MODforSave(i, 0) = "0000"
@@ -300,7 +302,6 @@ Form12.Picture2.Cls
 For j = 0 To 16
 For i = 0 To 11
 DrawTile16 i, j, MODforSave(i, j), Form12.Picture2, , 24
-DoEvents
 Next i
 Next j
 End If
@@ -335,4 +336,16 @@ End Sub
 Private Sub Picture2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 IX2 = X \ 384
 JY2 = Y \ 384
+End Sub
+
+Private Sub Text1_Click()
+Form12.KeyPreview = False
+End Sub
+
+Private Sub Text1_GotFocus()
+Form12.KeyPreview = False
+End Sub
+
+Private Sub Text1_LostFocus()
+Form12.KeyPreview = True
 End Sub

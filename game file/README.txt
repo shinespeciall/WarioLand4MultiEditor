@@ -1,1 +1,1 @@
-The game file is just for test althougth there are progress and plan to make it to be a new Wario Land 4 game, you can try to play this on VisualBoyAdvance and you will see the progress, if you are interested in this program, you can contact me by email: 648616375@qq.com
+The game files are just for test, you can try to play them on VisualBoyAdvance.

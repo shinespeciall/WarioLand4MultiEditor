@@ -421,6 +421,18 @@ Public IsLayer0Change As Boolean
 Public IsLayer1Change As Boolean
 Public IsLayer2Change As Boolean
 
+Private Sub Check1_Click()
+Form10.Command16.Enabled = False
+End Sub
+
+Private Sub Check2_Click()
+Form10.Command16.Enabled = False
+End Sub
+
+Private Sub Check3_Click()
+Form10.Command16.Enabled = False
+End Sub
+
 Private Sub Combo1_Click()
 Form10.Picture2.Cls
 Dim width As Integer, height As Integer, i As Integer, j As Integer, result As Boolean
@@ -533,6 +545,7 @@ End If
 Form10.Command11.Enabled = True
 Form10.Command9.Enabled = True
 Form10.Command10.Enabled = True
+Form10.Command16.Enabled = True
 End Sub
 
 Private Sub Command11_Click()
@@ -547,7 +560,7 @@ Dim i As Integer, j As Integer, result As Boolean
 If IsDeliver = True Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
-    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
+    DrawTile16 i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
     DoEvents
     Next i
     Next j
@@ -557,21 +570,21 @@ ElseIf WholeRoomChange = True Then
     If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.height \ DotSize)
     For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.width \ DotSize)
-    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
+    DrawTile16 i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
     DoEvents
     Next i
     Next j
     ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
-    result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
+    DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
     DoEvents
     Next i
     Next j
     ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
     For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
-    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
+    DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
     DoEvents
     Next i
     Next j
@@ -586,6 +599,7 @@ End If
 Form10.Command11.Enabled = True
 Form10.Command9.Enabled = True
 Form10.Command10.Enabled = True
+Form10.Command16.Enabled = True
 End Sub
 
 Private Sub Command12_Click()
@@ -735,7 +749,7 @@ If WholeRoomChange = True Then
     Next j
     compressData = compressData & CompressDataOnly(strtmp1)
     compressData = compressData & "000000FF"
-    SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 16), compressData, PostlayerCompDataLength(2))
+    SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 16), compressData, PostlayerCompDataLength(2), True)
     End If
     
     Form10.Visible = False
@@ -753,7 +767,9 @@ Next i
 Next j
 If (Form10.Check1.Value = 1 And Form10.Check2.Value = 0 And Form10.Check3.Value = 0) Or _
    (Form10.Check1.Value = 0 And Form10.Check2.Value = 1 And Form10.Check3.Value = 0) Or _
-   (Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1) Then
+   (Form10.Check1.Value = 0 And Form10.Check2.Value = 0 And Form10.Check3.Value = 1) Or _
+    IsDeliver = True Then
+                                                                    
 i = MsgBox("Get MOD from MAP ?", vbYesNo, "Info")
 If i <> vbYes Then GoTo StartNewMODDialog
 '--------------------------------------Use A Timer to do the rest thing
@@ -1035,10 +1051,10 @@ End If
 
 If IsDeliver = True Then
 Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
+DoEvents
 For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
 For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
-result = DrawTile16(i, j, L0_LB_000(i, j), Form10.Picture1)
-DoEvents
+DrawTile16 i, j, L0_LB_000(i, j), Form10.Picture1, , DotSize
 Next i
 Next j
 End If
@@ -1062,22 +1078,19 @@ For k = 2 To 0 Step -1
 If layerPriority(0) = k Then
 For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.height \ DotSize)
 For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.width \ DotSize)
-result = DrawTile16(i, j, L0_LB_000(i, j), Form10.Picture1, , DotSize)
-DoEvents
+DrawTile16 i, j, L0_LB_000(i, j), Form10.Picture1, , DotSize
 Next i
 Next j
 ElseIf layerPriority(1) = k Then
 For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
 For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
-result = DrawTile16(i, j, L1_LB_000(i, j), Form10.Picture1, , DotSize)
-DoEvents
+DrawTile16 i, j, L1_LB_000(i, j), Form10.Picture1, , DotSize
 Next i
 Next j
 ElseIf layerPriority(2) = k Then
 For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.height \ DotSize)
 For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.width \ DotSize)
-result = DrawTile16(i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize)
-DoEvents
+DrawTile16 i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize
 Next i
 Next j
 End If
@@ -1094,6 +1107,7 @@ End If
 Form9.Text1.Text = Form9.Text1.Text & "Finish All" & vbCrLf
 Form10.Combo1.Enabled = True
 Form10.Command5.Enabled = False
+Form10.Command16.Enabled = True
 MDIForm1.Enabled = False
 End Sub
 
@@ -1236,6 +1250,7 @@ End If
 Form10.Command11.Enabled = True
 Form10.Command9.Enabled = True
 Form10.Command10.Enabled = True
+Form10.Command16.Enabled = True
 End Sub
 
 Private Sub Form_Load()
@@ -1832,7 +1847,7 @@ If IsClick = True And Y2 = 0 Then
         
         Dim i As Integer, j As Integer
         If X2 - X1 < 12 And Y2 - Y1 < 17 Then
-        If Form10.Check1.Value = 1 Then
+        If Form10.Check1.Value = 1 Or IsDeliver = True Then
         For j = 0 To Y2 - Y1
         For i = 0 To X2 - X1
         MODforSave(i, j) = L0_LB_000(i + X1, j + Y1)
