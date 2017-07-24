@@ -684,7 +684,7 @@ If IsHexstream2NeedWrite = True Then MsgBox "the App save camera control in temp
 End If
 
 Dim i As Long, j As Long, strtmp1 As String
-Dim compressData As String
+Dim compressData As String, DonnotCompress As Boolean
 Dim SaveResult As Boolean
 
 If SaveDataOffset(90) <> "" Then
@@ -694,25 +694,35 @@ End If
 
 If WholeRoomChange = True Then
     '----------------------------------------Layer 0
+    DonnotCompress = True
     If IsLayer0Change = True Then
     strtmp1 = ""
     compressData = Right("00" & Hex(Layer0Width), 2) & Right("00" & Hex(Layer0Height), 2) & "01"
-    For j = 0 To Val("&H" & MapHeight) - 1
-    For i = 0 To Val("&H" & MapLength) - 1
+    For j = 0 To Layer0Height - 1
+    For i = 0 To Layer0Width - 1
     strtmp1 = strtmp1 & Mid$(L0_LB_000(i, j), 3, 2)
+    If CLng("&H" & L0_LB_000(i, j)) <> 0 Then DonnotCompress = False
     Next i
     Next j
-    compressData = compressData & CompressDataOnly(strtmp1)
-    compressData = compressData & "0001"
-    strtmp1 = ""
-    For j = 0 To Val("&H" & MapHeight) - 1
-    For i = 0 To Val("&H" & MapLength) - 1
-    strtmp1 = strtmp1 & Mid$(L0_LB_000(i, j), 1, 2)
-    Next i
-    Next j
-    compressData = compressData & CompressDataOnly(strtmp1)
-    compressData = compressData & "000000FF"
-    SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 8), compressData, PostlayerCompDataLength(0))
+    If DonnotCompress = False Then
+        compressData = compressData & CompressDataOnly(strtmp1)
+        compressData = compressData & "0001"
+        strtmp1 = ""
+        For j = 0 To Layer0Height - 1
+        For i = 0 To Layer0Width - 1
+        strtmp1 = strtmp1 & Mid$(L0_LB_000(i, j), 1, 2)
+        Next i
+        Next j
+        compressData = compressData & CompressDataOnly(strtmp1)
+        compressData = compressData & "000000FF"
+        SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 8), compressData, PostlayerCompDataLength(0))
+    Else
+        For i = 1 To 100
+        If SaveDataOffset(i) = "" Then Exit For
+        Next i
+        SaveDataOffset(i) = Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 8)
+        SaveDatabuffer(i) = "63223F08"
+    End If
     End If
     '----------------------------------------Layer 1
     If IsLayer1Change = True Then
@@ -736,27 +746,37 @@ If WholeRoomChange = True Then
     SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 12), compressData, PostlayerCompDataLength(1))
     End If
     '----------------------------------------Layer 2
+    DonnotCompress = True
     If IsLayer2Change = True Then
     strtmp1 = ""
     compressData = Right("00" & MapLength, 2) & Right("00" & MapHeight, 2) & "01"
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
     strtmp1 = strtmp1 & Mid$(L2_LB_000(i, j), 3, 2)
+    If CLng("&H" & L2_LB_000(i, j)) <> 0 Then DonnotCompress = False
     Next i
     Next j
-    compressData = compressData & CompressDataOnly(strtmp1)
-    compressData = compressData & "0001"
-    strtmp1 = ""
-    For j = 0 To Val("&H" & MapHeight) - 1
-    For i = 0 To Val("&H" & MapLength) - 1
-    strtmp1 = strtmp1 & Mid$(L2_LB_000(i, j), 1, 2)
-    Next i
-    Next j
-    compressData = compressData & CompressDataOnly(strtmp1)
-    compressData = compressData & "000000FF"
-    SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 16), compressData, PostlayerCompDataLength(2), True)
+    If DonnotCompress = False Then
+        compressData = compressData & CompressDataOnly(strtmp1)
+        compressData = compressData & "0001"
+        strtmp1 = ""
+        For j = 0 To Val("&H" & MapHeight) - 1
+        For i = 0 To Val("&H" & MapLength) - 1
+        strtmp1 = strtmp1 & Mid$(L2_LB_000(i, j), 1, 2)
+        Next i
+        Next j
+        compressData = compressData & CompressDataOnly(strtmp1)
+        compressData = compressData & "000000FF"
+        SaveResult = SaveRoomCompData(Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 16), compressData, PostlayerCompDataLength(2), True)
+    Else
+        For i = 1 To 100
+        If SaveDataOffset(i) = "" Then Exit For
+        Next i
+        SaveDataOffset(i) = Hex(CLng("&H" & LevelAllRoomPointerandDataBaseOffset) + 44 * (CLng("&H" & LevelRoomIndex) - 1) + 16)
+        SaveDatabuffer(i) = "63223F08"
     End If
-    
+    End If
+
     Form10.Visible = False
     Unload Form10
 End If
