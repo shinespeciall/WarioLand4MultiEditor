@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form Form2 
-   Caption         =   "Textmap editor"
+   Caption         =   "Layer Textmap editor"
    ClientHeight    =   10320
    ClientLeft      =   225
    ClientTop       =   675
@@ -12,18 +12,18 @@ Begin VB.Form Form2
    ScaleWidth      =   18180
    Visible         =   0   'False
    Begin VB.CommandButton Command16 
-      Caption         =   "deliver to Visual Editor"
+      Caption         =   "deliver the Layer to Visual Editor"
       Height          =   615
-      Left            =   12840
-      TabIndex        =   33
-      Top             =   2280
+      Left            =   8640
+      TabIndex        =   30
+      Top             =   240
       Width           =   1455
    End
    Begin VB.CommandButton Command15 
       Caption         =   "Right"
       Height          =   375
       Left            =   13560
-      TabIndex        =   32
+      TabIndex        =   29
       Top             =   1200
       Width           =   615
    End
@@ -31,7 +31,7 @@ Begin VB.Form Form2
       Caption         =   "Left"
       Height          =   375
       Left            =   12840
-      TabIndex        =   31
+      TabIndex        =   28
       Top             =   1200
       Width           =   615
    End
@@ -39,7 +39,7 @@ Begin VB.Form Form2
       Caption         =   "down"
       Height          =   375
       Left            =   13200
-      TabIndex        =   30
+      TabIndex        =   27
       Top             =   1680
       Width           =   615
    End
@@ -47,7 +47,7 @@ Begin VB.Form Form2
       Caption         =   "up"
       Height          =   375
       Left            =   13200
-      TabIndex        =   29
+      TabIndex        =   26
       Top             =   720
       Width           =   615
    End
@@ -55,23 +55,15 @@ Begin VB.Form Form2
       Caption         =   "fullfill bigger textmap by Flag"
       Height          =   495
       Left            =   10920
-      TabIndex        =   27
+      TabIndex        =   24
       Top             =   6120
       Width           =   1695
    End
-   Begin VB.CommandButton Command10 
-      Caption         =   "Resave three Flags"
-      Height          =   735
-      Left            =   8040
-      TabIndex        =   26
-      Top             =   120
-      Width           =   975
-   End
    Begin VB.CommandButton Command9 
-      Caption         =   "rewrite textmap in order ==>"
+      Caption         =   "Input Byte MOD"
       Height          =   495
       Left            =   10920
-      TabIndex        =   24
+      TabIndex        =   22
       Top             =   4320
       Width           =   1695
    End
@@ -80,7 +72,7 @@ Begin VB.Form Form2
       Left            =   14520
       MultiLine       =   -1  'True
       ScrollBars      =   3  'Both
-      TabIndex        =   22
+      TabIndex        =   20
       Top             =   1200
       Width           =   3375
    End
@@ -88,7 +80,7 @@ Begin VB.Form Form2
       Caption         =   "replace one Tile  hundreds digit"
       Height          =   495
       Left            =   10920
-      TabIndex        =   21
+      TabIndex        =   19
       ToolTipText     =   "直接操作layer 2 的缓存数据并对layer 1 进行一次缓存"
       Top             =   5520
       Width           =   1695
@@ -98,14 +90,14 @@ Begin VB.Form Form2
       Enabled         =   0   'False
       Height          =   495
       Left            =   10920
-      TabIndex        =   19
+      TabIndex        =   17
       Top             =   9000
       Width           =   1815
    End
    Begin VB.TextBox Text6 
       Height          =   495
       Left            =   10920
-      TabIndex        =   17
+      TabIndex        =   15
       Top             =   8160
       Width           =   1815
    End
@@ -113,7 +105,7 @@ Begin VB.Form Form2
       Caption         =   "repalce one byte"
       Height          =   495
       Left            =   10920
-      TabIndex        =   16
+      TabIndex        =   14
       Top             =   4920
       Width           =   1695
    End
@@ -121,28 +113,21 @@ Begin VB.Form Form2
       Caption         =   "compress all"
       Height          =   495
       Left            =   10920
-      TabIndex        =   15
-      Top             =   2880
-      Width           =   1695
-   End
-   Begin VB.TextBox Text5 
-      Height          =   615
-      Left            =   7080
       TabIndex        =   13
-      Top             =   120
-      Width           =   735
+      Top             =   2640
+      Width           =   1695
    End
    Begin VB.TextBox Text4 
       Height          =   615
       Left            =   3720
-      TabIndex        =   12
+      TabIndex        =   11
       Top             =   120
       Width           =   975
    End
    Begin VB.TextBox Text3 
       Height          =   615
       Left            =   1200
-      TabIndex        =   11
+      TabIndex        =   10
       Top             =   120
       Width           =   1215
    End
@@ -161,7 +146,7 @@ Begin VB.Form Form2
       Height          =   495
       Left            =   10920
       TabIndex        =   4
-      Top             =   2160
+      Top             =   2040
       Width           =   1695
    End
    Begin VB.CommandButton Command3 
@@ -169,7 +154,7 @@ Begin VB.Form Form2
       Height          =   495
       Left            =   10920
       TabIndex        =   3
-      Top             =   1560
+      Top             =   1440
       Width           =   1695
    End
    Begin VB.CommandButton Command2 
@@ -178,7 +163,7 @@ Begin VB.Form Form2
       Height          =   615
       Left            =   10920
       TabIndex        =   2
-      Top             =   840
+      Top             =   720
       Width           =   1695
    End
    Begin VB.CommandButton Command1 
@@ -186,7 +171,7 @@ Begin VB.Form Form2
       Height          =   495
       Left            =   10920
       TabIndex        =   1
-      Top             =   240
+      Top             =   120
       Width           =   1695
    End
    Begin VB.TextBox Text1 
@@ -202,29 +187,29 @@ Begin VB.Form Form2
       Caption         =   "Add Lines:"
       Height          =   375
       Left            =   12840
-      TabIndex        =   28
+      TabIndex        =   25
       Top             =   240
       Width           =   1455
    End
    Begin VB.Label Label10 
       Height          =   735
       Left            =   10920
-      TabIndex        =   25
+      TabIndex        =   23
       Top             =   3480
       Width           =   1695
    End
    Begin VB.Label Label9 
-      Caption         =   "inputTextmap in special order:"
+      Caption         =   "input Byte MOD:"
       Height          =   615
       Left            =   14520
-      TabIndex        =   23
+      TabIndex        =   21
       Top             =   360
       Width           =   3375
    End
    Begin VB.Label Label8 
       Height          =   255
       Left            =   3240
-      TabIndex        =   20
+      TabIndex        =   18
       Top             =   6960
       Width           =   9135
    End
@@ -232,28 +217,20 @@ Begin VB.Form Form2
       Caption         =   "Save Address："
       Height          =   255
       Left            =   11040
-      TabIndex        =   18
+      TabIndex        =   16
       Top             =   7800
       Width           =   1575
    End
    Begin VB.Label Label6 
       Caption         =   "start address:"
       Height          =   735
-      Left            =   9360
-      TabIndex        =   14
+      Left            =   5160
+      TabIndex        =   12
       Top             =   120
-      Width           =   1335
-   End
-   Begin VB.Label Label5 
-      Caption         =   "Flat 3[do not change]:"
-      Height          =   375
-      Left            =   4800
-      TabIndex        =   10
-      Top             =   240
-      Width           =   2295
+      Width           =   2775
    End
    Begin VB.Label Label4 
-      Caption         =   "Height Hex:"
+      Caption         =   "Height(Hex)"
       Height          =   255
       Left            =   2520
       TabIndex        =   9
@@ -261,7 +238,7 @@ Begin VB.Form Form2
       Width           =   1095
    End
    Begin VB.Label Label3 
-      Caption         =   "Width Hex:"
+      Caption         =   "Width(Hex)"
       Height          =   252
       Left            =   240
       TabIndex        =   8
@@ -321,12 +298,6 @@ Form2.Command2.Enabled = True
 Form2.Command4.Enabled = False
 End Sub
 
-Private Sub Command10_Click()
-widtha1 = Replace(Form2.Text3.Text, " ", "")
-heighta2 = Replace(Form2.Text4.Text, " ", "")
-transmita3 = Replace(Form2.Text5.Text, " ", "")
-End Sub
-
 Private Sub Command12_Click()
 Dim Num1 As Integer, Hex1 As String
 
@@ -363,7 +334,7 @@ Hexstream1 = addstr & Hexstream1
 heighta2 = Hex(Val("&H" & heighta2) + Num1)
 Text4.Text = heighta2
 Text1.Text = ""
-MsgBox "Finish !"
+Form9.Text1.Text = Form9.Text1.Text & "Adding line finished !" & vbCrLf
 End Sub
 
 Private Sub Command13_Click()
@@ -403,7 +374,14 @@ Hexstream1 = Hexstream1 & addstr
 heighta2 = Hex(Val("&H" & heighta2) + Num1)
 Text4.Text = heighta2
 Text1.Text = ""
-MsgBox "Finish !"
+'a template for all the 4 button or create another function
+'Form2.Enabled = False
+
+'change camera control and sprites position and also room change header altogether
+'It seems that these things should be pre-read
+
+'Form2.Enabled = True
+Form9.Text1.Text = Form9.Text1.Text & "Adding line finished !" & vbCrLf
 End Sub
 
 Private Sub Command14_Click()
@@ -443,7 +421,7 @@ Hexstream1 = addstr
 widtha1 = Hex(Val("&H" & widtha1) + Num1)
 Text3.Text = widtha1
 Text1.Text = ""
-MsgBox "Finish !"
+Form9.Text1.Text = Form9.Text1.Text & "Adding line finished !" & vbCrLf
 End Sub
 
 Private Sub Command15_Click()
@@ -483,7 +461,7 @@ Hexstream1 = addstr
 widtha1 = Hex(Val("&H" & widtha1) + Num1)
 Text3.Text = widtha1
 Text1.Text = ""
-MsgBox "Finish !"
+Form9.Text1.Text = Form9.Text1.Text & "Adding line finished !" & vbCrLf
 End Sub
 
 Private Sub Command16_Click()
@@ -545,11 +523,10 @@ If gbafilepath = "" Then Exit Sub
 Form2.Text6.Text = ""
 widtha1 = Replace(Form2.Text3.Text, " ", "")
 heighta2 = Replace(Form2.Text4.Text, " ", "")
-transmita3 = Replace(Form2.Text5.Text, " ", "")
 
 Dim ALLCOMPRESSDATA As String
 
-ALLCOMPRESSDATA = ALLCOMPRESSDATA & Right("00" & widtha1, 2) & Right("00" & heighta2, 2) & Right("00" & transmita3, 2)
+ALLCOMPRESSDATA = ALLCOMPRESSDATA & Right("00" & widtha1, 2) & Right("00" & heighta2, 2) & transmita3
 ALLCOMPRESSDATA = ALLCOMPRESSDATA & CompressDataOnly(Hexstream1)
 
 'If Len(ALLCOMPRESSDATA) > layer1compressdatalength - 8 Then
@@ -890,10 +867,10 @@ If IfisNewRoom = True Then
     Form2.Label6.Caption = "Start address: "
     Form2.Text3.Text = ""
     Form2.Text4.Text = ""
-    Form2.Text5.Text = "01"
 
     widtha1 = ""
     heighta2 = ""
+    transmita3 = "01"
 
     Hexstream1 = ""
     Hexstream2 = ""
@@ -909,17 +886,13 @@ Form2.Caption = "Textmap editor"
 Form2.Label6.Caption = "Start address:" & startoffset
 Form2.Text3.Text = widtha1
 Form2.Text4.Text = heighta2
-Form2.Text5.Text = transmita3
-If transmita3 = "02" Then MsgBox "only support comptress in mode 01(flag3=01)，please change Flag3 to 01"
-
-If Hexstream1 = "" Then Text5.Text = "01"
+If transmita3 = "02" Then transmita3 = "01"
 
 resizefrm2:
 Form2.Move 4650, 0, 18420, 10905
 
 Form2.Text3.FontSize = 15
 Form2.Text4.FontSize = 15
-Form2.Text5.FontSize = 15
 Form2.Text1.FontSize = 12
 Form2.Text2.FontSize = 10
 Form2.Text6.FontSize = 12
@@ -961,15 +934,6 @@ If Val("&H" & widtha1) * Val("&H" & heighta2) >= Val("&H" & "FFF") Then MsgBox "
 End Sub
 
 Private Sub Text4_KeyPress(KeyAscii As Integer)
-If KeyCode <> vbKeyBack And KeyCode <> 22 And KeyCode <> 3 And KeyCode <> 24 Then
-    If (KeyCode > 64 And KeyCode < 71) Then Exit Sub 'A-F are OK
-    If (KeyCode > 96 And KeyCode < 103) Then KeyCode = KeyCode - 32: Exit Sub 'a-f become A-F
-    If (KeyCode > 47 And KeyCode < 58) Then Exit Sub 'Numbers are OK
-KeyCode = 0 'All other letters are unwanted.
-End If
-End Sub
-
-Private Sub Text5_KeyPress(KeyAscii As Integer)
 If KeyCode <> vbKeyBack And KeyCode <> 22 And KeyCode <> 3 And KeyCode <> 24 Then
     If (KeyCode > 64 And KeyCode < 71) Then Exit Sub 'A-F are OK
     If (KeyCode > 96 And KeyCode < 103) Then KeyCode = KeyCode - 32: Exit Sub 'a-f become A-F

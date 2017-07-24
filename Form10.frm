@@ -696,7 +696,7 @@ If WholeRoomChange = True Then
     '----------------------------------------Layer 0
     If IsLayer0Change = True Then
     strtmp1 = ""
-    compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
+    compressData = Right("00" & Hex(Layer0Width), 2) & Right("00" & Hex(Layer0Height), 2) & "01"
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
     strtmp1 = strtmp1 & Mid$(L0_LB_000(i, j), 3, 2)
@@ -717,7 +717,7 @@ If WholeRoomChange = True Then
     '----------------------------------------Layer 1
     If IsLayer1Change = True Then
     strtmp1 = ""
-    compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
+    compressData = Right("00" & MapLength, 2) & Right("00" & MapHeight, 2)
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
     strtmp1 = strtmp1 & Mid$(L1_LB_000(i, j), 3, 2)
@@ -738,7 +738,7 @@ If WholeRoomChange = True Then
     '----------------------------------------Layer 2
     If IsLayer2Change = True Then
     strtmp1 = ""
-    compressData = Replace(Replace(Replace(Form10.Text8.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & Replace(Replace(Replace(Form10.Text9.Text, Chr(32), ""), Chr(13), ""), Chr(10), "") & "01"
+    compressData = Right("00" & MapLength, 2) & Right("00" & MapHeight, 2) & "01"
     For j = 0 To Val("&H" & MapHeight) - 1
     For i = 0 To Val("&H" & MapLength) - 1
     strtmp1 = strtmp1 & Mid$(L2_LB_000(i, j), 3, 2)
