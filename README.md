@@ -11,7 +11,7 @@
 ##
 ##      Although VB6 App can run on various Windows platform, but due to I coding on Windows 10 Creater with a HD wide screen, the App UI always not suitable for average screen. I am trying to fix the problem now.
 ##
-##      I am going to make a release version when I finished the inportant parts of the App and make it stable enougth on running. And this is a view for the App when editting with the Visual MAP Editor:
+##      I am going to make a release version when I finished the important parts of the App and make it stable enougth on running. And this is a view for the App when editting with the Visual MAP Editor:
 ![Image text](https://github.com/shinespeciall/WarioLand4MultiEditor/blob/master/App_Screenshot.png)
 ##      If you want to rebuild the level but not for a test (now you can find suitable Tile textcode for yourself in the room or other rooms use the same tileset to make suitable changes Or try to use the Visual editor), you need to expand your source gba file, which is available as a patch program here now, rewrite data usually need more room.
 ##      This is an example for what it can do:
