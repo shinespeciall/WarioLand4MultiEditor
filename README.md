@@ -8,7 +8,7 @@
 ##      4. Camera control modification is available in Visual MAP Editor visually, there are two types available and the textbox just show the exact control characters in the ROM file.
 ##      5. You can Edit Sprites Tiles by input a Index. but only bitmap-direct-change available. The sprites editor sometimes will not render the sprites in right colors, you need to use the slider to correct it.
 ##      6. Sprites stuffs and their positions can only change in textmode, it's not wise to change them if you don't know how the characters function. By the way, there will be a lot of work if I make a wizard for this, so it will be a long way to get there. 
-##      7. the txt files in directory "~\MOD\" is models for Tilesets which will be loaded into running App, it can be created or changed automatically by the App if you try to edit a room using a particular Tileset or make models for it visually in the Visual MAP Editor, sometimes files will be chcanged or uploaded if I make some test in Visual MAP Editor, I would be happy to see you contribute to this folder.
+##      7. the txt files in directory "~\MOD\" are models for Tilesets which will be loaded into running App, it can be created or changed automatically by the App if you try to edit a room using a particular Tileset or make models for it visually in the Visual MAP Editor, sometimes files will be changed or uploaded if I make some test in Visual MAP Editor, I will be happy to see you contribute to this folder.
 ##
 ##      Although VB6 App can run on various Windows platform, but due to I coding on a HD wide screen, the App UI always not suitable for average screen. I have tried to solve the problem and if bugs still exist please make an issue here.
 ##
