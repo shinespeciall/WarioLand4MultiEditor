@@ -51,10 +51,11 @@ B8 = BIN_to_DEC(Mid$(hextoBin(RGB555), 2, 5) & Mid$(hextoBin(RGB555), 2, 3))
 G8 = BIN_to_DEC(Mid$(hextoBin(RGB555), 7, 5) & Mid$(hextoBin(RGB555), 7, 3))
 R8 = BIN_to_DEC(Mid$(hextoBin(RGB555), 12, 5) & Mid$(hextoBin(RGB555), 12, 3))
 
+'I think I mistake something here
 RGB555ToRGB888 = B8 * 256 * 256 + G8 * 256 + R8
 If Mid$(hextoBin(RGB555), 1, 1) = "1" Then
 RGB555ToRGB888 = R8 * 256 * 256 + G8 * 256 + B8
-Debug.Print "Existing Color Problem !"
+Debug.Print "Existing order reverse event in color change!"
 End If
 End Function
 
@@ -175,6 +176,7 @@ For i = 0 To 7                       '作图
 For j = 0 To 7
 If Cover = True Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + (SizeOfDot - 1), heipos + i * SizeOfDot + (SizeOfDot - 1)), vbBlack, BF
 If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot < 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -213,6 +215,7 @@ For i = 0 To 7                       '作图
 For j = 0 To 7
 If Cover = True Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + (SizeOfDot - 1), heipos + i * SizeOfDot + (SizeOfDot - 1)), vbBlack, BF
 If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot < 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -251,6 +254,7 @@ For i = 0 To 7                       '作图
 For j = 0 To 7
 If Cover = True Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + (SizeOfDot - 1), heipos + i * SizeOfDot + (SizeOfDot - 1)), vbBlack, BF
 If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot < 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -289,6 +293,7 @@ For i = 0 To 7                       '作图
 For j = 0 To 7
 If Cover = True Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + (SizeOfDot - 1), heipos + i * SizeOfDot + (SizeOfDot - 1)), vbBlack, BF
 If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or Val("&H" & TileWord) = 2) And SizeOfDot > 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -298,5 +303,13 @@ End Function
 
 Public Function Min(a As Single, b As Single) As Single
 If a <= b Then Min = a Else Min = b
+End Function
+
+Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer) As Long
+Dim rRed As Long, rGreen As Long, rBlue As Long         'the order in VB6 is &BBGGRR
+rRed = Min((TopColor And CLng("&HFF")) * RenderEVA \ 16 + (BottomColor And CLng("&HFF")), 255)
+rGreen = Min((TopColor And CLng("&HFF00") / 256) * RenderEVA \ 16 + (BottomColor And CLng("&HFF00") / 256), 255)
+rBlue = Min((TopColor And CLng("&HFF0000") / 65536) * RenderEVA \ 16 + (BottomColor And CLng("&HFF0000") / 65536), 255)
+GetAlphaBlendColor = rBlue * 65536 + rGreen * 256 + rRed
 End Function
 

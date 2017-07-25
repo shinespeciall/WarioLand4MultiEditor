@@ -15,6 +15,7 @@ Begin VB.Form Form4
    Visible         =   0   'False
    Begin VB.CommandButton Command3 
       Caption         =   "Edit Room"
+      Enabled         =   0   'False
       Height          =   375
       Left            =   2640
       TabIndex        =   16
@@ -426,6 +427,10 @@ WholeRoomChange = True
 Form10.Visible = True
 End Sub
 
+Private Sub Form_Activate()
+Form4.Command3.Enabled = False
+End Sub
+
 Private Sub Form_Load()
 Form4.Move 0, 0, 4650, 8950
 Form4.Label1.FontSize = 13
@@ -533,6 +538,7 @@ End If
 MDIForm1.mnudecompress.Enabled = True
 MDIForm1.mnuRoomElement.Enabled = True
 Form4.List1.Enabled = True
+Form4.Command3.Enabled = True
 End Sub
 
 Private Sub List1_DblClick()
@@ -675,6 +681,7 @@ End If
 MDIForm1.mnudecompress.Enabled = True
 MDIForm1.mnuRoomElement.Enabled = True
 Form4.List3.Enabled = True
+Form4.Command3.Enabled = True
 End Sub
 
 Private Sub List3_DblClick()
@@ -817,6 +824,7 @@ End If
 MDIForm1.mnudecompress.Enabled = True
 MDIForm1.mnuRoomElement.Enabled = True
 Form4.List5.Enabled = True
+Form4.Command3.Enabled = True
 End Sub
 
 Private Sub List5_DblClick()

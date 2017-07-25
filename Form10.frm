@@ -2,8 +2,8 @@ VERSION 5.00
 Begin VB.Form Form10 
    Caption         =   "Visual MAP Editor (Beta)"
    ClientHeight    =   12450
-   ClientLeft      =   120
-   ClientTop       =   465
+   ClientLeft      =   4770
+   ClientTop       =   1170
    ClientWidth     =   19305
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
