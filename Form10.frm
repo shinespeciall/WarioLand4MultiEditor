@@ -2,14 +2,23 @@ VERSION 5.00
 Begin VB.Form Form10 
    Caption         =   "Visual MAP Editor (Beta)"
    ClientHeight    =   12450
-   ClientLeft      =   4770
-   ClientTop       =   1170
+   ClientLeft      =   120
+   ClientTop       =   465
    ClientWidth     =   19305
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    ScaleHeight     =   12450
    ScaleWidth      =   19305
    Visible         =   0   'False
+   Begin VB.CheckBox Check4 
+      Caption         =   "Alpha"
+      Enabled         =   0   'False
+      Height          =   375
+      Left            =   15000
+      TabIndex        =   41
+      Top             =   1125
+      Width           =   1095
+   End
    Begin VB.Timer Timer2 
       Left            =   18600
       Top             =   3600
@@ -35,23 +44,23 @@ Begin VB.Form Form10
       Height          =   375
       Left            =   15000
       TabIndex        =   36
-      Top             =   1080
+      Top             =   750
       Width           =   1215
    End
    Begin VB.CheckBox Check2 
       Caption         =   "layer 1"
-      Height          =   615
+      Height          =   375
       Left            =   15000
       TabIndex        =   35
-      Top             =   480
+      Top             =   375
       Width           =   1335
    End
    Begin VB.CheckBox Check1 
       Caption         =   "layer 0"
-      Height          =   495
+      Height          =   375
       Left            =   15000
       TabIndex        =   34
-      Top             =   120
+      Top             =   0
       Width           =   1335
    End
    Begin VB.Timer Timer1 
@@ -1096,6 +1105,23 @@ layerPriority(0) = 1: layerPriority(2) = 2
 Else
 layerPriority(0) = 2: layerPriority(2) = 1
 End If
+'Set EVA for Alpha Blending
+If Flag01 > 7 Then
+Select Case (Flag01 - 8) \ 4
+    Case 0: EVA = 7
+    Case 1: EVA = 10
+    Case 2: EVA = 13
+    Case 3: EVA = 16
+    Case 4: EVA = 0
+    Case 5: EVA = 3
+    Case 6: EVA = 6
+    Case 7: EVA = 9
+    Case 8: EVA = 11
+    Case 9: EVA = 13
+    Case 10: EVA = 16
+End Select
+Form10.Check4.Enabled = True
+End If
 
 Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
 Dim k As Integer
@@ -1283,6 +1309,7 @@ End Sub
 
 Private Sub Form_Load()
 Form10.Icon = LoadResPicture(101, vbResIcon)
+If Screen.Width > 24200 Then Me.Move 4650, 700, 19545, 13035
 IsMakingCameraRec = False
 IsClick = False
 If MODfilepath = "" Then

@@ -34,6 +34,7 @@ Public Layer0Width As Integer
 
 Public DotSize As Integer
 Public MODforSave() As String
+Public EVA As Integer
 
 Public Function RGB555ToRGB888(ByVal RGB555 As String) As Long
 If Len(RGB555) <> 4 Then
@@ -313,3 +314,435 @@ rBlue = Min((TopColor And CLng("&HFF0000") / 65536) * RenderEVA \ 16 + (BottomCo
 GetAlphaBlendColor = rBlue * 65536 + rGreen * 256 + rRed
 End Function
 
+Public Function DrawTile16_Alpha(ByVal lenpos As Long, ByVal heipos As Long, ByVal TopTileWord As String, ByVal MiddleTileWord As String, ByVal BottomTileWord As String, ByVal picbox As PictureBox, ByVal EVALng As Long, ByVal SizeOfDot As Integer, Optional Cover As Boolean) As Boolean
+On Error Resume Next
+If SizeOfDot < 1 Then
+DrawTile16_Alpha = False
+Exit Function
+End If
+'lenpos and heipos are position Index for Tile16
+Dim Wrd As String      '处理当前字段
+Dim Tile8_T() As String, Tile8_M() As String, Tile8_B() As String
+Dim i As Integer, j As Integer, strtmp As String
+Dim kT As Long, kM As Long, kB As Long             '调色板专用
+Dim RealBottomColor As Long
+'-------------------------------------first Tile------------------------------
+'-------------Top-------------
+Wrd = Mid$(Tile16(Val("&H" & TopTileWord)), 1, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_T(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_T(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_T(j, i)
+Tile8_T(j, i) = Tile8_T(7 - j, i)
+Tile8_T(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_T(j, i)
+Tile8_T(j, i) = Tile8_T(j, 7 - i)
+Tile8_T(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kT = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'-------------Middle-------------
+Wrd = Mid$(Tile16(Val("&H" & MiddleTileWord)), 1, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_M(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_M(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_M(j, i)
+Tile8_M(j, i) = Tile8_M(7 - j, i)
+Tile8_M(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_M(j, i)
+Tile8_M(j, i) = Tile8_M(j, 7 - i)
+Tile8_M(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kM = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'-------------Bottom-------------
+Wrd = Mid$(Tile16(Val("&H" & BottomTileWord)), 1, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_B(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_B(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_B(j, i)
+Tile8_B(j, i) = Tile8_B(7 - j, i)
+Tile8_B(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_B(j, i)
+Tile8_B(j, i) = Tile8_B(j, 7 - i)
+Tile8_B(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kB = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'------End of Load Tile Data-----
+'Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer) As Long
+lenpos = lenpos * SizeOfDot * 16          '作为基址
+heipos = heipos * SizeOfDot * 16
+If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 7 * SizeOfDot + SizeOfDot - 1, heipos + 7 * SizeOfDot + SizeOfDot - 1), vbBlack, BF
+For i = 0 To 7                       '作图
+For j = 0 To 7
+If Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM) <> Palette256(0, kM) Then
+RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
+Else
+RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
+End If
+RealBottomColor = GetAlphaBlendColor(Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT), RealBottomColor, EVALng)
+picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
+Next j
+Next i
+
+'-------------------------------------Second Tile------------------------------
+'-------------Top-------------
+Wrd = Mid$(Tile16(Val("&H" & TopTileWord)), 5, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_T(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_T(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_T(j, i)
+Tile8_T(j, i) = Tile8_T(7 - j, i)
+Tile8_T(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_T(j, i)
+Tile8_T(j, i) = Tile8_T(j, 7 - i)
+Tile8_T(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kT = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'-------------Middle-------------
+Wrd = Mid$(Tile16(Val("&H" & MiddleTileWord)), 5, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_M(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_M(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_M(j, i)
+Tile8_M(j, i) = Tile8_M(7 - j, i)
+Tile8_M(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_M(j, i)
+Tile8_M(j, i) = Tile8_M(j, 7 - i)
+Tile8_M(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kM = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'-------------Bottom-------------
+Wrd = Mid$(Tile16(Val("&H" & BottomTileWord)), 5, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_B(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_B(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_B(j, i)
+Tile8_B(j, i) = Tile8_B(7 - j, i)
+Tile8_B(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_B(j, i)
+Tile8_B(j, i) = Tile8_B(j, 7 - i)
+Tile8_B(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kB = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'------End of Load Tile Data-----
+lenpos = lenpos + SizeOfDot * 8          '作为基址
+heipos = heipos
+If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 7 * SizeOfDot + SizeOfDot - 1, heipos + 7 * SizeOfDot + SizeOfDot - 1), vbBlack, BF
+For i = 0 To 7                       '作图
+For j = 0 To 7
+If Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM) <> Palette256(0, kM) Then
+RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
+Else
+RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
+End If
+RealBottomColor = GetAlphaBlendColor(Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT), RealBottomColor, EVALng)
+picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
+Next j
+Next i
+
+'-------------------------------------Third Tile------------------------------
+'-------------Top-------------
+Wrd = Mid$(Tile16(Val("&H" & TopTileWord)), 9, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_T(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_T(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_T(j, i)
+Tile8_T(j, i) = Tile8_T(7 - j, i)
+Tile8_T(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_T(j, i)
+Tile8_T(j, i) = Tile8_T(j, 7 - i)
+Tile8_T(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kT = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'-------------Middle-------------
+Wrd = Mid$(Tile16(Val("&H" & MiddleTileWord)), 9, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_M(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_M(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_M(j, i)
+Tile8_M(j, i) = Tile8_M(7 - j, i)
+Tile8_M(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_M(j, i)
+Tile8_M(j, i) = Tile8_M(j, 7 - i)
+Tile8_M(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kM = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'-------------Bottom-------------
+Wrd = Mid$(Tile16(Val("&H" & BottomTileWord)), 9, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_B(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_B(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_B(j, i)
+Tile8_B(j, i) = Tile8_B(7 - j, i)
+Tile8_B(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_B(j, i)
+Tile8_B(j, i) = Tile8_B(j, 7 - i)
+Tile8_B(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kB = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'------End of Load Tile Data-----
+lenpos = lenpos - SizeOfDot * 8          '作为基址
+heipos = heipos + SizeOfDot * 8
+If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 7 * SizeOfDot + SizeOfDot - 1, heipos + 7 * SizeOfDot + SizeOfDot - 1), vbBlack, BF
+For i = 0 To 7                       '作图
+For j = 0 To 7
+If Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM) <> Palette256(0, kM) Then
+RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
+Else
+RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
+End If
+RealBottomColor = GetAlphaBlendColor(Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT), RealBottomColor, EVALng)
+picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
+Next j
+Next i
+
+'-------------------------------------Fourth Tile------------------------------
+'-------------Top-------------
+Wrd = Mid$(Tile16(Val("&H" & TopTileWord)), 13, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_T(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_T(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_T(j, i)
+Tile8_T(j, i) = Tile8_T(7 - j, i)
+Tile8_T(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_T(j, i)
+Tile8_T(j, i) = Tile8_T(j, 7 - i)
+Tile8_T(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kT = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'-------------Middle-------------
+Wrd = Mid$(Tile16(Val("&H" & MiddleTileWord)), 13, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_M(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_M(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_M(j, i)
+Tile8_M(j, i) = Tile8_M(7 - j, i)
+Tile8_M(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_M(j, i)
+Tile8_M(j, i) = Tile8_M(j, 7 - i)
+Tile8_M(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kM = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'-------------Bottom-------------
+Wrd = Mid$(Tile16(Val("&H" & BottomTileWord)), 13, 4)
+Wrd = Right("0000000000000000" & hextoBin(Wrd), 16)
+ReDim Tile8_B(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8_B(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8_B(j, i)
+Tile8_B(j, i) = Tile8_B(7 - j, i)
+Tile8_B(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8_B(j, i)
+Tile8_B(j, i) = Tile8_B(j, 7 - i)
+Tile8_B(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+kB = BIN_to_DEC(Mid$(Wrd, 1, 4))
+'------End of Load Tile Data-----
+lenpos = lenpos + SizeOfDot * 8          '作为基址
+heipos = heipos
+If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 7 * SizeOfDot + SizeOfDot - 1, heipos + 7 * SizeOfDot + SizeOfDot - 1), vbBlack, BF
+For i = 0 To 7                       '作图
+For j = 0 To 7
+If Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM) <> Palette256(0, kM) Then
+RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
+Else
+RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
+End If
+RealBottomColor = GetAlphaBlendColor(Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT), RealBottomColor, EVALng)
+picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
+Next j
+Next i
+
+Erase Tile8()
+DrawTile16_Alpha = True
+End Function

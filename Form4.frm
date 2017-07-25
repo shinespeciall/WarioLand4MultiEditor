@@ -342,11 +342,6 @@ Form11.Visible = True
 End Sub
 
 Private Sub Command3_Click()   ' UNFINISHED
-'If MODfilepath = "" Then
-'MsgBox "No MOD file Loaded", vbInformation, "Info"
-'Exit Sub
-'End If
-
 'get last LevelRoomIndex if exist
 If LevelRoomIndex = "" Then
 MsgBox "You haven't chose a Room yet !", vbExclamation + vbOKOnly, "Info"

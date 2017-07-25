@@ -457,7 +457,7 @@ Dim str1 As Long
 '*********************************************
            Case " ": str1 = 255
            Case Else: str1 = 255
-           End Select
+        End Select
    letter_to_DEX = str1
 End Function
 
