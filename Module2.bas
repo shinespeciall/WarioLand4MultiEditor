@@ -308,13 +308,17 @@ End Function
 
 Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer) As Long
 Dim rRed As Long, rGreen As Long, rBlue As Long         'the order in VB6 is &BBGGRR
-rRed = Min((TopColor And CLng("&HFF")) * RenderEVA \ 16 + (BottomColor And CLng("&HFF")), 255)
-rGreen = Min((TopColor And CLng("&HFF00") / 256) * RenderEVA \ 16 + (BottomColor And CLng("&HFF00") / 256), 255)
-rBlue = Min((TopColor And CLng("&HFF0000") / 65536) * RenderEVA \ 16 + (BottomColor And CLng("&HFF0000") / 65536), 255)
+If BottomColor = 0 Then
+GetAlphaBlendColor = TopColor
+Exit Function
+End If
+rRed = Min(((TopColor And CLng("&HFF")) * (16 - RenderEVA)) \ 16 + (BottomColor And CLng("&HFF")), 255)
+rGreen = Min((((TopColor And CLng("&HFF00")) / 256) * (16 - RenderEVA)) \ 16 + ((BottomColor And CLng("&HFF00")) / 256), 255)
+rBlue = Min((((TopColor And CLng("&HFF0000")) / 65536) * (16 - RenderEVA)) \ 16 + ((BottomColor And CLng("&HFF0000")) / 65536), 255)
 GetAlphaBlendColor = rBlue * 65536 + rGreen * 256 + rRed
 End Function
 
-Public Function DrawTile16_Alpha(ByVal lenpos As Long, ByVal heipos As Long, ByVal TopTileWord As String, ByVal MiddleTileWord As String, ByVal BottomTileWord As String, ByVal picbox As PictureBox, ByVal EVALng As Long, ByVal SizeOfDot As Integer, Optional Cover As Boolean) As Boolean
+Public Function DrawTile16_Alpha(ByVal lenpos As Long, ByVal heipos As Long, ByVal TopTileWord As String, ByVal MiddleTileWord As String, ByVal BottomTileWord As String, ByVal picbox As PictureBox, ByVal EVALng As Integer, ByVal SizeOfDot As Integer, Optional Cover As Boolean) As Boolean
 On Error Resume Next
 If SizeOfDot < 1 Then
 DrawTile16_Alpha = False
@@ -325,7 +329,7 @@ Dim Wrd As String      '处理当前字段
 Dim Tile8_T() As String, Tile8_M() As String, Tile8_B() As String
 Dim i As Integer, j As Integer, strtmp As String
 Dim kT As Long, kM As Long, kB As Long             '调色板专用
-Dim RealBottomColor As Long
+Dim RealBottomColor As Long, RealTopColor As Long
 '-------------------------------------first Tile------------------------------
 '-------------Top-------------
 Wrd = Mid$(Tile16(Val("&H" & TopTileWord)), 1, 4)
@@ -415,7 +419,6 @@ Next i
 End If
 kB = BIN_to_DEC(Mid$(Wrd, 1, 4))
 '------End of Load Tile Data-----
-'Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer) As Long
 lenpos = lenpos * SizeOfDot * 16          '作为基址
 heipos = heipos * SizeOfDot * 16
 If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 7 * SizeOfDot + SizeOfDot - 1, heipos + 7 * SizeOfDot + SizeOfDot - 1), vbBlack, BF
@@ -426,7 +429,10 @@ RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
 Else
 RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
 End If
-RealBottomColor = GetAlphaBlendColor(Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT), RealBottomColor, EVALng)
+If RealBottomColor = Palette256(0, kM) Then RealBottomColor = 0
+RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
+If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
+RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
 picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
 Next j
 Next i
@@ -530,7 +536,10 @@ RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
 Else
 RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
 End If
-RealBottomColor = GetAlphaBlendColor(Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT), RealBottomColor, EVALng)
+If RealBottomColor = Palette256(0, kM) Then RealBottomColor = 0
+RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
+If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
+RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
 picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
 Next j
 Next i
@@ -634,7 +643,10 @@ RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
 Else
 RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
 End If
-RealBottomColor = GetAlphaBlendColor(Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT), RealBottomColor, EVALng)
+If RealBottomColor = Palette256(0, kM) Then RealBottomColor = 0
+RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
+If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
+RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
 picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
 Next j
 Next i
@@ -738,11 +750,17 @@ RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
 Else
 RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
 End If
-RealBottomColor = GetAlphaBlendColor(Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT), RealBottomColor, EVALng)
+If RealBottomColor = Palette256(0, kM) Then RealBottomColor = 0
+RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
+If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
+RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
 picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
 Next j
 Next i
 
-Erase Tile8()
+Erase Tile8_B()
+Erase Tile8_M()
+Erase Tile8_T()
+
 DrawTile16_Alpha = True
 End Function

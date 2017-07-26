@@ -1124,28 +1124,53 @@ Form10.Check4.Enabled = True
 End If
 
 Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
-Dim k As Integer
-For k = 2 To 0 Step -1
-If layerPriority(0) = k Then
-For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-DrawTile16 i, j, L0_LB_000(i, j), Form10.Picture1, , DotSize
-Next i
-Next j
-ElseIf layerPriority(1) = k Then
-For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-DrawTile16 i, j, L1_LB_000(i, j), Form10.Picture1, , DotSize
-Next i
-Next j
-ElseIf layerPriority(2) = k Then
-For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-DrawTile16 i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize
-Next i
-Next j
+If EVA = 0 Then
+NoAlphaBlendingRender:
+    Dim k As Integer
+    For k = 2 To 0 Step -1
+    If layerPriority(0) = k Then
+    For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+    For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+    DrawTile16 i, j, L0_LB_000(i, j), Form10.Picture1, , DotSize
+    Next i
+    Next j
+    ElseIf layerPriority(1) = k Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+    DrawTile16 i, j, L1_LB_000(i, j), Form10.Picture1, , DotSize
+    Next i
+    Next j
+    ElseIf layerPriority(2) = k Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+    DrawTile16 i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize
+    Next i
+    Next j
+    End If
+    Next k
+Else
+    If layerPriority(0) <> 0 Or Layer0Height < MapHeight Or Layer0Width < MapLength Or ExistUnchangeableLayer0 = True Then
+    MsgBox "Layer 0 Priority != 0, Alpha blending failed !"
+    Form10.Check4.Enabled = False
+    GoTo NoAlphaBlendingRender
+    End If
+    
+    If layerPriority(1) = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+    DrawTile16_Alpha i, j, L0_LB_000(i, j), L1_LB_000(i, j), L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
+    Next i
+    Next j
+    ElseIf layerPriority(2) = 1 Then
+    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+    DrawTile16_Alpha i, j, L0_LB_000(i, j), L2_LB_000(i, j), L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
+    Next i
+    Next j
+    Else
+    GoTo NoAlphaBlendingRender
+    End If
 End If
-Next k
 
 Form10.Check1.Value = 1
 If ExistUnchangeableLayer0 = True Then
@@ -1305,6 +1330,10 @@ Form10.Command9.Enabled = True
 Form10.Command10.Enabled = True
 Form10.Command16.Enabled = True
 Form10.Picture1.Enabled = True
+End Sub
+
+Private Sub Form_Activate()
+Me.SetFocus
 End Sub
 
 Private Sub Form_Load()
