@@ -998,7 +998,8 @@ Form9.Text1.Text = Form9.Text1.Text & "The amount of Tiles is " & str(TileLength
 TextMAPDataOffset = Mid$(StrTemp, 45, 2) & Mid$(StrTemp, 43, 2) & Mid$(StrTemp, 41, 2)
 paletteOffset = Mid$(StrTemp, 21, 2) & Mid$(StrTemp, 19, 2) & Mid$(StrTemp, 17, 2)
 ReDim Palette256(16, 16)
-ReDim Tile88(TileLength2 / 16 + 64)
+ReDim Tile88(2048)
+'ReDim Tile88(TileLength2 / 16 + 64)
 Form9.Text1.Text = Form9.Text1.Text & "impoting 8 * 8 Tiles Data......" & vbCrLf
 Dim TextMapData As String
 StrTemp = ReadFileHexWithByteInterchange(gbafilepath, TileOffset, Hex(Val("&H" & TileOffset) + TileLength2))
@@ -1030,12 +1031,15 @@ Tile88(i * 4 + j) = Mid$(str2, j * 64 + 1, 64)
 Next j
 Next i
 Tile88(64) = Replace(Space(64), Chr(32), "0")
-'-------------------------------------------------------------End  权宜之策
 For i = 0 To (TileLength2 / 16) - 1
 Tile88(i + 65) = Mid$(StrTemp, 64 * i + 1, 64)
 DoEvents
 Next i
-
+For i = (TileLength2 / 16 + 65) To 2047
+Tile88(i) = Replace(Space(64), Chr(32), "0")
+DoEvents
+Next i
+'-------------------------------------------------------------End  权宜之策
 
 Form9.Text1.Text = Form9.Text1.Text & "impoting and making 16 * 16 Tiles Data......" & vbCrLf
 TextMapData = ReadFileHex(gbafilepath, TextMAPDataOffset, Hex(Val("&H" & TextMAPDataOffset) + 8192))
@@ -1121,6 +1125,8 @@ Select Case (Flag01 - 8) \ 4
     Case 10: EVA = 16
 End Select
 Form10.Check4.Enabled = True
+Form10.Check4.Value = 1
+Form10.Picture1.Enabled = False
 End If
 
 Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
@@ -1149,26 +1155,42 @@ NoAlphaBlendingRender:
     End If
     Next k
 Else
-    If layerPriority(0) <> 0 Or Layer0Height < MapHeight Or Layer0Width < MapLength Or ExistUnchangeableLayer0 = True Then
+    If layerPriority(0) = 2 Or Layer0Height < Val("&H" & MapHeight) Or Layer0Width < Val("&H" & MapLength) Or ExistUnchangeableLayer0 = True Then
     MsgBox "Layer 0 Priority != 0, Alpha blending failed !"
     Form10.Check4.Enabled = False
     GoTo NoAlphaBlendingRender
     End If
     
-    If layerPriority(1) = 1 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    DrawTile16_Alpha i, j, L0_LB_000(i, j), L1_LB_000(i, j), L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
-    Next i
-    Next j
-    ElseIf layerPriority(2) = 1 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    DrawTile16_Alpha i, j, L0_LB_000(i, j), L2_LB_000(i, j), L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
-    Next i
-    Next j
-    Else
-    GoTo NoAlphaBlendingRender
+    If layerPriority(0) = 0 Then
+        If layerPriority(1) = 1 Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), L1_LB_000(i, j), L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        Next i
+        Next j
+        ElseIf layerPriority(2) = 1 Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), L2_LB_000(i, j), L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        Next i
+        Next j
+        End If
+    ElseIf layerPriority(0) = 1 Then
+        If layerPriority(1) = 0 Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), L2_LB_000(i, j), L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        DrawTile16 i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize
+        Next i
+        Next j
+        ElseIf layerPriority(2) = 0 Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), L1_LB_000(i, j), L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        DrawTile16 i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize
+        Next i
+        Next j
+        End If
     End If
 End If
 
@@ -1593,6 +1615,7 @@ Form10.Shape1.Top = Y - Yshift
 End Sub
 
 Private Sub Picture1_Click()
+If Form10.Check4.Value = 1 Then Exit Sub
 Dim i As Integer, j As Integer
 
 If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a new room is not support

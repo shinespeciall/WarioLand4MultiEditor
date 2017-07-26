@@ -422,10 +422,6 @@ WholeRoomChange = True
 Form10.Visible = True
 End Sub
 
-Private Sub Form_Activate()
-Form4.Command3.Enabled = False
-End Sub
-
 Private Sub Form_Load()
 Form4.Move 0, 0, 4650, 8950
 Form4.Label1.FontSize = 13
