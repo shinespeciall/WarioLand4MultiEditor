@@ -14,6 +14,6 @@
 ##
 ##      I am going to make a release version when I finished some important parts of the App, if you want to run the alpha version, just download the whole repo and run the WL4 MutiEditor.exe as administrator. You can report bugs by creating an issue to the repo and this is a screenshot for the App when editting with the Visual MAP Editor:
 ![Image text](https://github.com/shinespeciall/WarioLand4MultiEditor/blob/master/App_Screenshot.png)
-##      If you want to rebuild the level but not for a test (now you can find suitable Tile textcode for yourself in the room or other rooms use the same tileset to make suitable changes Or try to use the Visual editor), you need to expand your source gba file, which is available as a patch program here now, rewrite data usually need more room.
 ##      This is an example for what it can do:
 ![Image text](https://github.com/shinespeciall/WarioLand4MultiEditor/blob/master/screenshot.png)
+##      PS: If you want to rebuild the level but not for a test (now you can find suitable Tile textcode for yourself in the room or other rooms use the same tileset to make suitable changes Or try to use the Visual editor), you need to expand your source gba file, which is available as a patch program here now, rewrite data usually need more room.
