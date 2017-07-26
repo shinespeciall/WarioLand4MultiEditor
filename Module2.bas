@@ -429,7 +429,7 @@ RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
 Else
 RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
 End If
-If RealBottomColor = Palette256(0, kM) Then RealBottomColor = 0
+If RealBottomColor = Palette256(0, kB) Then RealBottomColor = 0
 RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
 If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
 RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
@@ -536,7 +536,7 @@ RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
 Else
 RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
 End If
-If RealBottomColor = Palette256(0, kM) Then RealBottomColor = 0
+If RealBottomColor = Palette256(0, kB) Then RealBottomColor = 0
 RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
 If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
 RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
@@ -643,7 +643,7 @@ RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
 Else
 RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
 End If
-If RealBottomColor = Palette256(0, kM) Then RealBottomColor = 0
+If RealBottomColor = Palette256(0, kB) Then RealBottomColor = 0
 RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
 If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
 RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
@@ -750,7 +750,7 @@ RealBottomColor = Palette256(Val("&H" & "0" & Tile8_M(j, i)), kM)
 Else
 RealBottomColor = Palette256(Val("&H" & "0" & Tile8_B(j, i)), kB)
 End If
-If RealBottomColor = Palette256(0, kM) Then RealBottomColor = 0
+If RealBottomColor = Palette256(0, kB) Then RealBottomColor = 0
 RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
 If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
 RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
