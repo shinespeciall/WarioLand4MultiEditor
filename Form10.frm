@@ -445,6 +445,11 @@ Form10.Command16.Enabled = False
 Form10.Picture1.Enabled = False
 End Sub
 
+Private Sub Check4_Click()
+Form10.Command16.Enabled = False
+Form10.Picture1.Enabled = False
+End Sub
+
 Private Sub Combo1_Click()
 Form10.Picture2.Cls
 Dim Width As Integer, Height As Integer, i As Integer, j As Integer, result As Boolean
@@ -504,10 +509,12 @@ Private Sub Command10_Click()
 Form10.Check1.Enabled = False
 Form10.Check2.Enabled = False
 Form10.Check3.Enabled = False
+Form10.Check4.Enabled = False
+Form10.Picture1.Cls
+Form10.Picture1.Enabled = False
 Form10.Command11.Enabled = False
 Form10.Command9.Enabled = False
 Form10.Command10.Enabled = False
-Form10.Picture1.Cls
 Dim i As Integer, j As Integer, result As Boolean
 If IsDeliver = True Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
@@ -517,31 +524,73 @@ If IsDeliver = True Then
     Next i
     Next j
 ElseIf WholeRoomChange = True Then
-    Dim k As Integer
-    For k = 2 To 0 Step -1
-    If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
-    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
-    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
+    If Form10.Check4.Value = 1 Then
+        If layerPriority(0) = 0 Then
+            If layerPriority(1) = 1 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DoEvents
+            Next i
+            Next j
+            ElseIf layerPriority(2) = 1 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DoEvents
+            Next i
+            Next j
+            End If
+            Form10.Check4.Enabled = True
+        ElseIf layerPriority(0) = 1 Then
+            If layerPriority(1) = 0 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+            DoEvents
+            Next i
+            Next j
+            Form10.Check4.Enabled = True
+            ElseIf layerPriority(2) = 0 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+            DoEvents
+            Next i
+            Next j
+            Form10.Check4.Enabled = True
+            End If
+        End If
     End If
-    Next k
+    If EVA = 0 Then
+        Dim k As Integer
+        For k = 2 To 0 Step -1
+        If layerPriority(0) = k Then
+        For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16 i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+        DoEvents
+        Next i
+        Next j
+        ElseIf layerPriority(1) = k Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+        DoEvents
+        Next i
+        Next j
+        ElseIf layerPriority(2) = k Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+        DoEvents
+        Next i
+        Next j
+        End If
+        Next k
+    End If
 End If
 For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
 For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
@@ -565,10 +614,12 @@ Private Sub Command11_Click()
 Form10.Check1.Enabled = False
 Form10.Check2.Enabled = False
 Form10.Check3.Enabled = False
+Form10.Check4.Enabled = False
+Form10.Picture1.Cls
+Form10.Picture1.Enabled = False
 Form10.Command11.Enabled = False
 Form10.Command9.Enabled = False
 Form10.Command10.Enabled = False
-Form10.Picture1.Cls
 Dim i As Integer, j As Integer, result As Boolean
 If IsDeliver = True Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
@@ -578,31 +629,73 @@ If IsDeliver = True Then
     Next i
     Next j
 ElseIf WholeRoomChange = True Then
-    Dim k As Integer
-    For k = 2 To 0 Step -1
-    If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    DrawTile16 i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
-    DoEvents
-    Next i
-    Next j
-    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
-    DoEvents
-    Next i
-    Next j
-    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
-    DoEvents
-    Next i
-    Next j
+    If Form10.Check4.Value = 1 Then
+        If layerPriority(0) = 0 Then
+            If layerPriority(1) = 1 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DoEvents
+            Next i
+            Next j
+            ElseIf layerPriority(2) = 1 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DoEvents
+            Next i
+            Next j
+            End If
+            Form10.Check4.Enabled = True
+        ElseIf layerPriority(0) = 1 Then
+            If layerPriority(1) = 0 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+            DoEvents
+            Next i
+            Next j
+            Form10.Check4.Enabled = True
+            ElseIf layerPriority(2) = 0 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+            DoEvents
+            Next i
+            Next j
+            Form10.Check4.Enabled = True
+            End If
+        End If
     End If
-    Next k
+    If EVA = 0 Then
+        Dim k As Integer
+        For k = 2 To 0 Step -1
+        If layerPriority(0) = k Then
+        For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16 i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+        DoEvents
+        Next i
+        Next j
+        ElseIf layerPriority(1) = k Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+        DoEvents
+        Next i
+        Next j
+        ElseIf layerPriority(2) = k Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+        DoEvents
+        Next i
+        Next j
+        End If
+        Next k
+    End If
 End If
 If IsDeliver = False Then
 Form10.Check1.Enabled = True
@@ -956,6 +1049,8 @@ Dim TextMAPDataOffset As String, paletteOffset As String
 
 MapLength = Form10.Text8.Text
 MapHeight = Form10.Text9.Text
+Form10.Check4.Value = 0
+Form10.Check4.Enabled = False
 'If Val("&H" & MapLength) * Val("&H" & MapHeight) >= Val("&H" & "FFF") Then
 'Form9.Text1.Text = Form9.Text1.Text & "Map too large, stop initrial !" & vbCrLf
 'MsgBox "Map too large, please change the Length and Height value!!", vbInformation, "Info"
@@ -1126,12 +1221,49 @@ Select Case (Flag01 - 8) \ 4
 End Select
 Form10.Check4.Enabled = True
 Form10.Check4.Value = 1
-Form10.Picture1.Enabled = False
 End If
 
 Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
+If EVA <> 0 And (layerPriority(0) = 2 Or Layer0Height < Val("&H" & MapHeight) Or Layer0Width < Val("&H" & MapLength) Or ExistUnchangeableLayer0 = True) Then
+    MsgBox "Alpha blending failed !"
+    Form10.Check4.Value = 0
+    Form10.Check4.Enabled = False
+    EVA = 0
+End If
+If EVA <> 0 Then
+    If layerPriority(0) = 0 Then
+        If layerPriority(1) = 1 Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), L1_LB_000(i, j), L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        Next i
+        Next j
+        ElseIf layerPriority(2) = 1 Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), L2_LB_000(i, j), L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        Next i
+        Next j
+        End If
+    ElseIf layerPriority(0) = 1 Then
+        If layerPriority(1) = 0 Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), "0000", L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        DrawTile16 i, j, L1_LB_000(i, j), Form10.Picture1, , DotSize
+        Next i
+        Next j
+        ElseIf layerPriority(2) = 0 Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), "0000", L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        DrawTile16 i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize
+        Next i
+        Next j
+        End If
+    End If
+End If
 If EVA = 0 Then
-NoAlphaBlendingRender:
     Dim k As Integer
     For k = 2 To 0 Step -1
     If layerPriority(0) = k Then
@@ -1154,44 +1286,6 @@ NoAlphaBlendingRender:
     Next j
     End If
     Next k
-Else
-    If layerPriority(0) = 2 Or Layer0Height < Val("&H" & MapHeight) Or Layer0Width < Val("&H" & MapLength) Or ExistUnchangeableLayer0 = True Then
-    MsgBox "Layer 0 Priority != 0, Alpha blending failed !"
-    Form10.Check4.Enabled = False
-    GoTo NoAlphaBlendingRender
-    End If
-    
-    If layerPriority(0) = 0 Then
-        If layerPriority(1) = 1 Then
-        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-        DrawTile16_Alpha i, j, L0_LB_000(i, j), L1_LB_000(i, j), L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
-        Next i
-        Next j
-        ElseIf layerPriority(2) = 1 Then
-        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-        DrawTile16_Alpha i, j, L0_LB_000(i, j), L2_LB_000(i, j), L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
-        Next i
-        Next j
-        End If
-    ElseIf layerPriority(0) = 1 Then
-        If layerPriority(1) = 0 Then
-        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-        DrawTile16_Alpha i, j, L0_LB_000(i, j), L2_LB_000(i, j), L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
-        DrawTile16 i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize
-        Next i
-        Next j
-        ElseIf layerPriority(2) = 0 Then
-        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-        DrawTile16_Alpha i, j, L0_LB_000(i, j), L1_LB_000(i, j), L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
-        DrawTile16 i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize
-        Next i
-        Next j
-        End If
-    End If
 End If
 
 Form10.Check1.Value = 1
@@ -1263,10 +1357,12 @@ Private Sub Command9_Click()
 Form10.Check1.Enabled = False
 Form10.Check2.Enabled = False
 Form10.Check3.Enabled = False
+Form10.Check4.Enabled = False
+Form10.Picture1.Cls
+Form10.Picture1.Enabled = False
 Form10.Command11.Enabled = False
 Form10.Command9.Enabled = False
 Form10.Command10.Enabled = False
-Form10.Picture1.Cls
 Dim i As Integer, j As Integer, result As Boolean
 If IsDeliver = True Then
     For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
@@ -1276,31 +1372,73 @@ If IsDeliver = True Then
     Next i
     Next j
 ElseIf WholeRoomChange = True Then
-    Dim k As Integer
-    For k = 2 To 0 Step -1
-    If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    result = DrawTile16(i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
-    ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    result = DrawTile16(i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
-    ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-    For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
-    For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-    result = DrawTile16(i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize)
-    DoEvents
-    Next i
-    Next j
+    If Form10.Check4.Value = 1 Then
+        If layerPriority(0) = 0 Then
+            If layerPriority(1) = 1 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DoEvents
+            Next i
+            Next j
+            ElseIf layerPriority(2) = 1 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DoEvents
+            Next i
+            Next j
+            End If
+            Form10.Check4.Enabled = True
+        ElseIf layerPriority(0) = 1 Then
+            If layerPriority(1) = 0 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+            DoEvents
+            Next i
+            Next j
+            Form10.Check4.Enabled = True
+            ElseIf layerPriority(2) = 0 Then
+            For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+            For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+            DoEvents
+            Next i
+            Next j
+            Form10.Check4.Enabled = True
+            End If
+        End If
     End If
-    Next k
+    If EVA = 0 Then
+        Dim k As Integer
+        For k = 2 To 0 Step -1
+        If layerPriority(0) = k Then
+        For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16 i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+        DoEvents
+        Next i
+        Next j
+        ElseIf layerPriority(1) = k Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+        DoEvents
+        Next i
+        Next j
+        ElseIf layerPriority(2) = k Then
+        For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
+        For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
+        DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
+        DoEvents
+        Next i
+        Next j
+        End If
+        Next k
+    End If
 End If
 
 Dim OutputString As String, kk As Integer
@@ -1578,6 +1716,8 @@ Private Sub Form_Unload(Cancel As Integer)
 IsDeliver = False
 WholeRoomChange = False
 
+EVA = 0
+
 Erase Tile16()
 Erase Tile88()
 Erase Palette256()
@@ -1614,8 +1754,7 @@ Form10.Shape1.Left = X - Xshift
 Form10.Shape1.Top = Y - Yshift
 End Sub
 
-Private Sub Picture1_Click()
-If Form10.Check4.Value = 1 Then Exit Sub
+Private Sub Picture1_Click()     'Nothing will happen after click the board without selete any model
 Dim i As Integer, j As Integer
 
 If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a new room is not support
@@ -1668,7 +1807,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         End If
         
         Dim k As Integer
-        
+    If EVA = 0 Then
         If LastLayerChange = 0 Then
         For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
         For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
@@ -1772,6 +1911,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         End If
 
         End If
+    End If
     End If
 Else
 IsClick = True
