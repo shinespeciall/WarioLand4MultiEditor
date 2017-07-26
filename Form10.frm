@@ -1807,7 +1807,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         End If
         
         Dim k As Integer
-    If EVA = 0 Then
+    If EVA = 0 Or Form10.Check4.Value = 0 Then
         If LastLayerChange = 0 Then
         For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
         For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
@@ -1911,11 +1911,164 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         End If
 
         End If
-    End If
-    End If
+    ElseIf EVA <> 0 And Form10.Check4.Value = 1 Then   ' The Code under this Line is disgusting and I haven't test them yet, so uncheck the checker Alpha and make change in case of glitches in graph and oly graph
+
+        If LastLayerChange = 0 Then
+        For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
+        For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(1) = 1 Then
+            DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
+            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize
+            DoEvents
+            L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(2) = 1 Then
+            DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
+            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize
+            DoEvents
+            L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(1) = 0 Then
+            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+            DrawTile16 MouseX + i, MouseY + j, L1_LB_000(MouseX + i, MouseY + j), Form10.Picture1, , DotSize
+            DoEvents
+            L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(2) = 0 Then
+            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), "0000", L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+            DrawTile16 MouseX + i, MouseY + j, L2_LB_000(MouseX + i, MouseY + j), Form10.Picture1, , DotSize
+            DoEvents
+            L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        Next i
+        Next j
+
+        If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" And NowTileMOD(1, 0) = "0000" And NowTileMOD(0, 1) = "0000" And NowTileMOD(1, 1) = "0000" Then
+            DrawTile16 MouseX, MouseY, "0000", Form10.Picture1, True, DotSize
+            For k = 2 To 1 Step -1
+            If layerPriority(1) = k And Form10.Check2.Value = 1 Then
+            result = DrawTile16(MouseX, MouseY, L1_LB_000(MouseX + Xshift, MouseY + Yshift), Form10.Picture1, , DotSize)
+            ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
+            result = DrawTile16(MouseX, MouseY, L2_LB_000(MouseX + Xshift, MouseY + Yshift), Form10.Picture1, , DotSize)
+            End If
+            Next k
+        L0_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)      '"0000"
+        End If
+
+        ElseIf LastLayerChange = 1 Then
+        For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
+        For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(1) = 1 Then
+            DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize
+            DoEvents
+            L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(2) = 1 Then
+            DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), Form10.Picture1, EVA, DotSize
+            DoEvents
+            L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(1) = 0 Then
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+            DrawTile16 MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize
+            DoEvents
+            L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(2) = 0 Then
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", NowTileMOD(i, j), Form10.Picture1, EVA, DotSize, True
+            DrawTile16 MouseX + i, MouseY + j, L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, , DotSize
+            DoEvents
+            L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        Next i
+        Next j
+
+        If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" And NowTileMOD(1, 0) = "0000" And NowTileMOD(0, 1) = "0000" And NowTileMOD(1, 1) = "0000" Then
+            If layerPriority(0) = 0 Then
+                DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize
+                DoEvents
+            End If
+            If layerPriority(0) = 1 And layerPriority(1) = 0 Then
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+                DoEvents
+            End If
+            If layerPriority(0) = 1 And layerPriority(2) = 0 Then
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", "0000", Form10.Picture1, EVA, DotSize, True
+                DrawTile16 MouseX + i, MouseY + j, L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, , DotSize
+                DoEvents
+            End If
+            Form10.Command6.Enabled = True
+            L1_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)      '"0000"
+        End If
+
+        ElseIf LastLayerChange = 2 Then
+        For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
+        For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(1) = 1 Then
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), Form10.Picture1, EVA, DotSize, True
+            DoEvents
+            L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(2) = 1 Then
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+            DoEvents
+            L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(1) = 0 Then
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", NowTileMOD(i, j), Form10.Picture1, EVA, DotSize, True
+            DrawTile16 MouseX + i, MouseY + j, L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, , DotSize
+            DoEvents
+            L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(2) = 0 Then
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j), Form10.Picture1, EVA, DotSize, True
+            DrawTile16 MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize
+            DoEvents
+            L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
+            Form10.Command6.Enabled = True
+        End If
+        Next i
+        Next j
+
+        If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" And NowTileMOD(1, 0) = "0000" And NowTileMOD(0, 1) = "0000" And NowTileMOD(1, 1) = "0000" Then
+            If layerPriority(0) = 0 Then
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+                DoEvents
+            End If
+            If layerPriority(0) = 1 And layerPriority(1) = 0 Then
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", "0000", Form10.Picture1, EVA, DotSize
+                DrawTile16 MouseX + i, MouseY + j, L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, True, DotSize
+                DoEvents
+            End If
+            If layerPriority(0) = 1 And layerPriority(2) = 0 Then
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+                DoEvents
+            End If
+            Form10.Command6.Enabled = True
+            L2_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)      '"0000"
+        End If
+
+        End If     'for last change layer
+
+    End If    'for If EVA = 0
+    End If    'for seperate WholeRoomChange and IsDeliver
 Else
 IsClick = True
-End If
+End If        'for judge IsMakingCameraRec
 End Sub
 
 Private Sub Picture2_Click()
