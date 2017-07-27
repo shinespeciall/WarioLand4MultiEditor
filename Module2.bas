@@ -35,6 +35,7 @@ Public Layer0Width As Integer
 Public DotSize As Integer
 Public MODforSave() As String
 Public EVA As Integer
+Public EVB As Integer
 
 Public Function RGB555ToRGB888(ByVal RGB555 As String) As Long
 If Len(RGB555) <> 4 Then
@@ -306,23 +307,24 @@ Public Function Min(a As Single, b As Single) As Single
 If a <= b Then Min = a Else Min = b
 End Function
 
-Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer) As Long    'Some glitches have been found and haven't been fix yet
+Public Function Max(a As Single, b As Single) As Single
+If a <= b Then Max = b Else Max = a
+End Function
+
+Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer, RenderEVB As Integer) As Long    'Some glitches have been found and haven't been fix yet
 Dim rRed As Long, rGreen As Long, rBlue As Long         'the order in VB6 is &BBGGRR
-If BottomColor = 0 Then
-GetAlphaBlendColor = TopColor
+If TopColor = 0 Then
+GetAlphaBlendColor = BottomColor
 Exit Function
 End If
-rRed = Min(((TopColor And CLng("&HFF")) * RenderEVA) \ 16 + (BottomColor And CLng("&HFF")), 255)
-'rRed = Min(((TopColor And CLng("&HFF")) * (16 - RenderEVA)) \ 16 + (BottomColor And CLng("&HFF")), 255)
-rGreen = Min((((TopColor And CLng("&HFF00")) / 256) * RenderEVA) \ 16 + ((BottomColor And CLng("&HFF00")) / 256), 255)
-'rGreen = Min((((TopColor And CLng("&HFF00")) / 256) * (16 - RenderEVA)) \ 16 + ((BottomColor And CLng("&HFF00")) / 256), 255)
-rBlue = Min((((TopColor And CLng("&HFF0000")) / 65536) * RenderEVA) \ 16 + ((BottomColor And CLng("&HFF0000")) / 65536), 255)
-'rBlue = Min((((TopColor And CLng("&HFF0000")) / 65536) * (16 - RenderEVA)) \ 16 + ((BottomColor And CLng("&HFF0000")) / 65536), 255)
+rRed = Max(Min(((TopColor And CLng("&HFF")) * RenderEVA) \ 16 + ((BottomColor And CLng("&HFF")) * RenderEVB) \ 16, 255), 0)
+rGreen = Max(Min((((TopColor And CLng("&HFF00")) / 256) * RenderEVA) \ 16 + (((BottomColor And CLng("&HFF00")) / 256) * RenderEVB) \ 16, 255), 0)
+rBlue = Max(Min((((TopColor And CLng("&HFF0000")) / 65536) * RenderEVA) \ 16 + (((BottomColor And CLng("&HFF0000")) / 65536) * RenderEVB) \ 16, 255), 0)
 GetAlphaBlendColor = rBlue * 65536 + rGreen * 256 + rRed
 End Function
 
-Public Function DrawTile16_Alpha(ByVal lenpos As Long, ByVal heipos As Long, ByVal TopTileWord As String, ByVal MiddleTileWord As String, ByVal BottomTileWord As String, ByVal picbox As PictureBox, ByVal EVALng As Integer, ByVal SizeOfDot As Integer, Optional Cover As Boolean) As Boolean
-On Error Resume Next    'Some glitches have been found and haven't been fix yet
+Public Function DrawTile16_Alpha(ByVal lenpos As Long, ByVal heipos As Long, ByVal TopTileWord As String, ByVal MiddleTileWord As String, ByVal BottomTileWord As String, ByVal picbox As PictureBox, ByVal EVALng As Integer, ByVal EVBLng As Integer, ByVal SizeOfDot As Integer, Optional Cover As Boolean) As Boolean
+'Some glitches have been found and haven't been fix yet
 If SizeOfDot < 1 Then
 DrawTile16_Alpha = False
 Exit Function
@@ -435,7 +437,7 @@ End If
 If RealBottomColor = Palette256(0, kB) Then RealBottomColor = 0
 RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
 If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
-RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
+RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng, EVBLng)
 picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
 Next j
 Next i
@@ -542,7 +544,7 @@ End If
 If RealBottomColor = Palette256(0, kB) Then RealBottomColor = 0
 RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
 If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
-RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
+RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng, EVBLng)
 picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
 Next j
 Next i
@@ -649,7 +651,7 @@ End If
 If RealBottomColor = Palette256(0, kB) Then RealBottomColor = 0
 RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
 If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
-RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
+RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng, EVBLng)
 picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
 Next j
 Next i
@@ -756,7 +758,7 @@ End If
 If RealBottomColor = Palette256(0, kB) Then RealBottomColor = 0
 RealTopColor = Palette256(Val("&H" & "0" & Tile8_T(j, i)), kT)
 If RealTopColor = Palette256(0, kT) Then RealTopColor = 0
-RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng)
+RealBottomColor = GetAlphaBlendColor(RealTopColor, RealBottomColor, EVALng, EVBLng)
 picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), RealBottomColor, BF
 Next j
 Next i

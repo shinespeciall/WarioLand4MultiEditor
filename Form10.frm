@@ -529,14 +529,14 @@ ElseIf WholeRoomChange = True Then
             If layerPriority(1) = 1 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             Next i
             Next j
             ElseIf layerPriority(2) = 1 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             Next i
             Next j
@@ -546,7 +546,7 @@ ElseIf WholeRoomChange = True Then
             If layerPriority(1) = 0 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
             DoEvents
             Next i
@@ -555,7 +555,7 @@ ElseIf WholeRoomChange = True Then
             ElseIf layerPriority(2) = 0 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
             DoEvents
             Next i
@@ -563,8 +563,10 @@ ElseIf WholeRoomChange = True Then
             Form10.Check4.Enabled = True
             End If
         End If
+        Form10.Caption = "Visual MAP Editor(Beta)   Open Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
     End If
     If EVA = 0 Or Form10.Check4.Value = 0 Then
+        If EVA <> 0 And Form10.Check4.Value = 0 Then Form10.Caption = "Visual MAP Editor(Beta)   Stop Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
         Dim k As Integer
         For k = 2 To 0 Step -1
         If layerPriority(0) = k Then
@@ -634,14 +636,14 @@ ElseIf WholeRoomChange = True Then
             If layerPriority(1) = 1 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             Next i
             Next j
             ElseIf layerPriority(2) = 1 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             Next i
             Next j
@@ -651,7 +653,7 @@ ElseIf WholeRoomChange = True Then
             If layerPriority(1) = 0 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
             DoEvents
             Next i
@@ -660,7 +662,7 @@ ElseIf WholeRoomChange = True Then
             ElseIf layerPriority(2) = 0 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
             DoEvents
             Next i
@@ -668,8 +670,10 @@ ElseIf WholeRoomChange = True Then
             Form10.Check4.Enabled = True
             End If
         End If
+        Form10.Caption = "Visual MAP Editor(Beta)   Open Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
     End If
     If EVA = 0 Or Form10.Check4.Value = 0 Then
+        If EVA <> 0 And Form10.Check4.Value = 0 Then Form10.Caption = "Visual MAP Editor(Beta)   Stop Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
         Dim k As Integer
         For k = 2 To 0 Step -1
         If layerPriority(0) = k Then
@@ -1207,20 +1211,24 @@ End If
 'Set EVA for Alpha Blending
 If Flag01 > 7 Then
 Select Case (Flag01 - 8) \ 4
-    Case 0: EVA = 7
-    Case 1: EVA = 10
-    Case 2: EVA = 13
-    Case 3: EVA = 16
-    Case 4: EVA = 0
-    Case 5: EVA = 3
-    Case 6: EVA = 6
-    Case 7: EVA = 9
-    Case 8: EVA = 11
-    Case 9: EVA = 13
-    Case 10: EVA = 16
+    Case 0: EVA = 7: EVB = 16
+    Case 1: EVA = 10: EVB = 16
+    Case 2: EVA = 13: EVB = 16
+    Case 3: EVA = 16: EVB = 16
+    '------------------------------------After tracing on the assembly code I remake the following code, althougth there are still some assumption
+    Case 4: EVA = 16: EVB = 0
+    Case 5: EVA = 13: EVB = 3
+    Case 6: EVA = 10: EVB = 6
+    Case 7: EVA = 7: EVB = 9
+    Case 8: EVA = 5: EVB = 11
+    Case 9: EVA = 3: EVB = 13          'trace once in this condition and exclude a lot of varients
+    Case 10: EVA = 0: EVB = 16
+    Case Else: EVA = 0: EVB = 16         'I don't know
+    '-----------------------------------assumption end here
 End Select
 Form10.Check4.Enabled = True
 Form10.Check4.Value = 1
+Form10.Caption = "Visual MAP Editor(Beta)   Open Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
 End If
 
 Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
@@ -1235,13 +1243,13 @@ If EVA <> 0 Then
         If layerPriority(1) = 1 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-        DrawTile16_Alpha i, j, L0_LB_000(i, j), L1_LB_000(i, j), L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), L1_LB_000(i, j), L2_LB_000(i, j), Form10.Picture1, EVA, EVB, DotSize
         Next i
         Next j
         ElseIf layerPriority(2) = 1 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-        DrawTile16_Alpha i, j, L0_LB_000(i, j), L2_LB_000(i, j), L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), L2_LB_000(i, j), L1_LB_000(i, j), Form10.Picture1, EVA, EVB, DotSize
         Next i
         Next j
         End If
@@ -1249,14 +1257,14 @@ If EVA <> 0 Then
         If layerPriority(1) = 0 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-        DrawTile16_Alpha i, j, L0_LB_000(i, j), "0000", L2_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), "0000", L2_LB_000(i, j), Form10.Picture1, EVA, EVB, DotSize
         DrawTile16 i, j, L1_LB_000(i, j), Form10.Picture1, , DotSize
         Next i
         Next j
         ElseIf layerPriority(2) = 0 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-        DrawTile16_Alpha i, j, L0_LB_000(i, j), "0000", L1_LB_000(i, j), Form10.Picture1, EVA, DotSize
+        DrawTile16_Alpha i, j, L0_LB_000(i, j), "0000", L1_LB_000(i, j), Form10.Picture1, EVA, EVB, DotSize
         DrawTile16 i, j, L2_LB_000(i, j), Form10.Picture1, , DotSize
         Next i
         Next j
@@ -1377,14 +1385,14 @@ ElseIf WholeRoomChange = True Then
             If layerPriority(1) = 1 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             Next i
             Next j
             ElseIf layerPriority(2) = 1 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), L2_LB_000(i + Xshift, j + Yshift), L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             Next i
             Next j
@@ -1394,7 +1402,7 @@ ElseIf WholeRoomChange = True Then
             If layerPriority(1) = 0 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
             DoEvents
             Next i
@@ -1403,7 +1411,7 @@ ElseIf WholeRoomChange = True Then
             ElseIf layerPriority(2) = 0 Then
             For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
             For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
-            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha i, j, L0_LB_000(i + Xshift, j + Yshift), "0000", L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
             DoEvents
             Next i
@@ -1411,8 +1419,10 @@ ElseIf WholeRoomChange = True Then
             Form10.Check4.Enabled = True
             End If
         End If
+        Form10.Caption = "Visual MAP Editor(Beta)   Open Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
     End If
     If EVA = 0 Or Form10.Check4.Value = 0 Then
+        If EVA <> 0 And Form10.Check4.Value = 0 Then Form10.Caption = "Visual MAP Editor(Beta)   Stop Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
         Dim k As Integer
         For k = 2 To 0 Step -1
         If layerPriority(0) = k Then
@@ -1717,6 +1727,7 @@ IsDeliver = False
 WholeRoomChange = False
 
 EVA = 0
+EVB = 0
 
 Erase Tile16()
 Erase Tile88()
@@ -1918,27 +1929,27 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(1) = 1 Then
             DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
-            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
             Form10.Command6.Enabled = True
         End If
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(2) = 1 Then
             DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
-            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
             Form10.Command6.Enabled = True
         End If
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(1) = 0 Then
-            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize, True
             DrawTile16 MouseX + i, MouseY + j, L1_LB_000(MouseX + i, MouseY + j), Form10.Picture1, , DotSize
             DoEvents
             L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
             Form10.Command6.Enabled = True
         End If
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(2) = 0 Then
-            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), "0000", L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+            DrawTile16_Alpha MouseX + i, MouseY + j, NowTileMOD(i, j), "0000", L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize, True
             DrawTile16 MouseX + i, MouseY + j, L2_LB_000(MouseX + i, MouseY + j), Form10.Picture1, , DotSize
             DoEvents
             L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
@@ -1964,27 +1975,27 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(1) = 1 Then
             DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
-            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
             Form10.Command6.Enabled = True
         End If
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(2) = 1 Then
             DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
-            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), Form10.Picture1, EVA, DotSize
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), Form10.Picture1, EVA, EVB, DotSize
             DoEvents
             L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
             Form10.Command6.Enabled = True
         End If
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(1) = 0 Then
-            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize, True
             DrawTile16 MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize
             DoEvents
             L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
             Form10.Command6.Enabled = True
         End If
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(2) = 0 Then
-            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", NowTileMOD(i, j), Form10.Picture1, EVA, DotSize, True
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", NowTileMOD(i, j), Form10.Picture1, EVA, EVB, DotSize, True
             DrawTile16 MouseX + i, MouseY + j, L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, , DotSize
             DoEvents
             L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
@@ -1996,15 +2007,15 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" And NowTileMOD(1, 0) = "0000" And NowTileMOD(0, 1) = "0000" And NowTileMOD(1, 1) = "0000" Then
             If layerPriority(0) = 0 Then
                 DrawTile16 MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize
-                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize
                 DoEvents
             End If
             If layerPriority(0) = 1 And layerPriority(1) = 0 Then
-                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize, True
                 DoEvents
             End If
             If layerPriority(0) = 1 And layerPriority(2) = 0 Then
-                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", "0000", Form10.Picture1, EVA, DotSize, True
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", "0000", Form10.Picture1, EVA, EVB, DotSize, True
                 DrawTile16 MouseX + i, MouseY + j, L2_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, , DotSize
                 DoEvents
             End If
@@ -2016,26 +2027,26 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
         For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(1) = 1 Then
-            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), Form10.Picture1, EVA, DotSize, True
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), Form10.Picture1, EVA, EVB, DotSize, True
             DoEvents
             L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
             Form10.Command6.Enabled = True
         End If
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(2) = 1 Then
-            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), NowTileMOD(i, j), L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize, True
             DoEvents
             L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
             Form10.Command6.Enabled = True
         End If
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(1) = 0 Then
-            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", NowTileMOD(i, j), Form10.Picture1, EVA, DotSize, True
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", NowTileMOD(i, j), Form10.Picture1, EVA, EVB, DotSize, True
             DrawTile16 MouseX + i, MouseY + j, L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, , DotSize
             DoEvents
             L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
             Form10.Command6.Enabled = True
         End If
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 1 And layerPriority(2) = 0 Then
-            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j), Form10.Picture1, EVA, DotSize, True
+            DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j), Form10.Picture1, EVA, EVB, DotSize, True
             DrawTile16 MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize
             DoEvents
             L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
@@ -2046,16 +2057,16 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
 
         If (UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) = 1) And (UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) = 1) And NowTileMOD(0, 0) = "0000" And NowTileMOD(1, 0) = "0000" And NowTileMOD(0, 1) = "0000" And NowTileMOD(1, 1) = "0000" Then
             If layerPriority(0) = 0 Then
-                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize, True
                 DoEvents
             End If
             If layerPriority(0) = 1 And layerPriority(1) = 0 Then
-                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", "0000", Form10.Picture1, EVA, DotSize
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", "0000", Form10.Picture1, EVA, EVB, DotSize
                 DrawTile16 MouseX + i, MouseY + j, L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, True, DotSize
                 DoEvents
             End If
             If layerPriority(0) = 1 And layerPriority(2) = 0 Then
-                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, DotSize, True
+                DrawTile16_Alpha MouseX + i, MouseY + j, L0_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), "0000", L1_LB_000(MouseX + i + Xshift, MouseY + j + Yshift), Form10.Picture1, EVA, EVB, DotSize, True
                 DoEvents
             End If
             Form10.Command6.Enabled = True
