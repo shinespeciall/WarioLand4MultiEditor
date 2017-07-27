@@ -564,7 +564,7 @@ ElseIf WholeRoomChange = True Then
             End If
         End If
     End If
-    If EVA = 0 Then
+    If EVA = 0 Or Form10.Check4.Value = 0 Then
         Dim k As Integer
         For k = 2 To 0 Step -1
         If layerPriority(0) = k Then
@@ -669,7 +669,7 @@ ElseIf WholeRoomChange = True Then
             End If
         End If
     End If
-    If EVA = 0 Then
+    If EVA = 0 Or Form10.Check4.Value = 0 Then
         Dim k As Integer
         For k = 2 To 0 Step -1
         If layerPriority(0) = k Then
@@ -1412,7 +1412,7 @@ ElseIf WholeRoomChange = True Then
             End If
         End If
     End If
-    If EVA = 0 Then
+    If EVA = 0 Or Form10.Check4.Value = 0 Then
         Dim k As Integer
         For k = 2 To 0 Step -1
         If layerPriority(0) = k Then

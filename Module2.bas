@@ -306,20 +306,23 @@ Public Function Min(a As Single, b As Single) As Single
 If a <= b Then Min = a Else Min = b
 End Function
 
-Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer) As Long
+Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer) As Long    'Some glitches have been found and haven't been fix yet
 Dim rRed As Long, rGreen As Long, rBlue As Long         'the order in VB6 is &BBGGRR
 If BottomColor = 0 Then
 GetAlphaBlendColor = TopColor
 Exit Function
 End If
-rRed = Min(((TopColor And CLng("&HFF")) * (16 - RenderEVA)) \ 16 + (BottomColor And CLng("&HFF")), 255)
-rGreen = Min((((TopColor And CLng("&HFF00")) / 256) * (16 - RenderEVA)) \ 16 + ((BottomColor And CLng("&HFF00")) / 256), 255)
-rBlue = Min((((TopColor And CLng("&HFF0000")) / 65536) * (16 - RenderEVA)) \ 16 + ((BottomColor And CLng("&HFF0000")) / 65536), 255)
+rRed = Min(((TopColor And CLng("&HFF")) * RenderEVA) \ 16 + (BottomColor And CLng("&HFF")), 255)
+'rRed = Min(((TopColor And CLng("&HFF")) * (16 - RenderEVA)) \ 16 + (BottomColor And CLng("&HFF")), 255)
+rGreen = Min((((TopColor And CLng("&HFF00")) / 256) * RenderEVA) \ 16 + ((BottomColor And CLng("&HFF00")) / 256), 255)
+'rGreen = Min((((TopColor And CLng("&HFF00")) / 256) * (16 - RenderEVA)) \ 16 + ((BottomColor And CLng("&HFF00")) / 256), 255)
+rBlue = Min((((TopColor And CLng("&HFF0000")) / 65536) * RenderEVA) \ 16 + ((BottomColor And CLng("&HFF0000")) / 65536), 255)
+'rBlue = Min((((TopColor And CLng("&HFF0000")) / 65536) * (16 - RenderEVA)) \ 16 + ((BottomColor And CLng("&HFF0000")) / 65536), 255)
 GetAlphaBlendColor = rBlue * 65536 + rGreen * 256 + rRed
 End Function
 
 Public Function DrawTile16_Alpha(ByVal lenpos As Long, ByVal heipos As Long, ByVal TopTileWord As String, ByVal MiddleTileWord As String, ByVal BottomTileWord As String, ByVal picbox As PictureBox, ByVal EVALng As Integer, ByVal SizeOfDot As Integer, Optional Cover As Boolean) As Boolean
-On Error Resume Next
+On Error Resume Next    'Some glitches have been found and haven't been fix yet
 If SizeOfDot < 1 Then
 DrawTile16_Alpha = False
 Exit Function
