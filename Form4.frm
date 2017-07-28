@@ -356,20 +356,21 @@ DoEvents
 Dim Poffset As String
 Poffset = Form4.List5.List(Val("&H" & LevelRoomIndex) - 1)
 If Poffset = "601854" Then
-ExistUnchangeableLayer0 = True
-PostlayerCompDataLength(0) = 0
+    ExistUnchangeableLayer0 = True
+    PostlayerCompDataLength(0) = 0
 ElseIf Poffset <> "3F2263" Then
-Poffset = DecompressRLE(Poffset, True)
-ReDim L0_LB_000(layerWidth, layerHeight)
-ReDim L0_LB_001(layerWidth, layerHeight)
-PostlayerCompDataLength(0) = DataByteNumber
-For j = 0 To layerHeight - 1
-For i = 0 To layerWidth - 1
-L0_LB_000(i, j) = TextMap(i, j)
-Next i
-Next j
-Layer0Height = layerHeight
-Layer0Width = layerWidth
+    Poffset = DecompressRLE(Poffset, True)
+    ReDim L0_LB_000(layerWidth, layerHeight)
+    ReDim L0_LB_001(layerWidth, layerHeight)
+    PostlayerCompDataLength(0) = DataByteNumber
+    For j = 0 To layerHeight - 1
+    For i = 0 To layerWidth - 1
+    L0_LB_000(i, j) = TextMap(i, j)
+    Next i
+    Next j
+    Layer0Height = layerHeight
+    Layer0Width = layerWidth
+    If Poffset = "5D4788" Then ExistUnchangeableLayer0 = True
 End If
 '--------------------------------Layer 1  which must be exist
 Poffset = Form4.List1.List(Val("&H" & LevelRoomIndex) - 1)

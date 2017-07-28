@@ -311,7 +311,7 @@ Public Function Max(a As Single, b As Single) As Single
 If a <= b Then Max = b Else Max = a
 End Function
 
-Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer, RenderEVB As Integer) As Long    'Some glitches have been found and haven't been fix yet
+Public Function GetAlphaBlendColor(ByVal TopColor As Long, BottomColor As Long, RenderEVA As Integer, RenderEVB As Integer) As Long
 Dim rRed As Long, rGreen As Long, rBlue As Long         'the order in VB6 is &BBGGRR
 If TopColor = 0 Then
 GetAlphaBlendColor = BottomColor

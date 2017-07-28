@@ -811,7 +811,7 @@ End If
 If WholeRoomChange = True Then
     '----------------------------------------Layer 0
     DonnotCompress = True
-    If IsLayer0Change = True Then
+    If IsLayer0Change = True And ExistUnchangeableLayer0 = False Then
     strtmp1 = ""
     compressData = Right("00" & Hex(Layer0Width), 2) & Right("00" & Hex(Layer0Height), 2) & "01"
     For j = 0 To Layer0Height - 1
@@ -1236,9 +1236,15 @@ Select Case (Flag01 - 8) \ 4
     Case Else: EVA = 0: EVB = 16         'I don't know
     '-----------------------------------assumption end here
 End Select
-Form10.Check4.Enabled = True
-Form10.Check4.Value = 1
-Form10.Caption = "Visual MAP Editor(Beta)   Open Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
+If ExistUnchangeableLayer0 = True Then
+EVA = 0
+EVB = 16
+End If
+If EVA <> 0 Then
+    Form10.Check4.Enabled = True
+    Form10.Check4.Value = 1
+    Form10.Caption = "Visual MAP Editor(Beta)   Open Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
+End If
 End If
 
 Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
@@ -1362,6 +1368,16 @@ Form10.Command6.Enabled = False
 End Sub
 
 Private Sub Command7_Click()
+If Val("&H" & Form10.Text6.Text) >= Xshift Then
+MsgBox "Number cannot be bigger than or equal to then the width of the MAP", vbCritical + vbOKOnly, "Info"
+Form10.Text6.Text = Hex(Xshift)
+Exit Sub
+End If
+If Val("&H" & Form10.Text7.Text) >= Yshift Then
+MsgBox "Number cannot be bigger than or equal to then the height of the MAP", vbCritical + vbOKOnly, "Info"
+Form10.Text7.Text = Hex(Yshift)
+Exit Sub
+End If
 Xshift = Val("&H" & Form10.Text6.Text)
 Yshift = Val("&H" & Form10.Text7.Text)
 Command11_Click
@@ -1802,7 +1818,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         L0_LB_000(MouseX + Xshift, MouseY + Yshift) = NowTileMOD(0, 0)
         End If
     ElseIf WholeRoomChange = True Then
-        If Form10.Check1.Value = 1 And layerPriority(0) < layerPriority(1) And layerPriority(0) < layerPriority(2) Then
+        If Form10.Check1.Value = 1 And layerPriority(0) < layerPriority(1) And layerPriority(0) < layerPriority(2) And ExistUnchangeableLayer0 = False Then
         For j = 0 To Layer0Height - 1
         For i = 0 To Layer0Width - 1
         L0_LB_001(i, j) = L0_LB_000(i, j)
@@ -1830,7 +1846,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         
         Dim k As Integer
     If EVA = 0 Or Form10.Check4.Value = 0 Then
-        If LastLayerChange = 0 Then
+        If LastLayerChange = 0 And ExistUnchangeableLayer0 = False Then
         For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
         For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
         If NowTileMOD(i, j) <> "0000" Then
@@ -1935,7 +1951,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         End If
     ElseIf EVA <> 0 And Form10.Check4.Value = 1 Then   ' The Code under this Line is disgusting and I haven't test them yet, so uncheck the checker Alpha and make change in case of glitches in graph and oly graph
 
-        If LastLayerChange = 0 Then
+        If LastLayerChange = 0 And ExistUnchangeableLayer0 = False Then
         For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
         For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1
         If NowTileMOD(i, j) <> "0000" And layerPriority(0) = 0 And layerPriority(1) = 1 Then
