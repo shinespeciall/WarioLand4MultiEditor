@@ -433,21 +433,29 @@ Public IsLayer2Change As Boolean
 Private Sub Check1_Click()
 Form10.Command16.Enabled = False
 Form10.Picture1.Enabled = False
+If Form10.Check1.Value = 0 Then Form10.Check4.Value = 0
 End Sub
 
 Private Sub Check2_Click()
 Form10.Command16.Enabled = False
 Form10.Picture1.Enabled = False
+If Form10.Check2.Value = 0 Then Form10.Check4.Value = 0
 End Sub
 
 Private Sub Check3_Click()
 Form10.Command16.Enabled = False
 Form10.Picture1.Enabled = False
+If Form10.Check3.Value = 0 Then Form10.Check4.Value = 0
 End Sub
 
 Private Sub Check4_Click()
 Form10.Command16.Enabled = False
 Form10.Picture1.Enabled = False
+If Form10.Check4.Value = 1 Then
+Form10.Check1.Value = 1
+Form10.Check2.Value = 1
+Form10.Check3.Value = 1
+End If
 End Sub
 
 Private Sub Combo1_Click()
@@ -569,21 +577,21 @@ ElseIf WholeRoomChange = True Then
         If EVA <> 0 And Form10.Check4.Value = 0 Then Form10.Caption = "Visual MAP Editor(Beta)   Stop Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
         Dim k As Integer
         For k = 2 To 0 Step -1
-        If layerPriority(0) = k Then
+        If layerPriority(0) = k And Form10.Check1.Value = 1 Then
         For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
         DrawTile16 i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
         DoEvents
         Next i
         Next j
-        ElseIf layerPriority(1) = k Then
+        ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
         DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
         DoEvents
         Next i
         Next j
-        ElseIf layerPriority(2) = k Then
+        ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
         DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
@@ -592,6 +600,7 @@ ElseIf WholeRoomChange = True Then
         Next j
         End If
         Next k
+        If EVA <> 0 And Form10.Check4.Value = 0 Then Form10.Check4.Enabled = True
     End If
 End If
 For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
@@ -676,21 +685,21 @@ ElseIf WholeRoomChange = True Then
         If EVA <> 0 And Form10.Check4.Value = 0 Then Form10.Caption = "Visual MAP Editor(Beta)   Stop Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
         Dim k As Integer
         For k = 2 To 0 Step -1
-        If layerPriority(0) = k Then
+        If layerPriority(0) = k And Form10.Check1.Value = 1 Then
         For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
         DrawTile16 i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
         DoEvents
         Next i
         Next j
-        ElseIf layerPriority(1) = k Then
+        ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
         DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
         DoEvents
         Next i
         Next j
-        ElseIf layerPriority(2) = k Then
+        ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
         DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
@@ -699,6 +708,7 @@ ElseIf WholeRoomChange = True Then
         Next j
         End If
         Next k
+        If EVA <> 0 And Form10.Check4.Value = 0 Then Form10.Check4.Enabled = True
     End If
 End If
 If IsDeliver = False Then
@@ -1425,21 +1435,21 @@ ElseIf WholeRoomChange = True Then
         If EVA <> 0 And Form10.Check4.Value = 0 Then Form10.Caption = "Visual MAP Editor(Beta)   Stop Alpha Blending | EVA: " & CStr(EVA) & "  | EVB: " & CStr(EVB)
         Dim k As Integer
         For k = 2 To 0 Step -1
-        If layerPriority(0) = k Then
+        If layerPriority(0) = k And Form10.Check1.Value = 1 Then
         For j = 0 To Min(Layer0Height - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Layer0Width - 1 - Xshift, Form10.Picture1.Width \ DotSize)
         DrawTile16 i, j, L0_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
         DoEvents
         Next i
         Next j
-        ElseIf layerPriority(1) = k Then
+        ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
         DrawTile16 i, j, L1_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
         DoEvents
         Next i
         Next j
-        ElseIf layerPriority(2) = k Then
+        ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 Then
         For j = 0 To Min(Val("&H" & MapHeight) - 1 - Yshift, Form10.Picture1.Height \ DotSize)
         For i = 0 To Min(Val("&H" & MapLength) - 1 - Xshift, Form10.Picture1.Width \ DotSize)
         DrawTile16 i, j, L2_LB_000(i + Xshift, j + Yshift), Form10.Picture1, , DotSize
@@ -1448,6 +1458,7 @@ ElseIf WholeRoomChange = True Then
         Next j
         End If
         Next k
+        If EVA <> 0 And Form10.Check4.Value = 0 Then Form10.Check4.Enabled = True
     End If
 End If
 
