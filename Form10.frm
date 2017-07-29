@@ -334,7 +334,7 @@ Begin VB.Form Form10
          Width           =   495
       End
       Begin VB.Label Label3 
-         Caption         =   "(   ,   )"
+         Caption         =   "( 0 , 0 )"
          Height          =   255
          Left            =   2520
          TabIndex        =   28
@@ -1368,12 +1368,12 @@ Form10.Command6.Enabled = False
 End Sub
 
 Private Sub Command7_Click()
-If Val("&H" & Form10.Text6.Text) >= Xshift Then
+If Val("&H" & Form10.Text6.Text) >= Val("&H" & MapLength) Then
 MsgBox "Number cannot be bigger than or equal to then the width of the MAP", vbCritical + vbOKOnly, "Info"
 Form10.Text6.Text = Hex(Xshift)
 Exit Sub
 End If
-If Val("&H" & Form10.Text7.Text) >= Yshift Then
+If Val("&H" & Form10.Text7.Text) >= Val("&H" & MapHeight) Then
 MsgBox "Number cannot be bigger than or equal to then the height of the MAP", vbCritical + vbOKOnly, "Info"
 Form10.Text7.Text = Hex(Yshift)
 Exit Sub
@@ -2147,6 +2147,7 @@ End Sub
 Private Sub Picture2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 MouseX = X \ (24 * 16)
 MouseY = Y \ (24 * 16)
+Form10.Shape1.Visible = False
 End Sub
 
 Private Sub Timer1_Timer()
