@@ -259,7 +259,7 @@ Begin VB.Form Form10
          Width           =   1335
       End
       Begin VB.CommandButton Command7 
-         Caption         =   "Go"
+         Caption         =   "Reset"
          Height          =   495
          Left            =   2640
          TabIndex        =   21
@@ -1250,7 +1250,9 @@ End If
 
 Form9.Text1.Text = Form9.Text1.Text & "Rendering......" & vbCrLf
 If EVA <> 0 And (layerPriority(0) = 2 Or Layer0Height < Val("&H" & MapHeight) Or Layer0Width < Val("&H" & MapLength) Or ExistUnchangeableLayer0 = True) Then
-    MsgBox "Alpha blending failed !"
+    MsgBox "Set Alpha blending failed Or not needed !"
+    EVA = 0
+    EVB = 16
     Form10.Check4.Value = 0
     Form10.Check4.Enabled = False
     EVA = 0
@@ -1900,9 +1902,9 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
             If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
             result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize)
             ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize)
+            result = DrawTile16(MouseX + i, MouseY + j, L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j), Form10.Picture1, , DotSize)
             ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize)
+            result = DrawTile16(MouseX + i, MouseY + j, L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j), Form10.Picture1, , DotSize)
             End If
             Next k
             L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
@@ -1932,11 +1934,11 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
             result = DrawTile16(MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize)
             For k = 2 To 0 Step -1
             If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize)
+            result = DrawTile16(MouseX + i, MouseY + j, L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j), Form10.Picture1, , DotSize)
             ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
             result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize)
             ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize)
+            result = DrawTile16(MouseX + i, MouseY + j, L2_LB_000(MouseX + Xshift + i, MouseY + Yshift + j), Form10.Picture1, , DotSize)
             End If
             Next k
             L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j) = NowTileMOD(i, j)
@@ -1966,9 +1968,9 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
             result = DrawTile16(MouseX + i, MouseY + j, "0000", Form10.Picture1, True, DotSize)
             For k = 2 To 0 Step -1
             If layerPriority(0) = k And Form10.Check1.Value = 1 And (Layer0Height - 1 - Yshift) >= 0 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize)
+            result = DrawTile16(MouseX + i, MouseY + j, L0_LB_000(MouseX + Xshift + i, MouseY + Yshift + j), Form10.Picture1, , DotSize)
             ElseIf layerPriority(1) = k And Form10.Check2.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
-            result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize)
+            result = DrawTile16(MouseX + i, MouseY + j, L1_LB_000(MouseX + Xshift + i, MouseY + Yshift + j), Form10.Picture1, , DotSize)
             ElseIf layerPriority(2) = k And Form10.Check3.Value = 1 And (Val("&H" & MapHeight) - 1 - Yshift) >= 0 Then
             result = DrawTile16(MouseX + i, MouseY + j, NowTileMOD(i, j), Form10.Picture1, , DotSize)
             End If
