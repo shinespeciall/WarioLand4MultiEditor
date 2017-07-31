@@ -1,4 +1,4 @@
-#   MutiEditor for Wario Land 4 is being made with VB
+#   MultiEditor for Wario Land 4 is being made with VB
 ## PS: patch applications will be made with C++
 ## 
 ##     what it can do now:
