@@ -10,7 +10,7 @@ Public Function DecompressRLE(ByVal DataOffset As String, Optional returnDataLen
 Dim strdata As String, src As Long, DecompressMap() As String, NeedRearrange As Boolean
 src = 1
 strdata = ReadFileHex(gbafilepath, DataOffset, Hex(Val("&H" & DataOffset) + 5120))
-If Mid$(strdata, 1, 2) = "00" Then
+If Mid$(strdata, 1, 2) = "00" Then             'Althougth this is exclusive for Tile 8*8 Mode, but no problem for directly judging, 16*16-Mode-MAP will never have such small width or height
     ReDim TextMap(32, 32)
     ReDim DecompressMap(32 * 32)
     layerWidth = 32

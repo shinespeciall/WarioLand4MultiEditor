@@ -16,6 +16,7 @@ Begin VB.Form Form10
       Height          =   375
       Left            =   15000
       TabIndex        =   41
+      ToolTipText     =   "Choose only when you want to change layer 0 for blending"
       Top             =   1125
       Width           =   1095
    End
@@ -147,11 +148,11 @@ Begin VB.Form Form10
       Width           =   4125
    End
    Begin VB.CommandButton Command8 
-      Caption         =   "Clear"
-      Height          =   495
+      Caption         =   "Clear Layer"
+      Height          =   615
       Left            =   18480
       TabIndex        =   23
-      Top             =   1800
+      Top             =   1680
       Width           =   735
    End
    Begin VB.CommandButton Command6 
@@ -1384,7 +1385,51 @@ Command11_Click
 End Sub
 
 Private Sub Command8_Click()
-Form10.Picture1.Cls
+Me.Enabled = False
+Dim i As Integer, j As Integer, k As Integer
+If WholeRoomChange = True Then
+    i = InputBox("Input the Layer ID you want to clear", "Info", 0)
+    If i <> 0 Or i <> 1 Or i <> 2 Then
+    MsgBox "illegal ID !", vbExclamation, "Info"
+    Me.Enabled = True
+    Exit Sub
+    End If
+    If i = 0 Then
+        For j = 0 To Layer0Height - 1
+        For k = 0 To Layer0Width - 1
+        L0_LB_001(k, j) = L0_LB_000(k, j)
+        L0_LB_000(k, j) = "0000"
+        Next k
+        Next j
+        IsLayer0Change = True
+    ElseIf i = 1 Then
+        For j = 0 To Val("&H" & MapHeight) - 1
+        For k = 0 To Val("&H" & MapLength) - 1
+        L1_LB_001(k, j) = L1_LB_000(k, j)
+        L1_LB_000(k, j) = "0000"
+        Next k
+        Next j
+        IsLayer1Change = True
+    Else
+        For j = 0 To Val("&H" & MapHeight) - 1
+        For k = 0 To Val("&H" & MapLength) - 1
+        L2_LB_001(k, j) = L2_LB_000(k, j)
+        L2_LB_000(k, j) = "0000"
+        Next k
+        Next j
+        IsLayer2Change = True
+    End If
+Else
+    For j = 0 To Val("&H" & MapHeight) - 1
+    For k = 0 To Val("&H" & MapLength) - 1
+    L0_LB_001(k, j) = L0_LB_000(k, j)
+    L0_LB_000(k, j) = "0000"
+    Next k
+    Next j
+End If
+Command11_Click
+Me.Enabled = True
+Form10.Command6.Enabled = True
 End Sub
 
 Private Sub Command9_Click()

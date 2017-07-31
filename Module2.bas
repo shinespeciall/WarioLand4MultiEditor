@@ -137,6 +137,10 @@ End Function
 
 Public Function DrawTile16(ByVal lenpos As Long, ByVal heipos As Long, ByVal TileWord As String, ByVal picbox As PictureBox, Optional Cover As Boolean, Optional SizeOfDot As Integer) As Boolean
 On Error Resume Next
+If SizeOfDot < 2 Then
+DrawTile16 = False
+Exit Function
+End If
 'lenpos and heipos are position Index for Tile16
 Dim Wrd As String      '处理当前字段
 Dim Tile8() As String
@@ -303,11 +307,11 @@ Erase Tile8()
 DrawTile16 = True
 End Function
 
-Public Function Min(a As Single, b As Single) As Single
+Public Function Min(ByVal a As Single, ByVal b As Single) As Single
 If a <= b Then Min = a Else Min = b
 End Function
 
-Public Function Max(a As Single, b As Single) As Single
+Public Function Max(ByVal a As Single, ByVal b As Single) As Single
 If a <= b Then Max = b Else Max = a
 End Function
 
@@ -325,7 +329,7 @@ End Function
 
 Public Function DrawTile16_Alpha(ByVal lenpos As Long, ByVal heipos As Long, ByVal TopTileWord As String, ByVal MiddleTileWord As String, ByVal BottomTileWord As String, ByVal picbox As PictureBox, ByVal EVALng As Integer, ByVal EVBLng As Integer, ByVal SizeOfDot As Integer, Optional Cover As Boolean) As Boolean
 'Some glitches have been found and haven't been fix yet
-If SizeOfDot < 1 Then
+If SizeOfDot < 2 Then
 DrawTile16_Alpha = False
 Exit Function
 End If

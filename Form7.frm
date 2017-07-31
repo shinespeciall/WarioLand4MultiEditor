@@ -10,48 +10,55 @@ Begin VB.Form Form7
    ScaleHeight     =   5760
    ScaleMode       =   0  'User
    ScaleWidth      =   22830
-   Begin VB.ComboBox Combo1 
-      Height          =   300
-      ItemData        =   "Form7.frx":0000
+   Begin VB.Frame Frame1 
+      Caption         =   "Palette"
+      Height          =   1455
       Left            =   21000
-      List            =   "Form7.frx":0002
-      TabIndex        =   9
-      Text            =   "0"
-      Top             =   4680
+      TabIndex        =   7
+      Top             =   2520
       Width           =   1695
+      Begin VB.CommandButton Command5 
+         Caption         =   "Advanced change"
+         Height          =   495
+         Left            =   120
+         TabIndex        =   9
+         Top             =   720
+         Width           =   1455
+      End
+      Begin VB.ComboBox Combo1 
+         Height          =   300
+         Left            =   120
+         TabIndex        =   8
+         Text            =   "0"
+         Top             =   240
+         Width           =   1455
+      End
    End
    Begin VB.PictureBox Picture2 
       Height          =   375
       Left            =   21000
       ScaleHeight     =   315
       ScaleWidth      =   1635
-      TabIndex        =   7
-      Top             =   3600
-      Width           =   1695
-   End
-   Begin VB.CommandButton Command4 
-      Caption         =   "change color"
-      Height          =   495
-      Left            =   21000
       TabIndex        =   6
-      Top             =   3000
+      ToolTipText     =   "Click to change color"
+      Top             =   1920
       Width           =   1695
    End
    Begin VB.CommandButton Command3 
-      Caption         =   "Reshow"
-      Height          =   615
+      Caption         =   "Refresh"
+      Height          =   375
       Left            =   21000
       TabIndex        =   4
       ToolTipText     =   "If bitmap been erased by some reason use this to reshow"
-      Top             =   1560
+      Top             =   1320
       Width           =   1695
    End
    Begin VB.CommandButton Command2 
-      Caption         =   "Save"
-      Height          =   615
+      Caption         =   "Save changes"
+      Height          =   375
       Left            =   21000
       TabIndex        =   3
-      Top             =   2280
+      Top             =   4080
       Width           =   1695
    End
    Begin VB.PictureBox Picture1 
@@ -64,27 +71,21 @@ Begin VB.Form Form7
       Width           =   20775
    End
    Begin VB.TextBox Text1 
+      Enabled         =   0   'False
       Height          =   375
       Left            =   21000
       TabIndex        =   1
+      ToolTipText     =   "Not Support Color Now"
       Top             =   360
       Width           =   1695
    End
    Begin VB.CommandButton Command1 
       Caption         =   "Reset"
-      Height          =   615
+      Height          =   375
       Left            =   21000
       TabIndex        =   0
       Top             =   840
       Width           =   1695
-   End
-   Begin VB.Label Label2 
-      Caption         =   "Palette"
-      Height          =   375
-      Left            =   21120
-      TabIndex        =   8
-      Top             =   4200
-      Width           =   1575
    End
    Begin VB.Label Label1 
       Caption         =   "if you have offset"
@@ -114,6 +115,8 @@ paletteStr = ReadFileHex(gbafilepath, paletteStr, Hex(Val("&H" & paletteStr) + 3
 For i = 0 To 15
 Palette16Color(i) = RGB555ToRGB888(Mid$(paletteStr, 4 * i + 1, 4))
 Next i
+ColorHByte = "0"
+Form7.Picture2.BackColor = Palette16Color(0)
 Command3_Click
 End Sub
 
@@ -172,9 +175,11 @@ Next j
 Next k
 TileData = Right(TileData, Len(TileData) - 64 * 32)
 Next LineNum
+ColorHByte = "0"
+Form7.Picture2.BackColor = Palette16Color(0)
 Form7.Command2.Enabled = True
 Form7.Command3.Enabled = True
-Form7.Command4.Enabled = True
+Form7.Picture2.Enabled = True
 Form7.Picture1.Enabled = True
 Form7.Combo1.Enabled = True
 'Form7.Slider1.Enabled = True
@@ -202,7 +207,7 @@ TileData = Right(TileData, Len(TileData) - 64 * 32)
 Next LineNum
 Form7.Command2.Enabled = True
 Form7.Command3.Enabled = True
-Form7.Command4.Enabled = True
+Form7.Picture2.Enabled = True
 Form7.Picture1.Enabled = True
 End Sub
 
@@ -250,13 +255,12 @@ Next k
 Next LineNum
 End Sub
 
-Private Sub Command4_Click()
-ColorHByte = Right(InputBox("input a halfByte from 0 to F for choose one color, 0 is the background color which will be transparent", "Info", 1), 1)
-'Form7.Picture2.BackColor = QBColor(Val("&H" & ColorHByte))
-Form7.Picture2.BackColor = Palette16Color(Val("&H" & ColorHByte))
+Private Sub Command5_Click()
+If Form7.Combo1.Enabled = False Then Exit Sub
 End Sub
 
 Private Sub Form_Activate()
+Unload Form4
 Form7.Text1.Text = ""
 Form7.Text1.FontSize = 12
 ifMouseDowm = False
@@ -280,17 +284,17 @@ Form7.Combo1.AddItem "15"
 
 Form7.Command2.Enabled = False
 Form7.Command3.Enabled = False
-Form7.Command4.Enabled = False
+Form7.Picture2.Enabled = False
 Form7.Picture1.Enabled = False
 Form7.Combo1.Enabled = False
-Form7.Picture1.Move 0, 0, 20560, Form7.height - 640     'height: 640 per 2 line   Width: 20480
+Form7.Picture1.Move 0, 0, 20560, Form7.Height - 640     'height: 640 per 2 line   Width: 20480
 Form7.Move 0, 0, 23070, 5985
 Form7.Icon = LoadResPicture(101, vbResIcon)
 End Sub
 
 Private Sub Form_Resize()                 ' 80 twip(ç¾ ¶Áti£¬µÚ¶þÉù) per height and width
-If Form7.height < 1700 Then Exit Sub
-Form7.Picture1.Move 0, 0, 20560, Form7.height - 640     'height: 640 per 2 line   Width: 20480
+If Form7.Height < 1700 Then Exit Sub
+Form7.Picture1.Move 0, 0, 20560, Form7.Height - 640     'height: 640 per 2 line   Width: 20480
 ColorHByte = "1"
 If TileLength <> "" Then Form7.Picture2.BackColor = Palette16Color(Val("&H" & ColorHByte))
 End Sub
@@ -320,6 +324,12 @@ End Sub
 
 Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 ifMouseDowm = False
+End Sub
+
+Private Sub Picture2_Click() 'UNFINISHED
+ColorHByte = Right(InputBox("input a halfByte from 0 to F for choose one color, 0 is the background color which will be transparent", "Info", 1), 1)
+'Form7.Picture2.BackColor = QBColor(Val("&H" & ColorHByte))
+Form7.Picture2.BackColor = Palette16Color(Val("&H" & ColorHByte))
 End Sub
 
 Private Sub Text1_Keypress(KeyCode As Integer)
