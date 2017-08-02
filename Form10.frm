@@ -1098,7 +1098,7 @@ End If
 Dim Tilesets As String
 Dim StrTemp As String, str1 As String, str2 As String, str3 As String, str4 As String
 
-Form9.Text1.Text = Form9.Text1.Text & "impoting pointers......" & vbCrLf
+Form9.Text1.Text = Form9.Text1.Text & "importing pointers......" & vbCrLf
 Tilesets = Mid$(Form10.Combo2.Text, 1, 2)
 StrTemp = ReadFileHex(gbafilepath, Hex(Val("&H" & Tilesets) * 9 * 4 + Val("&H" & "3F2298")), Hex(Val("&H" & Tilesets) * 9 * 4 + 35 + Val("&H" & "3F2298")))
 

@@ -177,23 +177,23 @@ Next j
 End Sub
 
 Private Sub Command1_Click()
-Dim str As String, strtmp As Long
-strtmp = 0
-Form11.Text1.Text = ""
-str = DecompressRLE(Form11.Text2.Text)
-If str = "" Then Exit Sub
-Dim i As Integer, j As Integer
-For j = 0 To layerHeight - 1
-For i = 0 To layerWidth - 1
-Form11.Text1.Text = Form11.Text1.Text & " " & TextMap(i, j)
-strtmp = Max(strtmp, CLng("&H" & TextMap(i, j)))
-Next i
-Form11.Text1.Text = Form11.Text1.Text & vbCrLf
-Next j
-layerHeight = 0
-layerWidth = 0
-Erase TextMap()
-Debug.Print Hex(strtmp)
+'Dim str As String, strtmp As Long
+'strtmp = 0
+'Form11.Text1.Text = ""
+'str = DecompressRLE(Form11.Text2.Text)
+'If str = "" Then Exit Sub
+'Dim i As Integer, j As Integer
+'For j = 0 To layerHeight - 1
+'For i = 0 To layerWidth - 1
+'Form11.Text1.Text = Form11.Text1.Text & " " & TextMap(i, j)
+'strtmp = Max(strtmp, CLng("&H" & TextMap(i, j)))
+'Next i
+'Form11.Text1.Text = Form11.Text1.Text & vbCrLf
+'Next j
+'layerHeight = 0
+'layerWidth = 0
+'Erase TextMap()
+'Debug.Print Hex(strtmp)
 End Sub
 
 Private Sub Form_Load()

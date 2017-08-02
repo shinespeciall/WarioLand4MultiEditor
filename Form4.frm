@@ -459,6 +459,44 @@ TenthByte_scrollBG = Mid$(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List1
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
 Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
 Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2) & vbCrLf
+'++++++++++++++++++++++++++++++++++++++++++++Save BG MAP Pointer
+Dim BGMAPpath As String
+BGMAPpath = App.Path & "\MOD\" & FirstByte & " BGMAPDATA.txt"
+If Dir(BGMAPpath) = "" Then
+    Open BGMAPpath For Append As #4
+    Print #4, "Level " & Right("00" & Hex(Form4.Combo1.ListIndex), 2) & " Room " & Right("00" & Hex(Form4.List1.ListIndex), 2) & " BG"
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2);
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2);
+    Close #4
+Else
+    Dim s As Integer, t As Integer, BGMAP() As String, pStrtmp As String
+    s = 0
+    ReDim BGMAP(1, 20)
+    Open BGMAPpath For Input As #4
+    Do While Not EOF(4)
+        Line Input #4, BGMAP(0, s)
+        Line Input #4, BGMAP(1, s)
+    s = s + 1
+    Loop
+    Close #4
+    pStrtmp = Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2)
+    For t = 0 To s - 1
+    If Mid$(BGMAP(1, t), 3, 8) = pStrtmp Then
+    s = s + 1
+    Exit For
+    End If
+    Next t
+    Open BGMAPpath For Append As #4
+    Do
+    If t < s - 1 Then Exit Do
+    Print #4, "Level " & Right("00" & Hex(Form4.Combo1.ListIndex), 2) & " Room " & Right("00" & Hex(Form4.List1.ListIndex), 2) & " BG"
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2);
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2);
+    Exit Do
+    Loop
+    Close #4
+    Erase BGMAP()
+End If
 '********************************************读文件过程
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
@@ -602,6 +640,44 @@ TenthByte_scrollBG = Mid$(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List3
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
 Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List3.ListIndex * 44 * 2, 2) & vbCrLf
 Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List3.ListIndex * 44 * 2, 2) & vbCrLf
+'++++++++++++++++++++++++++++++++++++++++++++Save BG MAP Pointer
+Dim BGMAPpath As String
+BGMAPpath = App.Path & "\MOD\" & FirstByte & " BGMAPDATA.txt"
+If Dir(BGMAPpath) = "" Then
+    Open BGMAPpath For Append As #4
+    Print #4, "Level " & Right("00" & Hex(Form4.Combo1.ListIndex), 2) & " Room " & Right("00" & Hex(Form4.List3.ListIndex), 2) & " BG"
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List3.ListIndex * 44 * 2, 2);
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List3.ListIndex * 44 * 2, 2);
+    Close #4
+Else
+    Dim s As Integer, t As Integer, BGMAP() As String, pStrtmp As String
+    s = 0
+    ReDim BGMAP(1, 20)
+    Open BGMAPpath For Input As #4
+    Do While Not EOF(4)
+        Line Input #4, BGMAP(0, s)
+        Line Input #4, BGMAP(1, s)
+    s = s + 1
+    Loop
+    Close #4
+    pStrtmp = Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List3.ListIndex * 44 * 2, 2)
+    For t = 0 To s - 1
+    If Mid$(BGMAP(1, t), 3, 8) = pStrtmp Then
+    s = s + 1
+    Exit For
+    End If
+    Next t
+    Open BGMAPpath For Append As #4
+    Do
+    If t < s - 1 Then Exit Do
+    Print #4, "Level " & Right("00" & Hex(Form4.Combo1.ListIndex), 2) & " Room " & Right("00" & Hex(Form4.List3.ListIndex), 2) & " BG"
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List3.ListIndex * 44 * 2, 2);
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List3.ListIndex * 44 * 2, 2);
+    Exit Do
+    Loop
+    Close #4
+    Erase BGMAP()
+End If
 '********************************************读文件过程
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
@@ -745,6 +821,44 @@ TenthByte_scrollBG = Mid$(LevelAllRoomPointerandDataallHex, 1 + 50 + Form4.List5
 Form4.Text2.Text = Form4.Text2.Text & "TenthByte_scrollBG register (If value = 7 then scroll):" & TenthByte_scrollBG & vbCrLf
 Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping flag:" & Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List5.ListIndex * 44 * 2, 2) & vbCrLf
 Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List5.ListIndex * 44 * 2, 2) & vbCrLf
+'++++++++++++++++++++++++++++++++++++++++++++Save BG MAP Pointer
+Dim BGMAPpath As String
+BGMAPpath = App.Path & "\MOD\" & FirstByte & " BGMAPDATA.txt"
+If Dir(BGMAPpath) = "" Then
+    Open BGMAPpath For Append As #4
+    Print #4, "Level " & Right("00" & Hex(Form4.Combo1.ListIndex), 2) & " Room " & Right("00" & Hex(Form4.List5.ListIndex), 2) & " BG"
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List5.ListIndex * 44 * 2, 2);
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List5.ListIndex * 44 * 2, 2);
+    Close #4
+Else
+    Dim s As Integer, t As Integer, BGMAP() As String, pStrtmp As String
+    s = 0
+    ReDim BGMAP(1, 20)
+    Open BGMAPpath For Input As #4
+    Do While Not EOF(4)
+        Line Input #4, BGMAP(0, s)
+        Line Input #4, BGMAP(1, s)
+    s = s + 1
+    Loop
+    Close #4
+    pStrtmp = Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List5.ListIndex * 44 * 2, 2)
+    For t = 0 To s - 1
+    If Mid$(BGMAP(1, t), 3, 8) = pStrtmp Then
+    s = s + 1
+    Exit For
+    End If
+    Next t
+    Open BGMAPpath For Append As #4
+    Do
+    If t < s - 1 Then Exit Do
+    Print #4, "Level " & Right("00" & Hex(Form4.Combo1.ListIndex), 2) & " Room " & Right("00" & Hex(Form4.List5.ListIndex), 2) & " BG"
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List5.ListIndex * 44 * 2, 2);
+    Print #4, Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List5.ListIndex * 44 * 2, 2);
+    Exit Do
+    Loop
+    Close #4
+    Erase BGMAP()
+End If
 '********************************************读文件过程
 
 Dim ROMallbyte() As Byte     'max ROM space is 32 MB, is in VB's changeable String Type, its maximun is 2^31
