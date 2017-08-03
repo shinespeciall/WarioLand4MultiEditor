@@ -431,7 +431,6 @@ Form4.Combo1.FontSize = 12
 Form4.Icon = LoadResPicture(101, vbResIcon)
 
 'Form11.Visible = True          'for test
-'Form12.Visible = True          'for test
 End Sub
 
 Private Sub List1_Click()
@@ -462,11 +461,18 @@ Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid$(LevelAll
 '++++++++++++++++++++++++++++++++++++++++++++Save BG MAP Pointer
 Dim BGMAPpath As String
 BGMAPpath = App.Path & "\MOD\" & FirstByte & " BGMAPDATA.txt"
-If Dir(BGMAPpath) = "" Then
+If Dir(BGMAPpath) = "" And Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) <> "00" Then
     Open BGMAPpath For Append As #4
+    Print #4, "Universal Blank BG"
+    Print #4, "000858DA7C"
     Print #4, "Level " & Right("00" & Hex(Form4.Combo1.ListIndex), 2) & " Room " & Right("00" & Hex(Form4.List1.ListIndex), 2) & " BG"
     Print #4, Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2);
     Print #4, Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List1.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List1.ListIndex * 44 * 2, 2);
+    Close #4
+ElseIf Dir(BGMAPpath) = "" And Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List1.ListIndex * 44 * 2, 2) = "00" Then
+    Open BGMAPpath For Append As #4
+    Print #4, "Universal Blank BG"
+    Print #4, "000858DA7C";
     Close #4
 Else
     Dim s As Integer, t As Integer, BGMAP() As String, pStrtmp As String
@@ -643,11 +649,18 @@ Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid$(LevelAll
 '++++++++++++++++++++++++++++++++++++++++++++Save BG MAP Pointer
 Dim BGMAPpath As String
 BGMAPpath = App.Path & "\MOD\" & FirstByte & " BGMAPDATA.txt"
-If Dir(BGMAPpath) = "" Then
+If Dir(BGMAPpath) = "" And Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List3.ListIndex * 44 * 2, 2) <> "00" Then
     Open BGMAPpath For Append As #4
+    Print #4, "Universal Blank BG"
+    Print #4, "000858DA7C"
     Print #4, "Level " & Right("00" & Hex(Form4.Combo1.ListIndex), 2) & " Room " & Right("00" & Hex(Form4.List3.ListIndex), 2) & " BG"
     Print #4, Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List3.ListIndex * 44 * 2, 2);
     Print #4, Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List3.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List3.ListIndex * 44 * 2, 2);
+    Close #4
+ElseIf Dir(BGMAPpath) = "" And Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List3.ListIndex * 44 * 2, 2) = "00" Then
+    Open BGMAPpath For Append As #4
+    Print #4, "Universal Blank BG"
+    Print #4, "000858DA7C";
     Close #4
 Else
     Dim s As Integer, t As Integer, BGMAP() As String, pStrtmp As String
@@ -824,11 +837,18 @@ Form4.Text2.Text = Form4.Text2.Text & "BG pointer mapping data:" & Mid$(LevelAll
 '++++++++++++++++++++++++++++++++++++++++++++Save BG MAP Pointer
 Dim BGMAPpath As String
 BGMAPpath = App.Path & "\MOD\" & FirstByte & " BGMAPDATA.txt"
-If Dir(BGMAPpath) = "" Then
+If Dir(BGMAPpath) = "" And Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List5.ListIndex * 44 * 2, 2) <> "00" Then
     Open BGMAPpath For Append As #4
+    Print #4, "Universal Blank BG"
+    Print #4, "000858DA7C"
     Print #4, "Level " & Right("00" & Hex(Form4.Combo1.ListIndex), 2) & " Room " & Right("00" & Hex(Form4.List5.ListIndex), 2) & " BG"
     Print #4, Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List5.ListIndex * 44 * 2, 2);
     Print #4, Mid$(LevelAllRoomPointerandDataallHex, 41 + 6 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 4 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + 2 + Form4.List5.ListIndex * 44 * 2, 2) & Mid$(LevelAllRoomPointerandDataallHex, 41 + Form4.List5.ListIndex * 44 * 2, 2);
+    Close #4
+ElseIf Dir(BGMAPpath) = "" And Mid$(LevelAllRoomPointerandDataallHex, 9 + Form4.List5.ListIndex * 44 * 2, 2) = "00" Then
+    Open BGMAPpath For Append As #4
+    Print #4, "Universal Blank BG"
+    Print #4, "000858DA7C";
     Close #4
 Else
     Dim s As Integer, t As Integer, BGMAP() As String, pStrtmp As String

@@ -282,6 +282,7 @@ Begin VB.Form Form10
          Height          =   300
          Left            =   240
          TabIndex        =   18
+         Text            =   "<Choose a model>"
          Top             =   4800
          Width           =   3615
       End
@@ -343,7 +344,7 @@ Begin VB.Form Form10
          Width           =   1455
       End
       Begin VB.Label Label2 
-         Caption         =   "select MOD:"
+         Caption         =   "existent MOD:"
          Height          =   255
          Left            =   360
          TabIndex        =   22
@@ -1141,11 +1142,11 @@ Tile88(i * 4 + j) = Mid$(str2, j * 64 + 1, 64)
 Next j
 Next i
 Tile88(64) = Replace(Space(64), Chr(32), "0")
-For i = 0 To (TileLength2 / 16) - 1
+For i = 0 To (TileLength2 / 32) - 1
 Tile88(i + 65) = Mid$(StrTemp, 64 * i + 1, 64)
 DoEvents
 Next i
-For i = (TileLength2 / 16 + 65) To 2047
+For i = (TileLength2 / 32 + 65) To 2047
 Tile88(i) = Replace(Space(64), Chr(32), "0")
 DoEvents
 Next i

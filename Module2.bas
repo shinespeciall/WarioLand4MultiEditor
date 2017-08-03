@@ -182,7 +182,7 @@ If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 8 * SizeOfDot - 1, h
 For i = 0 To 7                       '作图
 For j = 0 To 7
 If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
-If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot < 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+'If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot < 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -221,7 +221,7 @@ If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 8 * SizeOfDot - 1, h
 For i = 0 To 7                       '作图
 For j = 0 To 7
 If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
-If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot < 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+'If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot < 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -260,7 +260,7 @@ If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 8 * SizeOfDot - 1, h
 For i = 0 To 7                       '作图
 For j = 0 To 7
 If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
-If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot < 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+'If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot < 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -299,7 +299,7 @@ If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 8 * SizeOfDot - 1, h
 For i = 0 To 7                       '作图
 For j = 0 To 7
 If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot > 0 Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
-If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot > 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
+'If ((Val("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(Val("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k)) Or CLng("&H" & TileWord) = 2) And SizeOfDot > 1 Then picbox.Line (lenpos + j * 24, heipos + i * 24)-(lenpos + j * 24 + 23, heipos + i * 24 + 23), Palette256(Val("&H" & "0" & Tile8(j, i)), k), BF
 Next j
 Next i
 
@@ -772,4 +772,55 @@ Erase Tile8_M()
 Erase Tile8_T()
 
 DrawTile16_Alpha = True
+End Function
+
+Public Function DrawTile8(ByVal lenpos As Long, ByVal heipos As Long, ByVal Tile8Word As String, ByVal picbox As PictureBox, Optional Cover As Boolean, Optional SizeOfDot As Integer) As Boolean
+On Error Resume Next
+If SizeOfDot < 2 Then
+DrawTile8 = False
+Exit Function
+End If
+'lenpos and heipos are position Index for Tile16
+Dim Wrd As String      '处理当前字段
+Dim Tile8() As String
+Dim i As Integer, j As Integer, strtmp As String
+Dim k As Long             '调色板专用
+
+Wrd = Right("0000000000000000" & hextoBin(Tile8Word), 16)
+ReDim Tile8(8, 8)
+strtmp = Tile88(BIN_to_DEC(Mid$(Wrd, 7, 10)))
+For i = 0 To 7
+For j = 0 To 7
+Tile8(j, i) = Mid$(strtmp, 1 + j + 8 * i, 1)
+Next j
+Next i
+If Mid$(Wrd, 6, 1) = 1 Then      '水平翻转
+For i = 0 To 7
+For j = 0 To 3
+strtmp = Tile8(j, i)
+Tile8(j, i) = Tile8(7 - j, i)
+Tile8(7 - j, i) = strtmp
+Next j
+Next i
+End If
+If Mid$(Wrd, 5, 1) = 1 Then      '垂直翻转
+For i = 0 To 3
+For j = 0 To 7
+strtmp = Tile8(j, i)
+Tile8(j, i) = Tile8(j, 7 - i)
+Tile8(j, 7 - i) = strtmp
+Next j
+Next i
+End If
+lenpos = lenpos * SizeOfDot * 8          '作为基址
+heipos = heipos * SizeOfDot * 8
+k = BIN_to_DEC(Mid$(Wrd, 1, 4))
+If Cover = True Then picbox.Line (lenpos, heipos)-(lenpos + 8 * SizeOfDot - 1, heipos + 8 * SizeOfDot - 1), vbBlack, BF
+For i = 0 To 7                       '作图
+For j = 0 To 7
+If CLng("&H" & "0" & Tile8(j, i)) <> 0 And Palette256(CLng("&H" & "0" & Tile8(j, i)), k) <> Palette256(0, k) Then picbox.Line (lenpos + j * SizeOfDot, heipos + i * SizeOfDot)-(lenpos + j * SizeOfDot + SizeOfDot - 1, heipos + i * SizeOfDot + SizeOfDot - 1), Palette256(Val("&H0" & Tile8(j, i)), k), BF
+Next j
+Next i
+Erase Tile8()
+DrawTile8 = True
 End Function

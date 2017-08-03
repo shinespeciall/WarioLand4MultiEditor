@@ -1,9 +1,10 @@
 Attribute VB_Name = "Module3"
-'////////////////////////////////////////////////////////////This part is for Wizard use/////////////////////////////////////////////////////////
+'////////////////////////////////////////////////////////////This part is for Wizard use as a first design/////////////////////////////////////////////////////////
 '########################################## for decompress, make sure to call the function and erase these variaties after get the value in one sub or procedure
 Public TextMap() As String
 Public layerWidth As Integer, layerHeight As Integer
 Public DataByteNumber As Long
+Public BGMAPHeader() As String
 '##########################################
 
 Public Function DecompressRLE(ByVal DataOffset As String, Optional returnDataLength As Boolean) As String             'UNFINISHED
@@ -22,7 +23,7 @@ ElseIf Mid$(strdata, 1, 2) = "01" Then
     layerWidth = 64
     layerHeight = 32
 ElseIf Mid$(strdata, 1, 2) = "02" Then
-    ReDim TextMap(64, 32)
+    ReDim TextMap(32, 64)
     ReDim DecompressMap(32 * 64)
     layerWidth = 32
     layerHeight = 64

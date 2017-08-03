@@ -10,32 +10,35 @@ Begin VB.Form Form11
    ScaleHeight     =   7980
    ScaleWidth      =   15585
    Visible         =   0   'False
-   Begin VB.CommandButton Command1 
-      Caption         =   "Go"
-      Height          =   495
-      Left            =   12720
-      TabIndex        =   5
-      Top             =   600
-      Width           =   1335
-   End
-   Begin VB.TextBox Text2 
-      Height          =   495
-      Left            =   8040
-      TabIndex        =   4
-      Top             =   480
-      Width           =   3735
-   End
-   Begin VB.TextBox Text1 
-      Height          =   5775
-      Left            =   7680
-      MultiLine       =   -1  'True
-      ScrollBars      =   3  'Both
+   Begin VB.Frame Frame2 
+      Caption         =   "BG MAP"
+      Height          =   7575
+      Left            =   7320
       TabIndex        =   3
-      Top             =   1560
-      Width           =   7095
+      Top             =   120
+      Width           =   7935
+      Begin VB.PictureBox Picture2 
+         BackColor       =   &H00000000&
+         Height          =   6375
+         Left            =   240
+         ScaleHeight     =   6315
+         ScaleWidth      =   7395
+         TabIndex        =   5
+         Top             =   960
+         Width           =   7455
+      End
+      Begin VB.ComboBox Combo2 
+         Enabled         =   0   'False
+         Height          =   300
+         Left            =   240
+         TabIndex        =   4
+         Text            =   "<Choose one existent BG MAP>"
+         Top             =   360
+         Width           =   7455
+      End
    End
    Begin VB.Frame Frame1 
-      Caption         =   "Tileset (Only show partly just for choose)"
+      Caption         =   "Tileset"
       Height          =   7575
       Left            =   240
       TabIndex        =   0
@@ -69,6 +72,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Combo1_Click()
+Form11.Combo1.Enabled = False
 Form11.Picture1.Cls
 If gbafilepath = "" Then
 MsgBox "No GBA file Loaded", vbInformation, "Info"
@@ -88,7 +92,7 @@ Form9.Text1.Text = Form9.Text1.Text & "The amount of Tiles is " & str(TileLength
 TextMAPDataOffset = Mid$(StrTemp, 45, 2) & Mid$(StrTemp, 43, 2) & Mid$(StrTemp, 41, 2)
 paletteOffset = Mid$(StrTemp, 21, 2) & Mid$(StrTemp, 19, 2) & Mid$(StrTemp, 17, 2)
 ReDim Palette256(16, 16)
-ReDim Tile88(TileLength2 / 16 + 64)
+ReDim Tile88(2048)
 Form9.Text1.Text = Form9.Text1.Text & "impoting 8 * 8 Tiles Data......" & vbCrLf
 Dim TextMapData As String
 StrTemp = ReadFileHexWithByteInterchange(gbafilepath, TileOffset, Hex(Val("&H" & TileOffset) + TileLength2))
@@ -120,11 +124,15 @@ Tile88(i * 4 + j) = Mid$(str2, j * 64 + 1, 64)
 Next j
 Next i
 Tile88(64) = Replace(Space(64), Chr(32), "0")
-'-------------------------------------------------------------End  权宜之策
-For i = 0 To (TileLength2 / 16) - 1
+For i = 0 To (TileLength2 / 32) - 1
 Tile88(i + 65) = Mid$(StrTemp, 64 * i + 1, 64)
 DoEvents
 Next i
+For i = (TileLength2 / 32 + 65) To 2047
+Tile88(i) = Replace(Space(64), Chr(32), "0")
+DoEvents
+Next i
+'-------------------------------------------------------------End  权宜之策
 
 Form9.Text1.Text = Form9.Text1.Text & "impoting and making 16 * 16 Tiles Data......" & vbCrLf
 TextMapData = ReadFileHex(gbafilepath, TextMAPDataOffset, Hex(Val("&H" & TextMAPDataOffset) + 8192))
@@ -163,37 +171,95 @@ Next j
 Dim a As Boolean
 For j = 0 To 15
 For i = 0 To 7
-a = DrawTile16(i, j, Hex(i + 8 * j), Form11.Picture1)
+a = DrawTile16(i, j, Hex(i + 8 * j), Form11.Picture1, False, 24)
 DoEvents
 Next i
 Next j
 For j = 0 To 15
 For i = 0 To 7
-a = DrawTile16(i + 8, j, Hex(128 + i + 8 * j), Form11.Picture1)
+a = DrawTile16(i + 8, j, Hex(128 + i + 8 * j), Form11.Picture1, False, 24)
 DoEvents
 Next i
 Next j
 
+Dim BGMAPpath As String
+BGMAPpath = App.Path & "\MOD\" & Tilesets & " BGMAPDATA.txt"
+If Dir(BGMAPpath) = "" Then
+    Open BGMAPpath For Append As #4
+    Print #4, "Universal Blank BG"
+    Print #4, "000858DA7C";
+    Close #4
+End If
+
+Open BGMAPpath For Input As #4
+ReDim BGMAPHeader(1, 10)
+i = 0
+Do While Not EOF(4)
+    Line Input #4, BGMAPHeader(0, i)
+    Form11.Combo2.AddItem BGMAPHeader(0, i)
+    Line Input #4, BGMAPHeader(1, i)
+i = i + 1
+Loop
+Close #4
+'Erase Palette256(16, 16)    'used again in BG Mapping
+Erase Tile88()
+Erase Tile16()
+Form11.Combo2.Enabled = True
+Form11.Combo1.Enabled = True
 End Sub
 
-Private Sub Command1_Click()
-'Dim str As String, strtmp As Long
-'strtmp = 0
-'Form11.Text1.Text = ""
-'str = DecompressRLE(Form11.Text2.Text)
-'If str = "" Then Exit Sub
-'Dim i As Integer, j As Integer
-'For j = 0 To layerHeight - 1
-'For i = 0 To layerWidth - 1
-'Form11.Text1.Text = Form11.Text1.Text & " " & TextMap(i, j)
-'strtmp = Max(strtmp, CLng("&H" & TextMap(i, j)))
-'Next i
-'Form11.Text1.Text = Form11.Text1.Text & vbCrLf
-'Next j
-'layerHeight = 0
-'layerWidth = 0
-'Erase TextMap()
-'Debug.Print Hex(strtmp)
+Private Sub Combo2_Click()
+Dim str As String, StrTemp As String
+Dim i As Long, j As Long
+Form11.Picture2.Cls
+If Mid$(BGMAPHeader(1, Form11.Combo2.ListIndex), 1, 2) = "00" Then Exit Sub
+
+str = Mid$(BGMAPHeader(1, Form11.Combo2.ListIndex), 3, 8)
+str = Hex(CLng("&H" & str) - CLng("&H8000000"))
+str = DecompressRLE(str)
+If str = "" Then
+MsgBox "Something Wrong when Decompressing !"
+layerHeight = 0
+layerWidth = 0
+Erase TextMap()
+Exit Sub
+End If
+If Mid$(BGMAPHeader(1, Form11.Combo2.ListIndex), 1, 2) = "10" Then
+MsgBox "Something Wrong with BGMAPDATA File !"
+layerHeight = 0
+layerWidth = 0
+Erase TextMap()
+Exit Sub
+End If
+
+ReDim Tile88(1023)
+For i = 0 To 1023
+Tile88(i) = Replace(Space(64), Chr(32), "0")
+Next i
+
+Dim BGTileOffset As String, BGTileLength As Long, Tilesets As String
+
+Tilesets = Mid$(Form11.Combo1.Text, 1, 2)
+StrTemp = ReadFileHex(gbafilepath, Hex(Val("&H" & Tilesets) * 9 * 4 + CLng("&H" & "3F2298")), Hex(CLng("&H" & Tilesets) * 9 * 4 + 35 + CLng("&H" & "3F2298")))   'Get entirety of them
+BGTileOffset = Mid$(StrTemp, 29, 2) & Mid$(StrTemp, 27, 2) & Mid$(StrTemp, 25, 2)
+BGTileLength = CLng("&H" & Mid$(StrTemp, 35, 2) & Mid$(StrTemp, 33, 2))
+StrTemp = ReadFileHexWithByteInterchange(gbafilepath, BGTileOffset, Hex(CLng("&H" & BGTileOffset) + BGTileLength))
+
+j = 0
+For i = (1023 - (BGTileLength / 32)) To 1022
+Tile88(i) = Mid$(StrTemp, 64 * j + 1, 64)
+j = j + 1
+Next i
+
+For j = 0 To Min(layerHeight - 1, Form11.Picture2.Height \ 2 - 1)
+For i = 0 To Min(layerWidth - 1, Form11.Picture2.Width \ 2 - 1)
+DrawTile8 i, j, TextMap(i, j), Form11.Picture2, , 14
+Next i
+Next j
+layerHeight = 0
+layerWidth = 0
+Erase TextMap()
+Erase Tile88()
 End Sub
 
 Private Sub Form_Load()
@@ -203,6 +269,7 @@ Form11.Left = Form4.Width
 Form11.Icon = LoadResPicture(101, vbResIcon)
 Form11.Top = 0
 Form11.Combo1.FontSize = 15
+Form11.Combo2.FontSize = 15
 Form11.Combo1.AddItem "00  Debug room"
 Form11.Combo1.AddItem "01  Palm Tree Paradise"
 Form11.Combo1.AddItem "02  Caves"
@@ -297,3 +364,7 @@ Form11.Combo1.AddItem "5A  Final level"
 Form11.Combo1.AddItem "5B  The Big Board end"
 End Sub
 
+Private Sub Form_Unload(Cancel As Integer)
+Erase BGMAPHeader()
+Erase Palette256()
+End Sub
