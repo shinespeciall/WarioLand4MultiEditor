@@ -120,7 +120,7 @@ Begin VB.Form Form10
       Width           =   2775
    End
    Begin VB.CommandButton Command10 
-      Caption         =   "refresh with grid"
+      Caption         =   "show grid"
       Height          =   375
       Left            =   16440
       TabIndex        =   26
@@ -128,7 +128,7 @@ Begin VB.Form Form10
       Width           =   2775
    End
    Begin VB.CommandButton Command9 
-      Caption         =   "refresh with camera control"
+      Caption         =   "show camera control"
       Height          =   375
       Left            =   16440
       TabIndex        =   25
@@ -518,7 +518,6 @@ Form10.Text1.Text = str1
 End Sub
 
 Private Sub Command10_Click()
-Command11_Click
 Form10.Enabled = False
 Dim i As Integer, j As Integer, result As Boolean
 
@@ -629,12 +628,14 @@ Form10.Command16.Enabled = True
 End Sub
 
 Private Sub Command12_Click()
+Command9_Click
 WasCameraControlChange = True
 IsMakingCameraRec = True
 WillBeResize = MsgBox("Make a rectangle for camera control," & vbCrLf & "Resize mode?", vbYesNo, "Info")
 Form10.Shape3.Left = 0: Form10.Shape3.Top = 0
 Form10.Command12.Enabled = False: Form10.Command14.Enabled = False
-Form10.Shape2.Width = 780: Form10.Shape2.Height = 780
+Form10.Shape2.Width = DotSize * 32: Form10.Shape2.Height = DotSize * 32
+Form10.Shape3.Width = DotSize * 16: Form10.Shape3.Height = DotSize * 16
 Form10.Shape2.Visible = True
 Form10.Shape3.Visible = True
 Form10.Timer1.Interval = 5
@@ -1342,7 +1343,6 @@ Form10.Command6.Enabled = True
 End Sub
 
 Private Sub Command9_Click()
-Command11_Click
 Form10.Enabled = False
 Dim i As Integer, j As Integer, result As Boolean
 
@@ -2085,8 +2085,8 @@ ElseIf WillBeResize = vbNo Then
     Form10.Shape2.Left = MouseX * (DotSize * 16)
     Form10.Shape2.Top = MouseY * (DotSize * 16)
     ElseIf a = True And x1 > 0 Then
-    Form10.Shape2.Width = (MouseX + 1) * (DotSize * 16) - Form10.Shape2.Left
-    Form10.Shape2.Height = (MouseY + 1) * (DotSize * 16) - Form10.Shape2.Top
+    Form10.Shape2.Width = Max((MouseX + 1) * (DotSize * 16) - Form10.Shape2.Left, 1)
+    Form10.Shape2.Height = Max((MouseY + 1) * (DotSize * 16) - Form10.Shape2.Top, 1)
     End If
     
     If IsClick = True And y2 = 0 Then
