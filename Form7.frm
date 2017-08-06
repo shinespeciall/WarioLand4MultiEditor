@@ -260,7 +260,6 @@ If Form7.Combo1.Enabled = False Then Exit Sub
 End Sub
 
 Private Sub Form_Activate()
-Unload Form4
 Form7.Text1.Text = ""
 Form7.Text1.FontSize = 12
 ifMouseDowm = False

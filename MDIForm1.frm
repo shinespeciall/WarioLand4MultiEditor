@@ -210,8 +210,8 @@ Form9.Text1.Text = Form9.Text1.Text & "Finish£¡" & vbCrLf
 End Sub
 
 Private Sub mnuLevelguidefrm_Click()
-Load Form4
-Form4.Show
+Form4.Visible = True
+Form7.Visible = False
 End Sub
 
 Private Sub mnuLoadMOD_Click()
@@ -317,7 +317,7 @@ Load Form9
 End Sub
 
 Private Sub mnuOutputSpritesTiles_Click()
-Load Form7
+Form4.Visible = False
 Form7.Visible = True
 End Sub
 

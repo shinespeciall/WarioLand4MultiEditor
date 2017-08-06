@@ -1,15 +1,23 @@
 VERSION 5.00
 Begin VB.Form Form11 
    Caption         =   "New Room Wizard"
-   ClientHeight    =   7980
+   ClientHeight    =   10320
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   15585
    LinkTopic       =   "Form11"
    MDIChild        =   -1  'True
-   ScaleHeight     =   7980
+   ScaleHeight     =   10320
    ScaleWidth      =   15585
    Visible         =   0   'False
+   Begin VB.Frame Frame3 
+      Caption         =   "Layer Attributes"
+      Height          =   2415
+      Left            =   240
+      TabIndex        =   6
+      Top             =   7800
+      Width           =   6975
+   End
    Begin VB.Frame Frame2 
       Caption         =   "BG MAP"
       Height          =   7575
@@ -46,11 +54,11 @@ Begin VB.Form Form11
       Width           =   6975
       Begin VB.ComboBox Combo1 
          Height          =   300
-         Left            =   360
+         Left            =   240
          TabIndex        =   2
          Text            =   "00  Debug room"
          Top             =   360
-         Width           =   6255
+         Width           =   6375
       End
       Begin VB.PictureBox Picture1 
          AutoRedraw      =   -1  'True
@@ -72,13 +80,13 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Combo1_Click()
-Form11.Combo1.Enabled = False
+Form11.Enabled = False
 Form11.Picture1.Cls
-If gbafilepath = "" Then
-MsgBox "No GBA file Loaded", vbInformation, "Info"
-Form11.Visible = False
-Exit Sub
-End If
+Form11.Picture2.Cls
+Form11.Combo2.Clear
+Form11.Combo2.Text = "<Choose one existent BG MAP>"
+Form11.Combo2.ListIndex = -1
+
 Dim Tilesets As String
 Dim StrTemp As String, str1 As String, str2 As String, str3 As String, str4 As String
 Dim TileOffset As String, TileLength2 As Long
@@ -204,11 +212,12 @@ Close #4
 'Erase Palette256(16, 16)    'used again in BG Mapping
 Erase Tile88()
 Erase Tile16()
+Form11.Enabled = True
 Form11.Combo2.Enabled = True
-Form11.Combo1.Enabled = True
 End Sub
 
 Private Sub Combo2_Click()
+Form11.Enabled = False
 Dim str As String, StrTemp As String
 Dim i As Long, j As Long
 Form11.Picture2.Cls
@@ -260,11 +269,12 @@ layerHeight = 0
 layerWidth = 0
 Erase TextMap()
 Erase Tile88()
+Form11.Enabled = True
 End Sub
 
 Private Sub Form_Load()
 Form11.Width = 15825
-Form11.Height = 8565
+Form11.Height = 10900
 Form11.Left = Form4.Width
 Form11.Icon = LoadResPicture(101, vbResIcon)
 Form11.Top = 0
