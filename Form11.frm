@@ -17,6 +17,23 @@ Begin VB.Form Form11
       TabIndex        =   6
       Top             =   7800
       Width           =   6975
+      Begin VB.TextBox Text1 
+         Height          =   1215
+         Left            =   240
+         MultiLine       =   -1  'True
+         ScrollBars      =   3  'Both
+         TabIndex        =   8
+         Top             =   960
+         Width           =   6495
+      End
+      Begin VB.ComboBox Combo3 
+         Height          =   300
+         Left            =   240
+         TabIndex        =   7
+         Text            =   "<Choose a way to render the MAP>"
+         Top             =   360
+         Width           =   6495
+      End
    End
    Begin VB.Frame Frame2 
       Caption         =   "BG MAP"
@@ -280,6 +297,7 @@ Form11.Icon = LoadResPicture(101, vbResIcon)
 Form11.Top = 0
 Form11.Combo1.FontSize = 15
 Form11.Combo2.FontSize = 15
+Form11.Combo3.FontSize = 15
 Form11.Combo1.AddItem "00  Debug room"
 Form11.Combo1.AddItem "01  Palm Tree Paradise"
 Form11.Combo1.AddItem "02  Caves"
