@@ -2,7 +2,7 @@
 ## PS: patch applications will be made with C++
 ## 
 ##     what it can do now:
-##      1. The App read the Levels and its rooms data directly from the ROM file (*.gba for wario land 4) and you can use the app to edit one layer of a room by editing textmap value or by using visual MAP editor to make change in visual room rendered out. And also you can change 3 layers at the same time and save them all in visual MAP editor.
+##      1. The App read the Levels and its rooms data directly from the ROM file (only *.gba file for wario land 4) and you can use the app to edit one layer of a room by editing textmap value or by using visual MAP editor to make change in visual room rendered out. And also you can change 3 layers at the same time and save them all in visual MAP editor.
 ##      2. The visual map editor have almost been finished and it recently can render a whole room with alpha blending. (if you don't know how it works, just uncheck the checkbox named Alpha and refresh the MAP. ) And the most important thing is that you can make change directly on the MAP with more than one Layer rendering on the board, you just need to know the change will be made on the front layer which is being rendering now.
 ##      3. there are some other things the App can do, but are only for an alpha test, without WL4 hacking information, it will be hard to use them properly when you try to edit enimies and timers etc. I will try to make wizards if any part of hacking is completed.
 ##      4. Camera control modification is available in Visual MAP Editor visually, there are two types available and the textbox just show the exact control characters in the ROM file.
