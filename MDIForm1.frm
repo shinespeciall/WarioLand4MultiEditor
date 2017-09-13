@@ -59,7 +59,7 @@ Begin VB.MDIForm MDIForm1
          Caption         =   "Level guide"
       End
       Begin VB.Menu mnuOutputSpritesTiles 
-         Caption         =   "enimies bitmap editor"
+         Caption         =   "Sprites bitmap editor"
       End
       Begin VB.Menu mnuoutput 
          Caption         =   "Output"
@@ -317,6 +317,10 @@ Load Form9
 End Sub
 
 Private Sub mnuOutputSpritesTiles_Click()
+If Screen.Width < 23070 Then
+MsgBox "the Width of PC screen is too small, display failure !!"
+Exit Sub
+End If
 Form4.Visible = False
 Form7.Visible = True
 End Sub

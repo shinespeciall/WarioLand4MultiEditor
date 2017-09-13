@@ -1,38 +1,58 @@
 VERSION 5.00
 Begin VB.Form Form11 
    Caption         =   "New Room Wizard"
-   ClientHeight    =   10320
+   ClientHeight    =   9600
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   15585
    LinkTopic       =   "Form11"
    MDIChild        =   -1  'True
-   ScaleHeight     =   10320
+   ScaleHeight     =   9600
    ScaleWidth      =   15585
    Visible         =   0   'False
+   Begin VB.CommandButton Command1 
+      Caption         =   "Done"
+      Enabled         =   0   'False
+      Height          =   1335
+      Left            =   11640
+      TabIndex        =   9
+      Top             =   8040
+      Width           =   3615
+   End
    Begin VB.Frame Frame3 
-      Caption         =   "Layer Attributes"
-      Height          =   2415
+      Caption         =   "Layers' Attributes"
+      Enabled         =   0   'False
+      Height          =   1695
       Left            =   240
       TabIndex        =   6
       Top             =   7800
-      Width           =   6975
-      Begin VB.TextBox Text1 
-         Height          =   1215
+      Width           =   11175
+      Begin VB.CheckBox Check1 
+         Caption         =   "using Layer(0) to render Smoke"
+         Height          =   375
+         Left            =   7680
+         TabIndex        =   10
+         Top             =   840
+         Visible         =   0   'False
+         Width           =   3135
+      End
+      Begin VB.ComboBox Combo4 
+         Enabled         =   0   'False
+         Height          =   300
          Left            =   240
-         MultiLine       =   -1  'True
-         ScrollBars      =   3  'Both
          TabIndex        =   8
+         Text            =   "< Choose a way for alpha blending >"
          Top             =   960
-         Width           =   6495
+         Width           =   6615
       End
       Begin VB.ComboBox Combo3 
          Height          =   300
          Left            =   240
          TabIndex        =   7
-         Text            =   "<Choose a way to render the MAP>"
+         Text            =   "< Choose a priority order >"
+         ToolTipText     =   "Choose Tileset and BG MAP first"
          Top             =   360
-         Width           =   6495
+         Width           =   10575
       End
    End
    Begin VB.Frame Frame2 
@@ -103,6 +123,13 @@ Form11.Picture2.Cls
 Form11.Combo2.Clear
 Form11.Combo2.Text = "<Choose one existent BG MAP>"
 Form11.Combo2.ListIndex = -1
+
+Form11.Check1.Value = 0
+If Form11.Combo1.ListIndex = Val("&H21") Or Form11.Combo1.ListIndex = Val("&H22") Then
+Form11.Check1.Visible = True
+Else
+Form11.Check1.Visible = False
+End If
 
 Dim Tilesets As String
 Dim StrTemp As String, str1 As String, str2 As String, str3 As String, str4 As String
@@ -287,17 +314,49 @@ layerWidth = 0
 Erase TextMap()
 Erase Tile88()
 Form11.Enabled = True
+Form11.Frame3.Enabled = True
+End Sub
+
+Private Sub Combo3_Click()
+Form11.Combo4.Enabled = True
+End Sub
+
+Private Sub Combo4_Click()
+Form11.Command1.Enabled = True
+End Sub
+
+Private Sub Command1_Click()
+If LevelStartStreamOffset = "" Then Exit Sub
+If SaveDataOffset(95) <> "" Then
+    MsgBox "buffer memory used up, save all and retry !"
+    Exit Sub
+End If
+Dim i As Integer, j As Integer    ', str1 As String
+For i = 1 To 100
+    If SaveDataOffset(i) = "" Then Exit For
+Next i
+SaveDataOffset(i) = Hex(Val("&H" & LevelStartStreamOffset) + 1)    '修改Room数量标志位，最大值为 10 Hex
+SaveDatabuffer(i) = Right("00" & Hex(Val("&H" & RoomNumber) + 1), 2)
+RoomNumber = Right("00" & Hex(Val("&H" & RoomNumber) + 1), 2)
+SaveDataOffset(i + 1) = LevelAllRoomPointerandDataBaseOffset         '每个Room的layer指针和元素指针及Flag数据串保存基址
+
+SaveDatabuffer(i + 1) = LevelAllRoomPointerandDataallHex & Right("00" & Hex(Form11.Combo1.ListIndex), 2) & "101010 20000000 63223F08 63223F08 63223F08 7CDA5808"     'Normal
+
 End Sub
 
 Private Sub Form_Load()
 Form11.Width = 15825
-Form11.Height = 10900
+Form11.Height = 10180
 Form11.Left = Form4.Width
 Form11.Icon = LoadResPicture(101, vbResIcon)
 Form11.Top = 0
 Form11.Combo1.FontSize = 15
 Form11.Combo2.FontSize = 15
 Form11.Combo3.FontSize = 15
+Form11.Combo4.FontSize = 15
+Form11.Check1.Value = 0
+Form11.Check1.Visible = False
+Form11.Command1.FontSize = 17
 Form11.Combo1.AddItem "00  Debug room"
 Form11.Combo1.AddItem "01  Palm Tree Paradise"
 Form11.Combo1.AddItem "02  Caves"
@@ -331,13 +390,13 @@ Form11.Combo1.AddItem "1D  Factory"
 Form11.Combo1.AddItem "1E  Factory"
 Form11.Combo1.AddItem "1F  Jungle"
 Form11.Combo1.AddItem "20  Factory"
-Form11.Combo1.AddItem "21  Junkyard"
-Form11.Combo1.AddItem "22  Junkyard"
+Form11.Combo1.AddItem "21  Toxic Landfill"
+Form11.Combo1.AddItem "22  Toxic Landfill"
 Form11.Combo1.AddItem "23  Pinball"
 Form11.Combo1.AddItem "24  Pinball"
 Form11.Combo1.AddItem "25  Pinball (with Gorilla)"
 Form11.Combo1.AddItem "26  Jungle"
-Form11.Combo1.AddItem "27  40 Below Fridge?"
+Form11.Combo1.AddItem "27  40 Below Fridge"
 Form11.Combo1.AddItem "28  Jungle"
 Form11.Combo1.AddItem "29  Jungle caves"
 Form11.Combo1.AddItem "2A  Hotel"
@@ -390,6 +449,23 @@ Form11.Combo1.AddItem "58  Bonus room"
 Form11.Combo1.AddItem "59  Bonus room"
 Form11.Combo1.AddItem "5A  Final level"
 Form11.Combo1.AddItem "5B  The Big Board end"
+Form11.Combo3.AddItem "layer(0) Priority = 0: layer(1) Priority = 1: layer(2) Priority = 2"
+Form11.Combo3.AddItem "layer(0) Priority = 1: layer(1) Priority = 0: layer(2) Priority = 2"
+Form11.Combo3.AddItem "layer(0) Priority = 1: layer(1) Priority = 0: layer(2) Priority = 2"
+Form11.Combo3.AddItem "layer(0) Priority = 2: layer(1) Priority = 0: layer(2) Priority = 1"
+Form11.Combo4.AddItem "No Alpha Blending"
+Form11.Combo4.AddItem "EVA = 7: EVB = 16"
+Form11.Combo4.AddItem "EVA = 10: EVB = 16"
+Form11.Combo4.AddItem "EVA = 13: EVB = 16"
+Form11.Combo4.AddItem "EVA = 16: EVB = 16"
+Form11.Combo4.AddItem "EVA = 16: EVB = 0"
+Form11.Combo4.AddItem "EVA = 13: EVB = 3"
+Form11.Combo4.AddItem "EVA = 10: EVB = 6"
+Form11.Combo4.AddItem "EVA = 7: EVB = 9"
+Form11.Combo4.AddItem "EVA = 5: EVB = 11"
+Form11.Combo4.AddItem "EVA = 3: EVB = 13"
+Form11.Combo4.AddItem "EVA = 0: EVB = 16"
+Form11.Combo4.AddItem "EVA = 0: EVB = 16"
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

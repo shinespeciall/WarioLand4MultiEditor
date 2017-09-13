@@ -176,7 +176,7 @@ Begin VB.Form Form6
       Width           =   2655
    End
    Begin VB.Label Label7 
-      Caption         =   "Layer 3 Visible:00=invisible 10=Visible"
+      Caption         =   "Layer 2 Visible:00=invisible 10=Visible"
       Height          =   375
       Left            =   120
       TabIndex        =   20
@@ -184,7 +184,7 @@ Begin VB.Form Form6
       Width           =   2655
    End
    Begin VB.Label Label6 
-      Caption         =   "Layer 2 Visible:00=invisible 10=Visible"
+      Caption         =   "Layer 1 Visible:00=invisible 10=Visible"
       Height          =   375
       Left            =   120
       TabIndex        =   17
@@ -192,7 +192,7 @@ Begin VB.Form Form6
       Width           =   2655
    End
    Begin VB.Label Label5 
-      Caption         =   "Layer 1 Visible:00=invisible 10=Visible 22=Scroll"
+      Caption         =   "Layer 0 Visible:00=invisible 10=Visible 22=Scroll"
       Height          =   495
       Left            =   120
       TabIndex        =   14
@@ -609,9 +609,9 @@ Exit Sub
 End If
 Form6.Label1.Caption = "Level Room Index:" & LevelRoomIndex
 Form6.Text9.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)        'First byte flag
-Form6.Text8.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 2 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Second byte flag    Layer 3 Visible Flag
-Form6.Text6.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 4 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Third byte flag    Layer 1 Visible Flag
-Form6.Text7.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 6 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Fourth byte flag    Layer 2 Visible Flag
+Form6.Text6.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 2 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Third byte flag    Layer 0 Visible Flag
+Form6.Text7.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 4 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Fourth byte flag    Layer 1 Visible Flag
+Form6.Text8.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 6 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'Second byte flag    Layer 2 Visible Flag
 Form6.Text2.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 50 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)      'tenth byte flag
 Form6.Text5.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 52 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)     'eleventh byte flag
 Form6.Text3.Text = Mid$(LevelAllRoomPointerandDataallHex, 1 + 48 + (Val("&H" & LevelRoomIndex) - 1) * 44 * 2, 2)

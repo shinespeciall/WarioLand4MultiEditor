@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form Form7 
-   Caption         =   "Sprites and Tiles Editor"
+   Caption         =   "Sprites Tiles Editor"
    ClientHeight    =   5400
    ClientLeft      =   120
    ClientTop       =   465
