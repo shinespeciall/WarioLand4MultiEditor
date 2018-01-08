@@ -464,6 +464,7 @@ End Sub
 
 Private Sub Combo1_Click()
 Form10.Picture2.Cls
+Form10.Picture1.Enabled = True
 Dim Width As Integer, Height As Integer, i As Integer, j As Integer, result As Boolean
 Width = Val("&" & Mid$(TileMOD(1, Form10.Combo1.ListIndex), 1, 2))
 Height = Val("&" & Mid$(TileMOD(1, Form10.Combo1.ListIndex), 3, 2))
@@ -1236,7 +1237,6 @@ Form9.Text1.Text = Form9.Text1.Text & "Finish All" & vbCrLf
 Form10.Combo1.Enabled = True
 Form10.Command5.Enabled = False
 Form10.Command16.Enabled = True
-Form10.Picture1.Enabled = True
 MDIForm1.Enabled = False
 End Sub
 
@@ -1424,6 +1424,7 @@ i = i + 1
 Loop
 Close #2
 Form10.Picture1.BackColor = &H0&
+Form10.Picture1.Enabled = False
 Form10.Combo1.FontSize = 15
 Form10.Combo2.FontSize = 15
 Form10.Combo2.AddItem "00  Debug room"
