@@ -1,8 +1,8 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\SysWOW64\stdole2.tlb#OLE Automation
 Reference=*\G{8C344710-5FEC-11CF-A0BF-00AA0062BE57}#1.0#0#C:\Program Files (x86)\Common Files\designer\MSCDRUN.DLL#Microsoft Connection Designer Instance 1.0
-Reference=*\G{EE008642-64A8-11CE-920F-08002B369A33}#2.0#0#C:\Windows\SysWOW64\MSRDO20.DLL#Microsoft Remote Data Object 2.0
-Object={F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0; comdlg32.OCX
+Reference=*\G{EE008642-64A8-11CE-920F-08002B369A33}#2.0#0#C:\WINDOWS\SysWow64\MSRDO20.DLL#Microsoft Remote Data Object 2.0
+Object={F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0; ComDlg32.OCX
 Module=Module1; Module1.bas
 Module=Module2; Module2.bas
 Form=MDIForm1.frm
