@@ -466,8 +466,8 @@ Private Sub Combo1_Click()
 Form10.Picture2.Cls
 Form10.Picture1.Enabled = True
 Dim Width As Integer, Height As Integer, i As Integer, j As Integer, result As Boolean
-Width = Val("&" & Mid$(TileMOD(1, Form10.Combo1.ListIndex), 1, 2))
-Height = Val("&" & Mid$(TileMOD(1, Form10.Combo1.ListIndex), 3, 2))
+Width = Val("&H" & Mid$(TileMOD(1, Form10.Combo1.ListIndex), 1, 2))
+Height = Val("&H" & Mid$(TileMOD(1, Form10.Combo1.ListIndex), 3, 2))
 ReDim NowTileMOD(Width, Height)
 For j = 0 To Height - 1
 For i = 0 To Width - 1
@@ -1695,7 +1695,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         Next j
         IsLayer1Change = True
         LastLayerChange = 1
-        ElseIf Form10.Check2.Value = 1 Then
+        ElseIf Form10.Check3.Value = 1 Then
         For j = 0 To Val("&H" & MapHeight) - 1
         For i = 0 To Val("&H" & MapLength) - 1
         L2_LB_001(i, j) = L2_LB_000(i, j)
@@ -1706,7 +1706,7 @@ If IsMakingCameraRec = False And Form10.Combo1.Text <> "" Then          'Start a
         End If
         
         Dim k As Integer
-    If EVA = 0 Or Form10.Check4.Value = 0 Then
+    If EVA = 0 Or Form10.Check4.Value = 0 Or Form10.Check4.Enabled = False Then
         If LastLayerChange = 0 And ExistUnchangeableLayer0 = False Then
         For j = 0 To UBound(NowTileMOD, 2) - LBound(NowTileMOD, 2) - 1
         For i = 0 To UBound(NowTileMOD, 1) - LBound(NowTileMOD, 1) - 1

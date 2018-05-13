@@ -156,6 +156,11 @@ str2 = Mid$(str1, 4 * i + 1, 2)
 Mid$(str1, 4 * i + 1, 2) = Mid$(str1, 4 * i + 3, 2)
 Mid$(str1, 4 * i + 3, 2) = str2
 Next i
+
+Dim BGMAPpath As String  '------------------------///
+'BGMAPpath = App.Path & "\MOD\Tile_" & Tilesets & ".txt"  '------------------------///
+'Open BGMAPpath For Append As #7  '------------------------///
+
 For i = 0 To 15
 str2 = Mid$(str1, 4 * i + 1, 4)
 str3 = ReadFileHex(gbafilepath, Hex(Val("&H" & str2) * 8 + Val("&H" & "3F7828")), Hex(Val("&H" & str2) * 8 + Val("&H" & "3F782F")))
@@ -173,13 +178,16 @@ str2 = ReadFileHexWithByteInterchange(gbafilepath, str2, Hex(Val("&H" & str2) + 
 DoEvents
 For j = 0 To 3
 Tile88(i * 4 + j) = Mid$(str2, j * 64 + 1, 64)
+'Print #7, Tile88(i * 4 + j) '------------------------///
 Next j
 Next i
 Tile88(64) = Replace(Space(64), Chr(32), "0")
 For i = 0 To (TileLength2 / 32) - 1
 Tile88(i + 65) = Mid$(StrTemp, 64 * i + 1, 64)
+'Print #7, Tile88(i + 65) '------------------------///
 DoEvents
 Next i
+'Close #7  '------------------------///
 For i = (TileLength2 / 32 + 65) To 2047
 Tile88(i) = Replace(Space(64), Chr(32), "0")
 DoEvents
@@ -214,12 +222,16 @@ Next i
 
 Form9.Text1.Text = Form9.Text1.Text & "impoting palette 256 ......" & vbCrLf
 StrTemp = ReadFileHex(gbafilepath, paletteOffset, Hex(Val("&H" & paletteOffset) + 256 * 2 - 1))
+BGMAPpath = App.Path & "\MOD\palette_" & Tilesets & ".txt"  '------------------------///
+Open BGMAPpath For Append As #9 '------------------------///
 For j = 0 To 15
 For i = 0 To 15
 Palette256(i, j) = RGB555ToRGB888(Mid$(StrTemp, 64 * j + 4 * i + 1, 4))
 DoEvents
 Next i
+Print #9, Mid$(StrTemp, 64 * j + 1, 64)  '------------------------///
 Next j
+Close #9  '------------------------///
 Dim a As Boolean
 For j = 0 To 15
 For i = 0 To 7
@@ -234,7 +246,16 @@ DoEvents
 Next i
 Next j
 
-Dim BGMAPpath As String
+'BGMAPpath = App.Path & "\MOD\Block_" & Tilesets & ".txt"  '------------------------///start
+'Open BGMAPpath For Append As #8
+'j = InputBox("input time", "", 1)
+'Print #8, CStr(8 * 16 * j)
+'For i = 0 To (8 * 16 * j - 1) Step 1
+'Print #8, Tile16(i)
+'Next i
+'Close #8  '------------------------///end
+
+'Dim BGMAPpath As String
 BGMAPpath = App.Path & "\MOD\" & Tilesets & " BGMAPDATA.txt"
 If Dir(BGMAPpath) = "" Then
     Open BGMAPpath For Append As #4
