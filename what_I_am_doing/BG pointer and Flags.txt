@@ -49,16 +49,15 @@ BG pointer mapping data:085FD9BC
 Tileset:51
 BG pointer mapping flag:20
 BG pointer mapping data:085FE008
-----------------------------------04  //some of the room cause my old editor crash so I just get the pointers I can get
+----------------------------------04
 Tileset:26
 BG pointer mapping flag:20
 BG pointer mapping data:085FE918
+BG pointer mapping flag:20
+BG pointer mapping data:085FEED8
 Tileset:35
 BG pointer mapping flag:20
 BG pointer mapping data:085FF264
-Tileset:26
-BG pointer mapping flag:20
-BG pointer mapping data:085FEED8
 Tileset:36
 BG pointer mapping flag:20
 BG pointer mapping data:085FF960
@@ -83,6 +82,8 @@ BG pointer mapping data:08600388
 Tileset:21
 BG pointer mapping flag:20
 BG pointer mapping data:086013D4
+Front Layer mapping type:22
+Front Layer pointer:08601854
 Tileset:22
 BG pointer mapping flag:20
 BG pointer mapping data:08601A0C
@@ -114,13 +115,14 @@ BG pointer mapping data:08603064
 Tileset:05
 BG pointer mapping flag:20
 BG pointer mapping data:0860368C
-----------------------------------0B //some of the room cause my old editor crash too
+----------------------------------0B
 Tileset:0F
 BG pointer mapping flag:20
 BG pointer mapping data:08605A7C
-Tileset:0F
 BG pointer mapping flag:20
 BG pointer mapping data:086063B0
+BG pointer mapping flag:20
+BG pointer mapping data:08606CF4
 ----------------------------------0C
 Tileset:10
 BG pointer mapping flag:20
@@ -165,20 +167,18 @@ BG pointer mapping data:0860E044
 Tileset:37
 BG pointer mapping flag:20
 BG pointer mapping data:0860BC54
-Tileset:45
-BG pointer mapping flag:20
-BG pointer mapping data:0860CF98
-Tileset:37
 BG pointer mapping flag:20
 BG pointer mapping data:0860B29C
 Tileset:45
+BG pointer mapping flag:20
+BG pointer mapping data:0860CF98
 BG pointer mapping flag:20
 BG pointer mapping data:0860C5FC
 ----------------------------------11-16
 Tileset:4A, 4B, 4C, 4D, 4E, 43
 BG pointer mapping flag:20
 BG pointer mapping data:0860E96C
-Tileset:29, 49, 44, 48, XX, 42
+Tileset:29, 49, 44, 48, no, 42
 BG pointer mapping flag:20
 BG pointer mapping data:0860E860
 Tileset:4F
