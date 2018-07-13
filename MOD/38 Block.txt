@@ -1,6 +1,0 @@
-000 0000 For Clean
-01010000
-000 0040 Fill Block
-01010040
-000 0002 RoomChangeMark
-01010002
