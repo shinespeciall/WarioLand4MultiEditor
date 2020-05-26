@@ -1,9 +1,8 @@
 #   MultiEditor for Wario Land 4 is being made with VB
-P.S: patch applications will be made with C++  
+
+**P.S:It won't be updated afterwards and has been deprecated because it isn't arrange well with OOP-style and it getting harder to add new functionalities into it. I started a new [repository](https://github.com/Goldensunboy/WL4Editor) with other developers, and use c++/Qt instead of VB. get in my Discord [Server](https://discord.gg/EQ6JhvP) to get the latest build.**  
   
-P.S.P.S:Althougth this is perhaps the most functional editor for WL4, it won't be updated afterwards and has been deprecated because it isn't arrange well with OOP-style and it getting harder to add new function into it(only if there were some new bugs founded). I have start a new [repository](https://github.com/Goldensunboy/WL4Editor) with another developer, and use c++/Qt instead of VB. get in my Discord [Server](https://discord.gg/EQ6JhvP) if you are interested in this and perhaps our new editor will coming soon with peaple's help. My opinion is to make a new editor for arranging level data and another injector to make patch for the source WL4 ROM file (all the new things is supposed to write in C++ using Qt), it will be convenient to use and play others' levels in Reddit.  
-## 
-##     what the application in this repo can do:  
+##     what the editor in this repo can do:  
 1. The App read the Levels and its rooms data directly from the ROM file (only *.gba file for wario land 4) and you can use the app to edit one layer of a room by editing textmap value or by using visual MAP editor to make change in visual room rendered out. And also you can change 3 layers at the same time and save them all in visual MAP editor.  
 2. The visual map editor have almost been finished and it recently can render a whole room with alpha blending. (if you don't know how it works, just uncheck the checkbox named Alpha and refresh the MAP. ) And the most important thing is that you can make change directly on the MAP with more than one Layer rendering on the board, you just need to know the change will be made on the front layer which is being rendering now.  
 3. there are some other things the App can do, but are only for an alpha test, without WL4 hacking information, it will be hard to use them properly when you try to edit enimies and timers etc. I will try to make wizards if any part of hacking is completed.  
